@@ -27,7 +27,7 @@
                       :right "auto"}]
 
     "top-0"
-    [".top-0" {:top "0px"}]
+    [".top-0" {:top "0"}]
 
     "top-0.5"
     [".top-0\\.5" {:top "0.125rem"}]
@@ -38,6 +38,9 @@
     "top-1"
     [".top-1" {:top "0.25rem"}]
 
+    "top-cm"
+    [".top-cm" {:top "1cm"}]
+
     "top-1px"
     [".top-1px" {:top "1px"}]
 
@@ -47,5 +50,17 @@
     "top-1%"
     [".top-1\\%" {:top "1%"}]
 
+    "top-3/8"
+    [".top-3\\/8" {:top "37.5%"}]
+
+    "top-full"
+    [".top-full" {:top "100%"}]
+
     "z-0"
-    [".z-0" {:z-index "0"}]))
+    [".z-0" {:z-index "0"}]
+
+    "z-1"
+    [".z-1" {:z-index "1"}]
+
+    "z-auto"
+    [".z-auto" {:z-index "auto"}]))

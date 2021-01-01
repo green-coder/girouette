@@ -1,7 +1,7 @@
 (ns girouette.tw.layout
   (:require [clojure.string :as str]
             [girouette.util :as util]
-            [girouette.tw.common :refer [dot size->css
+            [girouette.tw.common :refer [dot value-unit->css
                                          breakpoint->pixels]]))
 
 (def components
@@ -105,12 +105,12 @@
 
    {:id :positioning
     :rules "
-    positioning = signus? positioning-mode <'-'> positioning-size
+    positioning = signus? positioning-mode <'-'> positioning-value
     positioning-mode = 'top' | 'right' | 'bottom' | 'left' | #'inset(-x|-y)?'
-    positioning-size = size unit? | unit | fraction | 'auto'
+    positioning-value = number | length | length-unit | fraction | percentage-full | auto
     "
     :garden (fn [{component-data :component-data}]
-              (let [{:keys [signus positioning-mode positioning-size]} (util/index-by first next component-data)
+              (let [{:keys [signus positioning-mode positioning-value]} (util/index-by first next component-data)
                     directions ({"inset" [:top :right :bottom :left]
                                  "inset-x" [:right :left]
                                  "inset-y" [:top :bottom]
@@ -118,9 +118,12 @@
                                  "right" [:right]
                                  "bottom" [:bottom]
                                  "left" [:left]} (first positioning-mode))
-                    size (size->css (first signus) positioning-size)]
+                    value-css (value-unit->css (first signus)
+                                               (first positioning-value)
+                                               {:number-unit :quarter-rem
+                                                :fraction-unit "%"})]
                 (into {}
-                      (map (fn [direction] [direction size]))
+                      (map (fn [direction] [direction value-css]))
                       directions)))}
 
 
@@ -134,7 +137,7 @@
 
    {:id :z-index
     :rules "
-    z-index = <'z-'> (int-number | 'auto')
+    z-index = <'z-'> (integer | auto)
     "
     :garden (fn [{[index] :component-data}]
-              {:z-index index})}])
+              {:z-index (value-unit->css nil index {})})}])

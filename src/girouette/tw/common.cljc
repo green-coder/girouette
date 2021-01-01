@@ -24,31 +24,40 @@
    "2xl" "1536px"})
 
 
-(defn read-decimal [s]
+(defn read-number [s]
   (-> s
       (str/escape {\_ \.})
       edn/read-string))
 
 
-(defn size->css
-  ([signus size-data]
-   (if (= size-data ["auto"])
-     "auto"
-     (let [{:keys [size unit fraction]} (util/index-by first next size-data)
-           [size unit] (case fraction
-                         nil [(read-decimal (first size))
-                              (first unit)]
-                         ["full"] [100 "%"]
-                         [(-> 100.0
-                              (* (edn/read-string (first fraction)))
-                              (/ (edn/read-string (second fraction)))) "%"])]
-       (size->css signus size unit))))
-  ([signus size unit]
-   (let [[size unit] (cond
-                       (some? unit) [(or size 1) unit]
-                       (zero? size) [0 "px"]
-                       :else [(* 0.25 size) "rem"])]
-     (str (or signus "") size unit))))
+(defn value->css [value]
+  (if (= (int value) value)
+    (int value)
+    (float value)))
+
+
+(defn value-unit->css [signus [data-type & data] options]
+  (case data-type
+    :auto "auto"
+    :min-content "min-content"
+    :max-content "max-content"
+    (let [[value unit] (case data-type
+                         (:integer :number) [(read-number (first data)) (:number-unit options)]
+                         :length [(read-number (second (first data))) (second data)]
+                         :length-unit [1 (first data)]
+                         :percentage [(read-number (second (first data))) "%"]
+                         :fraction (let [[[_ numerator] [_ denominator]] data
+                                         ratio (/ (read-number numerator) (read-number denominator))
+                                         unit (:fraction-unit options)]
+                                     [(cond-> ratio (= unit "%") (* 100)) unit])
+                         :full-100% [100 "%"]
+                         :screen-100vw [100 "vw"])
+          [value unit] (cond
+                         (zero? value) [0 (:zero-unit options)]
+                         (= unit :quarter-rem) [(/ value 4) "rem"]
+                         :else [value unit])
+          value (cond-> value (= signus "-") (* -1))]
+     (str (value->css value) unit))))
 
 
 (defn inner-state-variants-transform [rule props]
@@ -119,11 +128,40 @@
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'
   axis = 'x' | 'y'
-  unit = 'px' | 'em' | 'rem' | '%'
-  size = float-number
-  fraction = int-number <'/'> int-number | 'full'
-  <int-number> = #'\\d+'
-  <float-number> = #'\\d+([._]\\d+)?'
+
+  fraction = integer <'/'> integer
+
+  full-100% = 'full'
+  screen-100vw = 'screen'
+  min-content = 'min'
+  max-context = 'max'
+  auto = 'auto'
+
+  <percentage-full> = percentage | full-100%
+
+  (* source: https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units *)
+  integer = #'\\d+'
+  number = #'\\d+([._]\\d+)?'
+  percentage = number <'%'>
+
+  <dimension> = length | angle | time | resolution
+
+  length = number (absolute-length-unit | relative-length-unit)
+  length-unit = absolute-length-unit | relative-length-unit
+  <absolute-length-unit> = 'cm' | 'mm' | 'in' | 'pc' | 'pt' | 'px'
+  <relative-length-unit> = 'em' | 'ex' | 'ch' | 'rem' | 'lh' | 'vw' | 'vh' | 'vmin' | 'vmax'
+  <length-percentage> = length | percentage
+
+  angle = number angle-unit
+  <angle-unit> = 'deg' | 'grad' | 'rad' | 'turn'
+
+  time = number time-unit
+  <time-unit> = 's' | 'ms'
+  <time-percentage> = time | percentage
+
+  resolution = number resolution-unit
+  <resolution-unit> = 'dpi' | 'dpcm' | 'dppx' | 'x'
+
 ")
 
 (def components
