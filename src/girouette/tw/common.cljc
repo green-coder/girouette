@@ -6,7 +6,8 @@
 
 
 (defn dot [class]
-  (str "." (str/escape class {\: "\\:"
+  (str "." (str/escape class {\. "\\."
+                              \: "\\:"
                               \/ "\\/"
                               \% "\\%"
                               \& "\\&"
@@ -23,13 +24,20 @@
    "2xl" "1536px"})
 
 
+(defn read-decimal [s]
+  (-> s
+      (str/escape {\_ \.})
+      edn/read-string))
+
+
 (defn size->css
   ([signus size-data]
    (if (= size-data ["auto"])
      "auto"
      (let [{:keys [size unit fraction]} (util/index-by first next size-data)
            [size unit] (case fraction
-                         nil [(edn/read-string (first size)) (first unit)]
+                         nil [(read-decimal (first size))
+                              (first unit)]
                          ["full"] [100 "%"]
                          [(-> 100.0
                               (* (edn/read-string (first fraction)))
@@ -115,7 +123,7 @@
   size = float-number
   fraction = int-number <'/'> int-number | 'full'
   <int-number> = #'\\d+'
-  <float-number> = #'\\d+(_\\d+)?'
+  <float-number> = #'\\d+([._]\\d+)?'
 ")
 
 (def components
