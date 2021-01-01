@@ -4,13 +4,15 @@
     [instaparse.core :as insta]
     [girouette.util :as util]
     [girouette.tw.common :as common]
-    [girouette.tw.layout :as layout]))
+    [girouette.tw.layout :as layout]
+    [girouette.tw.flexbox :as flexbox]))
 
 (def components
   (into []
         cat
         [common/components
-         layout/components]))
+         layout/components
+         flexbox/components]))
 
 (def components-by-id
   (into {}
