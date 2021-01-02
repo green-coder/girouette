@@ -5,14 +5,16 @@
     [girouette.util :as util]
     [girouette.tw.common :as common]
     [girouette.tw.layout :as layout]
-    [girouette.tw.flexbox :as flexbox]))
+    [girouette.tw.flexbox :as flexbox]
+    [girouette.tw.spacing :as spacing]))
 
 (def components
   (into []
         cat
         [common/components
          layout/components
-         flexbox/components]))
+         flexbox/components
+         spacing/components]))
 
 (def components-by-id
   (into {}
@@ -47,12 +49,25 @@
      :component-id component-id
      :component-data (vec component-data)}))
 
+(defn- pipeline->transform [pipeline]
+  (fn [rule props]
+    (reduce (fn [rule f] (f rule props))
+            rule
+            (->> pipeline
+                 ((juxt :media-queries
+                        :outer-state-variants
+                        :class-name
+                        :inner-state-variants))
+                 (apply concat)
+                 reverse))))
+
 (defn class-name->garden [class-name]
   (let [parsed-data (insta/parse parser class-name)]
     (when-not (insta/failure? parsed-data)
       (let [props (parsed-data->props class-name parsed-data)
             component (components-by-id (:component-id props))
             garden-fn (:garden component)
-            transform (:transform component common/default-transform)]
+            pipeline (:pipeline component common/default-pipeline)
+            transform (pipeline->transform pipeline)]
         (-> (garden-fn props)
             (transform props))))))

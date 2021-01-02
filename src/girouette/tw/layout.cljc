@@ -1,7 +1,7 @@
 (ns girouette.tw.layout
   (:require [clojure.string :as str]
             [girouette.util :as util]
-            [girouette.tw.common :refer [dot value-unit->css
+            [girouette.tw.common :refer [value-unit->css
                                          breakpoint->pixels]]))
 
 (def components
