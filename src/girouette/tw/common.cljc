@@ -39,6 +39,7 @@
 (defn value-unit->css [signus [data-type & data] options]
   (case data-type
     :auto "auto"
+    :none "none"
     :min-content "min-content"
     :max-content "max-content"
     (let [[value unit] (case data-type
@@ -51,7 +52,8 @@
                                          unit (:fraction-unit options)]
                                      [(cond-> ratio (= unit "%") (* 100)) unit])
                          :full-100% [100 "%"]
-                         :screen-100vw [100 "vw"])
+                         :screen-100vw [100 "vw"]
+                         :screen-100vh [100 "vh"])
           [value unit] (cond
                          (zero? value) [0 (:zero-unit options)]
                          (= unit :quarter-rem) [(/ value 4) "rem"]
@@ -133,9 +135,11 @@
 
   full-100% = 'full'
   screen-100vw = 'screen'
+  screen-100vh = 'screen'
   min-content = 'min'
-  max-context = 'max'
+  max-content = 'max'
   auto = 'auto'
+  none = 'none'
 
   <percentage-full> = percentage | full-100%
 
