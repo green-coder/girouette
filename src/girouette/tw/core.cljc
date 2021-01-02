@@ -6,7 +6,8 @@
     [girouette.tw.common :as common]
     [girouette.tw.layout :as layout]
     [girouette.tw.flexbox :as flexbox]
-    [girouette.tw.spacing :as spacing]))
+    [girouette.tw.spacing :as spacing]
+    [girouette.tw.sizing :as sizing]))
 
 (def components
   (into []
@@ -14,7 +15,8 @@
         [common/components
          layout/components
          flexbox/components
-         spacing/components]))
+         spacing/components
+         sizing/components]))
 
 (def components-by-id
   (into {}
