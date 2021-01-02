@@ -101,12 +101,12 @@
       (gs/at-media media-query rule)
       rule)))
 
-(defn default-transform [rule props]
-  (-> rule
-      (inner-state-variants-transform props)
-      (class-name-transform props)
-      (outer-state-variants-transform props)
-      (media-queries-transform props)))
+
+(def default-pipeline
+  {:media-queries [media-queries-transform]
+   :outer-state-variants [outer-state-variants-transform]
+   :class-name [class-name-transform]
+   :inner-state-variants [inner-state-variants-transform]})
 
 
 (def common-rules "
