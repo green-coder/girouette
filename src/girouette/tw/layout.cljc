@@ -81,7 +81,7 @@
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [axis overflow-mode]} (into {} component-data)
                     property (str "overflow" (when axis (str "-" axis)))]
-                {property overflow-mode}))}
+                {(keyword property) overflow-mode}))}
 
 
    {:id :overscroll
@@ -92,7 +92,7 @@
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [axis overscroll-mode]} (into {} component-data)
                     property (str "overscroll" (when axis (str "-" axis)))]
-                {property overscroll-mode}))}
+                {(keyword property) overscroll-mode}))}
 
 
    {:id :position

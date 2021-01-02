@@ -22,6 +22,37 @@
     "box-content"
     [".box-content" {:box-sizing "content-box"}]
 
+    "flex"
+    [".flex" {:display "flex"}]
+
+    "hidden"
+    [".hidden" {:display "none"}]
+
+    "object-left-top"
+    [".object-left-top" {:object-position "left top"}]
+
+    "overflow-x-auto"
+    [".overflow-x-auto" {:overflow-x "auto"}]
+
+    "overflow-hidden"
+    [".overflow-hidden" {:overflow "hidden"}]
+
+    "overscroll-x-auto"
+    [".overscroll-x-auto" {:overscroll-x "auto"}]
+
+    "overscroll-none"
+    [".overscroll-none" {:overscroll "none"}]
+
+    "invisible"
+    [".invisible" {:visibility "invisible"}]
+
+    "-inset-3/8"
+    [".-inset-3\\/8"
+     {:bottom "-37.5%"
+      :left   "-37.5%"
+      :right  "-37.5%"
+      :top    "-37.5%"}]
+
     "inset-x-auto"
     [".inset-x-auto" {:left  "auto"
                       :right "auto"}]
