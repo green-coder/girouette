@@ -1,0 +1,17 @@
+node_modules/
+public/js
+public/style/girouette.css
+
+/target
+/checkouts
+/src/gen
+
+pom.xml
+pom.xml.asc
+*.iml
+*.jar
+*.log
+.shadow-cljs
+.idea
+.nrepl-*
+.DS_Store
