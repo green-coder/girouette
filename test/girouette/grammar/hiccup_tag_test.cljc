@@ -4,17 +4,17 @@
 
 (deftest parser-test
   (are [kw expected-parsed-data]
-    (= (hiccup-tag-parser (name kw))
-       expected-parsed-data)
+    (= expected-parsed-data
+       (hiccup-tag-parser (name kw)))
 
     :div
     [:hiccup-tag [:html-tag "div"]]
 
     :div#app.foo
-    [:hiccup-tag [:html-tag "div"] [:id "app"] [:class "foo"]]
+    [:hiccup-tag [:html-tag "div"] [:id "app"] [:class-name "foo"]]
 
     :div.foo#here
-    [:hiccup-tag [:html-tag "div"] [:class "foo"] [:id "here"]]
+    [:hiccup-tag [:html-tag "div"] [:class-name "foo"] [:id "here"]]
 
     :div#app.foo#here.bar
-    [:hiccup-tag [:html-tag "div"] [:id "app"] [:class "foo"] [:id "here"] [:class "bar"]]))
+    [:hiccup-tag [:html-tag "div"] [:id "app"] [:class-name "foo"] [:id "here"] [:class-name "bar"]]))

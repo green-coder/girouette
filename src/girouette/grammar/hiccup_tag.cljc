@@ -2,10 +2,10 @@
   (:require [instaparse.core :as insta]))
 
 (def hiccup-tag-grammar "
-  hiccup-tag = html-tag (<'#'> id | (<'.'> class))*
+  hiccup-tag = html-tag (<'#'> id | (<'.'> class-name))*
   html-tag = segment
   id = segment
-  class = segment
+  class-name = segment
   <segment> = #'[^\\.#]+'
   ")
 
