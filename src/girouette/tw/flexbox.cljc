@@ -39,7 +39,7 @@
    {:id :flex-shorthand
     :rules "
     flex-shorthand = <'flex-'> (flex-shorthand-1-arg | flex-shorthand-2-args | flex-shorthand-3-args)
-    flex-shorthand-1-arg = number | 'auto' | 'initial' | 'none'
+    flex-shorthand-1-arg = number | fraction | 'auto' | 'initial' | 'none'
     flex-shorthand-2-args = flex-grow-value <'-'> (flex-shrink-value | flex-basis-value)
     flex-shorthand-3-args = flex-grow-value <'-'> flex-shrink-value <'-'> flex-basis-value
     "

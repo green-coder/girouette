@@ -42,6 +42,9 @@
     "flex-2"
     [".flex-2" {:flex "2 2 0%"}]
 
+    "flex-4/5"
+    [".flex-4\\/5" {:flex "0.8 0.8 0%"}]
+
     "flex-auto"
     [".flex-auto" {:flex "1 1 auto"}]
 
