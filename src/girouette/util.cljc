@@ -38,3 +38,16 @@
 
 #_ (index-by first        [[:a 1] [:a 2] [:b 3] [:a 4] [:b 5]])
 #_ (index-by first second [[:a 1] [:a 2] [:b 3] [:a 4] [:b 5]])
+
+(defn into-one-vector
+  "Flattens the outer vectors in the provided data and returns one vector with the data inside."
+  [data]
+  (if (vector? data)
+    (into [] (mapcat into-one-vector) data)
+    [data]))
+
+#_ (into-one-vector 3)
+#_ (into-one-vector [3 4 5 6])
+#_ (into-one-vector [3 [4 5 6]])
+#_ (into-one-vector [[3] [[4] 5 [6]]])
+#_ (into-one-vector [[3] [] [[]] [[4] [5]] 6])

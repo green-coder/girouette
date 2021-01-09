@@ -9,19 +9,6 @@
     [girouette.tw.spacing :as spacing]
     [girouette.tw.sizing :as sizing]))
 
-(def components
-  (into []
-        cat
-        [common/components
-         layout/components
-         flexbox/components
-         spacing/components
-         sizing/components]))
-
-(def components-by-id
-  (into {}
-        (map (juxt :id identity))
-        components))
 
 (defn- assemble-grammar [components]
   (let [root-rule (str "css-class = prefixes ("
@@ -35,8 +22,6 @@
            [common/common-rules])
          (apply str))))
 
-(def grammar (assemble-grammar components))
-(def parser (insta/parser grammar))
 
 (defn- parsed-data->props [class-name parsed-data]
   (let [[_
@@ -51,6 +36,7 @@
      :component-id component-id
      :component-data (vec component-data)}))
 
+
 (defn- pipeline->transform [pipeline]
   (fn [rule props]
     (reduce (fn [rule f] (f rule props))
@@ -63,13 +49,40 @@
                  (apply concat)
                  reverse))))
 
-(defn class-name->garden [class-name]
-  (let [parsed-data (insta/parse parser class-name)]
-    (when-not (insta/failure? parsed-data)
-      (let [props (parsed-data->props class-name parsed-data)
-            component (components-by-id (:component-id props))
-            garden-fn (:garden component)
-            pipeline (:pipeline component common/default-pipeline)
-            transform (pipeline->transform pipeline)]
-        (-> (garden-fn props)
-            (transform props))))))
+
+(defn make-api [components]
+  (let [grammar (assemble-grammar components)
+        parser (insta/parser grammar)
+        component-by-id (into {}
+                              (map (juxt :id identity))
+                              components)
+        class-name->garden (fn [class-name]
+                             (let [parsed-data (insta/parse parser class-name)]
+                               (when-not (insta/failure? parsed-data)
+                                 (let [props (parsed-data->props class-name parsed-data)
+                                       component (component-by-id (:component-id props))
+                                       garden-fn (:garden component)
+                                       pipeline (:pipeline component common/default-pipeline)
+                                       transform (pipeline->transform pipeline)]
+                                   (-> (garden-fn props)
+                                       (transform props))))))]
+    {:grammar            grammar
+     :parser             parser
+     :component-by-id    component-by-id
+     :class-name->garden class-name->garden}))
+
+
+(def default-components
+  (util/into-one-vector
+    [common/components
+     layout/components
+     flexbox/components
+     spacing/components
+     sizing/components]))
+
+
+;; This is how to build the API using the default components.
+;; For a customized experience of Girouette, create your own API in the same way, using altered components.
+(let [{:keys [parser class-name->garden]} (make-api default-components)]
+  (def parser parser)
+  (def class-name->garden class-name->garden))
