@@ -7,6 +7,7 @@
     [girouette.tw.layout :as layout]
     [girouette.tw.flexbox :as flexbox]
     [girouette.tw.grid :as grid]
+    [girouette.tw.box-alignment :as box-alignment]
     [girouette.tw.spacing :as spacing]
     [girouette.tw.sizing :as sizing]))
 
@@ -79,6 +80,7 @@
      layout/components
      flexbox/components
      grid/components
+     box-alignment/components
      spacing/components
      sizing/components]))
 
