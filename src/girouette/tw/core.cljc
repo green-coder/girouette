@@ -6,6 +6,7 @@
     [girouette.tw.common :as common]
     [girouette.tw.layout :as layout]
     [girouette.tw.flexbox :as flexbox]
+    [girouette.tw.grid :as grid]
     [girouette.tw.spacing :as spacing]
     [girouette.tw.sizing :as sizing]))
 
@@ -77,6 +78,7 @@
     [common/components
      layout/components
      flexbox/components
+     grid/components
      spacing/components
      sizing/components]))
 
