@@ -4,8 +4,7 @@
 
 (deftest parser-test
   (are [kw expected-parsed-data]
-    (= expected-parsed-data
-       (hiccup-tag-parser (name kw)))
+    (= expected-parsed-data (hiccup-tag-parser (name kw)))
 
     :div
     [:hiccup-tag [:html-tag "div"]]

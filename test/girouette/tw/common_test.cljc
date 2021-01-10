@@ -5,7 +5,7 @@
 
 (deftest prefixes-test
   (are [class-name expected-garden]
-    (= (class-name->garden class-name) expected-garden)
+    (= expected-garden (class-name->garden class-name))
 
     "group-hover:container"
     [".group:hover" [".group-hover\\:container" {:width "100%"}]]
