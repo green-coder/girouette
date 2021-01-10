@@ -40,6 +40,7 @@
   (case data-type
     :auto "auto"
     :none "none"
+    :full "full"
     :min-content "min-content"
     :max-content "max-content"
     (let [[value unit] (case data-type
@@ -140,6 +141,7 @@
   max-content = 'max'
   auto = 'auto'
   none = 'none'
+  full = 'full'
 
   <percentage-full> = percentage | full-100%
 
