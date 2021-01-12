@@ -185,7 +185,7 @@
     text-opacity = <'text-opacity-'> integer
     "
     :garden (fn [{[[_ value]] :component-data}]
-              {:--gi-text-opacity (value->css (* (read-number value) 0.01))})}
+              {:--gi-text-opacity (value->css (/ (read-number value) 100.0))})}
 
 
    {:id :text-decoration

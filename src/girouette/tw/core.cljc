@@ -11,7 +11,8 @@
     [girouette.tw.box-alignment :as box-alignment]
     [girouette.tw.spacing :as spacing]
     [girouette.tw.sizing :as sizing]
-    [girouette.tw.typography :as typography]))
+    [girouette.tw.typography :as typography]
+    [girouette.tw.background :as background]))
 
 
 (defn- assemble-grammar [components]
@@ -85,7 +86,8 @@
      box-alignment/components
      spacing/components
      sizing/components
-     typography/components]))
+     typography/components
+     background/components]))
 
 
 ;; This is how to build the API using the default components.
