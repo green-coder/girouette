@@ -40,8 +40,8 @@
                                     "7xl"  [4.5   1]
                                     "8xl"  [6     1]
                                     "9xl"  [8     1]} font-size)]
-                   {:font-size [[size "rem"]]
-                    :line-height [[height "rem"]]}))}
+                   {:font-size (str size "rem")
+                    :line-height (str height "rem")}))}
 
 
    {:id :font-smoothing
@@ -99,12 +99,12 @@
                                     'wide' | 'wider' | 'widest')
     "
     :garden (fn [{[size] :component-data}]
-              {:letter-spacing ({"tighter" [[-0.05  "em"]]
-                                 "tight"   [[-0.025 "em"]]
-                                 "normal"  [[0      "em"]]
-                                 "wide"    [[0.025  "em"]]
-                                 "wider"   [[0.05   "em"]]
-                                 "widest"  [[0.1    "em"]]} size)})}
+              {:letter-spacing ({"tighter" (str -0.05  "em")
+                                 "tight"   (str -0.025 "em")
+                                 "normal"  (str 0      "em")
+                                 "wide"    (str 0.025  "em")
+                                 "wider"   (str 0.05   "em")
+                                 "widest"  (str 0.1    "em")} size)})}
 
 
    {:id :line-height
@@ -113,14 +113,14 @@
                                 'normal' | 'relaxed' | 'loose')
     "
     :garden (fn [{[size] :component-data}]
-              {:line-height ({"3"       [[0.75 "rem"]]
-                              "4"       [[1    "rem"]]
-                              "5"       [[1.25 "rem"]]
-                              "6"       [[1.5  "rem"]]
-                              "7"       [[1.75 "rem"]]
-                              "8"       [[2    "rem"]]
-                              "9"       [[2.25 "rem"]]
-                              "10"      [[2.5  "rem"]]
+              {:line-height ({"3"       (str 0.75 "rem")
+                              "4"       (str 1    "rem")
+                              "5"       (str 1.25 "rem")
+                              "6"       (str 1.5  "rem")
+                              "7"       (str 1.75 "rem")
+                              "8"       (str 2    "rem")
+                              "9"       (str 2.25 "rem")
+                              "10"      (str 2.5  "rem")
                               "none"    1
                               "tight"   1.25
                               "snug"    1.375

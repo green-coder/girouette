@@ -10,7 +10,7 @@
     [".font-sans" {:font-family "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""}]
 
     "text-sm"
-    [".text-sm" {:font-size [[0.875 "rem"]], :line-height [[1.25 "rem"]]}]
+    [".text-sm" {:font-size (str 0.875 "rem"), :line-height (str 1.25 "rem")}]
 
     "antialiased"
     [".antialiased" {:-webkit-font-smoothing "antialiased", :-moz-osx-font-smoothing "grayscale"}]
@@ -22,10 +22,10 @@
     [".font-thin" {:font-style 100}]
 
     "tracking-wide"
-    [".tracking-wide" {:letter-spacing [[0.025 "em"]]}]
+    [".tracking-wide" {:letter-spacing (str 0.025 "em")}]
 
     "leading-3"
-    [".leading-3" {:line-height [[0.75 "rem"]]}]
+    [".leading-3" {:line-height (str 0.75 "rem")}]
 
     "leading-normal"
     [".leading-normal" {:line-height 1.5}]
