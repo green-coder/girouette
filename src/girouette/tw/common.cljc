@@ -31,9 +31,10 @@
 
 
 (defn value->css [value]
-  (if (= (int value) value)
+  (if (= (double (int value))
+         (double value))
     (int value)
-    (float value)))
+    (double value)))
 
 
 (defn value-unit->css [signus [data-type & data] options]

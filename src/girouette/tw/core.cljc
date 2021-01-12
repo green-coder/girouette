@@ -4,12 +4,14 @@
     [instaparse.core :as insta]
     [girouette.util :as util]
     [girouette.tw.common :as common]
+    [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
     [girouette.tw.flexbox :as flexbox]
     [girouette.tw.grid :as grid]
     [girouette.tw.box-alignment :as box-alignment]
     [girouette.tw.spacing :as spacing]
-    [girouette.tw.sizing :as sizing]))
+    [girouette.tw.sizing :as sizing]
+    [girouette.tw.typography :as typography]))
 
 
 (defn- assemble-grammar [components]
@@ -21,7 +23,7 @@
     (->> (concat
            [root-rule]
            (map :rules components)
-           [common/common-rules])
+           [common/common-rules color/color-rules])
          (apply str))))
 
 
@@ -82,7 +84,8 @@
      grid/components
      box-alignment/components
      spacing/components
-     sizing/components]))
+     sizing/components
+     typography/components]))
 
 
 ;; This is how to build the API using the default components.
