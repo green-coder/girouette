@@ -32,25 +32,27 @@
 
     "text-black"
     [".text-black" {:--gi-text-opacity 1
-                    :color "#000000ff"}]
+                    :color "rgba(0, 0, 0, var(--gi-text-opacity))"}]
 
     "text-current"
     [".text-current" {:color "currentColor"}]
 
     "text-green-300"
     [".text-green-300" {:--gi-text-opacity 1
-                        :color "#86efacff"}]
+                        :color "rgba(134, 239, 172, var(--gi-text-opacity))"}]
+
+    "text-green-300-50"
+    [".text-green-300-50" {:color "#86efac7f"}]
 
     "text-rgb-733"
     [".text-rgb-733" {:--gi-text-opacity 1
-                      :color "#703030ff"}]
+                      :color "rgba(112, 48, 48, var(--gi-text-opacity))"}]
 
     "text-rgba-7338"
-    [".text-rgba-7338" {:--gi-text-opacity 0.5019607843137255
-                        :color "#70303080"}]
+    [".text-rgba-7338" {:color "#70303080"}]
 
     "text-rgba-703030ff"
-    [".text-rgba-703030ff" {:--gi-text-opacity 1.0, :color "#703030ff"}]
+    [".text-rgba-703030ff" {:color "#703030ff"}]
 
     "text-opacity-0"
     [".text-opacity-0" {:--gi-text-opacity 0}]

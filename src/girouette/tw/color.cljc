@@ -1,7 +1,7 @@
 (ns girouette.tw.color
   (:require [clojure.string :as str]
-            [girouette.tw.common :as common]
-            [clojure.edn :as edn]))
+            [clojure.edn :as edn]
+            [girouette.tw.common :as common]))
 
 ;; Those color values and names are from Tailwind CSS.
 ;; They are imported here for the purpose of compatibility.
@@ -263,6 +263,8 @@
   default-color-with-darkness = (" default-color-names ") <'-'>
                                 ('50' | '100' | '200' | '300' | '400' |
                                  '500' | '600' | '700' | '800' | '900')
+                                (<'-'> color-opacity)?
+  <color-opacity> = integer
 
   (* Not sure if it will be used *)
   color-code = rgb-color-code | rgba-color-code
@@ -270,13 +272,19 @@
   rgba-color-code = (#'[0-9a-f]{4}' | #'[0-9a-f]{8}')
 ")))
 
+(def ^:private zero-to-f "0123456789abcdef")
+
 (defn- read-hex-value [hex-value]
   (edn/read-string (str "0x" hex-value)))
 
+(defn- byte->hex [byte]
+  (str (nth zero-to-f (bit-and (bit-shift-right byte 4) 0xf))
+       (nth zero-to-f (bit-and byte 0xf))))
+
 (defn read-color
-  "Returns a 4-elements vector containing the color components.
+  "Returns a 4-elements vector containing the color components, or a string.
    The nil value is returned if a particular component is not specified in the input."
-  [[type param1 param2 :as color]]
+  [[type param1 param2 [_ param3] :as color]]
   (case param1
     "transparent" "transparent"
     "current" "currentColor"
@@ -284,7 +292,9 @@
                        "black" "000"
                        "white" "fff"
                        (if (= type :default-color-with-darkness)
-                         (get-in default-colors [param1 (common/read-number param2)])
+                         (str (get-in default-colors [param1 (common/read-number param2)])
+                              (when param3
+                                (byte->hex (min 255 (int (/ (* (edn/read-string param3) 255) 100))))))
                          param1))]
       (case (count color-code)
         3 [(read-hex-value (str (nth color-code 0) 0))
@@ -304,16 +314,19 @@
            (read-hex-value (subs color-code 4 6))
            (read-hex-value (subs color-code 6 8))]))))
 
-(def ^:private zero-to-f "0123456789abcdef")
-
-(defn byte->hex [byte]
-  (str (nth zero-to-f (bit-and (bit-shift-right byte 4) 0xf))
-       (nth zero-to-f (bit-and byte 0xf))))
-
-(defn rgba->css [r g b a]
-  (str "#"
-       (byte->hex r)
-       (byte->hex g)
-       (byte->hex b)
-       (byte->hex a)))
-
+(defn color->css [[r g b a :as color]]
+  (cond
+    (nil? a) (str "#"
+                  (byte->hex r)
+                  (byte->hex g)
+                  (byte->hex b))
+    (string? a) (str "rgba("
+                      r ", "
+                      g ", "
+                      b ", "
+                      a ")")
+    :else (str "#"
+               (byte->hex r)
+               (byte->hex g)
+               (byte->hex b)
+               (byte->hex a))))

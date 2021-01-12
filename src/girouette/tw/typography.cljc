@@ -1,7 +1,7 @@
 (ns girouette.tw.typography
   (:require [garden.selectors :refer [defpseudoelement]]
             [girouette.tw.common :refer [read-number value->css value-unit->css]]
-            [girouette.tw.color :refer [read-color rgba->css]]))
+            [girouette.tw.color :refer [read-color color->css]]))
 
 
 (defpseudoelement
@@ -151,22 +151,10 @@
     "
     :garden (fn [{[[_ color]] :component-data}]
               [placeholder-pseudo-element
-               (let [color (read-color color)]
-                 (if (string? color)
-                   {:color color}
-                   (let [[r g b a] color]
-                     {:--gi-placeholder-opacity (if (some? a)
-                                                  (/ (min a 255) 255.0)
-                                                  1)
-                      :color (rgba->css r g b (or a 255))})))])}
-
-
-   {:id :placeholder-opacity
-    :rules "
-    placeholder-opacity = <'placeholder-opacity-'> integer
-    "
-    :garden (fn [{[[_ value]] :component-data}]
-              {:--gi-placeholder-opacity (value->css (* (read-number value) 0.01))})}
+               {:color (let [color (read-color color)]
+                         (if (string? color)
+                           color
+                           (color->css color)))}])}
 
 
    {:id :text-align
@@ -186,10 +174,10 @@
                 (if (string? color)
                   {:color color}
                   (let [[r g b a] color]
-                    {:--gi-text-opacity (if (some? a)
-                                          (/ (min a 255) 255.0)
-                                          1)
-                     :color (rgba->css r g b (or a 255))}))))}
+                    (if (some? a)
+                      {:color (color->css color)}
+                      {:--gi-text-opacity 1
+                       :color (color->css [r g b "var(--gi-text-opacity)"])})))))}
 
 
    {:id :text-opacity
