@@ -314,6 +314,12 @@
            (read-hex-value (subs color-code 4 6))
            (read-hex-value (subs color-code 6 8))]))))
 
+(defn as-transparent [color]
+  (if (string? color)
+    color
+    (let [[r g b _] color]
+      [r g b 0])))
+
 (defn color->css [[r g b a :as color]]
   (cond
     (nil? a) (str "#"
