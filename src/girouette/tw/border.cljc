@@ -2,9 +2,10 @@
   (:require [girouette.tw.common :refer [value-unit->css]]))
 
 (def components
-  [{:id :xxx
-    :rules "
-    xxx = <'xxx'> integer
+  [{:id     :border
+    :rules  "
+    border = <'border-'> integer
     "
     :garden (fn [{[val] :component-data}]
-              {:xxx (value-unit->css nil val {})})}])
+              {:border-width (value-unit->css nil val {:number-unit "px"})})}])
+

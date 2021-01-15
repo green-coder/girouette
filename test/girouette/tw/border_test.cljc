@@ -6,5 +6,5 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
-    "p-0"
-    [".p-0" {:padding "0"}]))
+    "border-2"
+    [".border-2" {:border-width "2px"}]))
