@@ -105,9 +105,7 @@ with the license terms below.
 
 ## License terms
 
-This project is distributed under the `Eclipse Public License version 2.0`,
-with a Secondary License
-`GNU General Public License, version 3 with the GNU Classpath Exception`
-which is available at https://www.gnu.org/software/classpath/license.html
+This project is distributed under the `MIT License`, which is available at
+https://opensource.org/licenses/MIT
 
 Copyright (c) Vincent Cantin and contributors.
