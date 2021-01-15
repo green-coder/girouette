@@ -70,7 +70,7 @@
                              'center' | 'bottom' | 'top'
     "
     :garden (fn [{[position] :component-data}]
-              {:object-position (str/escape position {\- " "})})}
+              {:object-position (str/escape position {\- \space})})}
 
 
    {:id :overflow
