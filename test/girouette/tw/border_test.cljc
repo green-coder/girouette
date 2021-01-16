@@ -38,6 +38,9 @@
     "border-l-4"
     [".border-l-4" {:border-left-width "4px"}]
 
+    "border-b-2em"
+    [".border-b-2em" {:border-bottom-width "2em"}]
+
     ;; Border Color
     ;; Border Opacity
     ;; Border Style

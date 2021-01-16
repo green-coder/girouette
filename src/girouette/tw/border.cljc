@@ -4,17 +4,18 @@
 (def components
   [{:id     :border
     :rules  "
-    border = <'border'> (<'-'> direction)? (<'-'> integer)?
+    border = <'border'> (<'-'> direction)? (<'-'> border-width)?
+    border-width = number | length | length-unit
     "
     :garden (fn [{:keys [component-data]}]
-              (let [{border-width     :integer :or {border-width "1"}
-                     border-direction :direction} (into {} component-data)
-                    border-prop (case border-direction
+              (let [{:keys [border-width direction]
+                     :or   {border-width [:integer "1"]}} (into {} component-data)
+                    border-prop (case direction
                                   "t" :border-top-width
                                   "r" :border-right-width
                                   "b" :border-bottom-width
                                   "l" :border-left-width
                                   :border-width)]
                 {border-prop (value-unit->css nil
-                                              [:integer border-width]
+                                              border-width
                                               {:number-unit "px"})}))}])
