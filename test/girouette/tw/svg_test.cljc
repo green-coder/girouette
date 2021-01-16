@@ -1,6 +1,6 @@
 (ns girouette.tw.svg-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.core :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [class-name->garden]]))
 
 (deftest component-test
   (are [class-name expected-garden]

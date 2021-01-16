@@ -1,7 +1,7 @@
 (ns girouette.tw.common-test
   (:require
     [clojure.test :refer [deftest testing is are]]
-    [girouette.tw.core :refer [class-name->garden]]))
+    [girouette.tw.default-api :refer [class-name->garden]]))
 
 (deftest prefixes-test
   (are [class-name expected-garden]

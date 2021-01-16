@@ -1,8 +1,6 @@
 (ns girouette.tw.spacing-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [garden.core :refer [css]]
-            [garden.selectors :as gs]
-            [girouette.tw.core :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [class-name->garden]]))
 
 (deftest component-test
   (are [class-name expected-garden]

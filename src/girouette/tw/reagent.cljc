@@ -2,7 +2,7 @@
   (:require
     #? (:clj [clojure.walk :refer [macroexpand-all]])
     [girouette.grammar.hiccup-tag :refer [hiccup-tag-parser]]
-    [girouette.tw.core :refer [parser class-name->garden]])
+    [girouette.tw.default-api :refer [parser class-name->garden]])
   #? (:cljs (:require-macros [girouette.tw.reagent])))
 
 ;; This is just good enough for the demo, will be improved shortly after.

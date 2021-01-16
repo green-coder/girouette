@@ -2,7 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.set :as set]
             [garden.core :refer [css]]
-            [girouette.tw.core :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [class-name->garden]]))
 
 (defn- collect-class-names
   "Returns a set of all the CSS class-names used in the compiled program."
