@@ -10,7 +10,8 @@
     [girouette.tw.spacing :as spacing]
     [girouette.tw.sizing :as sizing]
     [girouette.tw.typography :as typography]
-    [girouette.tw.background :as background]))
+    [girouette.tw.background :as background]
+    [girouette.tw.effect :as effect]))
 
 (def default-components
   (util/into-one-vector
@@ -22,7 +23,8 @@
      spacing/components
      sizing/components
      typography/components
-     background/components]))
+     background/components
+     effect/components]))
 
 
 ;; This is how to build the API using the default components.
