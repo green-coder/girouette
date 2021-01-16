@@ -43,6 +43,12 @@
     [".border-3px" {:border-width "3px"}]
 
     ;; Border Color
+    "border-transparent"
+    [".border-transparent" {:border-color "transparent"}]
+
+    "border-green-300"
+    [".border-green-300" {:--gi-border-opacity 1
+                          :border--color "rgba(134, 239, 172, var(--gi-border-opacity))"}]
     ;; Border Opacity
     ;; Border Style
     ;; Divide Width

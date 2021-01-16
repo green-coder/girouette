@@ -1,5 +1,6 @@
 (ns girouette.tw.border
-  (:require [girouette.tw.common :refer [value-unit->css]]))
+    (:require [girouette.tw.common :refer [value-unit->css]]
+              [girouette.tw.color :refer [read-color as-transparent color->css]]))
 
 (def components
   [{:id     :border-radius
@@ -56,4 +57,18 @@
                                :border-width)]
                 {css-prop (if (nil? border-width-value)
                             "1px"
-                            (value-unit->css nil border-width-value {:number-unit "px"}))}))}])
+                            (value-unit->css nil border-width-value {:number-unit "px"}))}))}
+   {:id :border-color
+    :rules "
+    border-color = <'border-'> color
+    "
+    ;; Copy-pasted from background; could be extracted into util?
+    :garden (fn [{[[_ color]] :component-data}]
+              (let [color (read-color color)]
+                (if (string? color)
+                  {:border-color color}
+                  (let [[r g b a] color]
+                    (if (some? a)
+                      {:border-color (color->css color)}
+                      {:--gi-border-opacity 1
+                       :border--color (color->css [r g b "var(--gi-border-opacity)"])})))))}])
