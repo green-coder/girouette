@@ -4,15 +4,44 @@
 (def components
   [{:id     :border-radius
     :rules  "
-    border-radius = <'rounded'>  (<'-'> direction (side)?)? (<'-'> size)?
-    side = 'l' | 'r'
-    size = none | full | media-query-min-width
+    border-radius = <'rounded'>  (<'-'> border-radius-position)? (<'-'> border-radius-size)?
+    border-radius-position  = border-radius-side | border-radius-corner
+    border-radius-side = 't' | 'r' | 'b' | 'l'
+    border-radius-corner = 'tl' | 'tr' | 'br' | 'bl'
+    border-radius-size = none | full | media-query-min-width
     "
     :garden (fn [{:keys [component-data]}]
-              (println component-data)
-              {:border-radius (value-unit->css nil [:number "1"]
-                                               {:number-unit :quarter-rem})})}
-   {:id     :border
+              (let [{position :border-radius-position
+                     size     :border-radius-size} (into {} component-data)
+                    {side   :border-radius-side
+                     corner :border-radius-corner} (into {} [position]) ;; TODO: find more idiomatic way
+                    [size-unit val] size
+                    radius (case size-unit
+                             :none "0px"
+                             :full "9999px"
+                             (:media-query-min-width nil) (str (* 0.25 (case val
+                                                                         "sm" 0.5
+                                                                         "md" 1.5
+                                                                         "lg" 2
+                                                                         "xl" 3
+                                                                         "2xl" 4
+                                                                         1)) "rem"))]
+                (if (nil? side)
+                  (let [css-prop (case corner
+                                   "tl" :border-top-left-radius
+                                   "tr" :border-top-right-radius
+                                   "br" :border-bottom-right-radius
+                                   "bl" :border-bottom-left-radius
+                                   :border-radius)]
+                    {css-prop radius})
+                  (let [css-props (case side
+                                    "t" [:border-top-left-radius :border-top-right-radius]
+                                    "r" [:border-top-right-radius :border-bottom-right-radius]
+                                    "b" [:border-bottom-right-radius :border-bottom-left-radius]
+                                    "l" [:border-bottom-left-radius :border-top-left-radius])]
+                    (into {} (map (juxt identity (constantly radius)) css-props))))))}
+
+   {:id     :border-width
     :rules  "
     border-width = <'border'> (<'-'> direction)? (<'-'> border-width-value)?
     border-width-value = number | length | length-unit
