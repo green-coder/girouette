@@ -2,7 +2,17 @@
   (:require [girouette.tw.common :refer [value-unit->css]]))
 
 (def components
-  [{:id     :border
+  [{:id     :border-radius
+    :rules  "
+    border-radius = <'rounded'>  (<'-'> direction (side)?)? (<'-'> size)?
+    side = 'l' | 'r'
+    size = none | full | media-query-min-width
+    "
+    :garden (fn [{:keys [component-data]}]
+              (println component-data)
+              {:border-radius (value-unit->css nil [:number "1"]
+                                               {:number-unit :quarter-rem})})}
+   {:id     :border
     :rules  "
     border = <'border'> (<'-'> direction)? (<'-'> border-width)?
     border-width = number | length | length-unit
