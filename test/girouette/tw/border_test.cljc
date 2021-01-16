@@ -24,11 +24,11 @@
 
     ;; Border Width - https://tailwindcss.com/docs/border-width
 
-    "border-2"
-    [".border-2" {:border-width "2px"}]
-
     "border"
     [".border" {:border-width "1px"}]
+
+    "border-2"
+    [".border-2" {:border-width "2px"}]
 
     "border-t"
     [".border-t" {:border-top-width "1px"}]
@@ -38,6 +38,9 @@
 
     "border-b-2em"
     [".border-b-2em" {:border-bottom-width "2em"}]
+
+    "border-3px"
+    [".border-3px" {:border-width "3px"}]
 
     ;; Border Color
     ;; Border Opacity

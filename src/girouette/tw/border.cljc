@@ -14,18 +14,17 @@
                                                {:number-unit :quarter-rem})})}
    {:id     :border
     :rules  "
-    border = <'border'> (<'-'> direction)? (<'-'> border-width)?
-    border-width = number | length | length-unit
+    border-width = <'border'> (<'-'> direction)? (<'-'> border-width-value)?
+    border-width-value = number | length | length-unit
     "
     :garden (fn [{:keys [component-data]}]
-              (let [{:keys [border-width direction]
-                     :or   {border-width [:integer "1"]}} (into {} component-data)
-                    border-prop (case direction
-                                  "t" :border-top-width
-                                  "r" :border-right-width
-                                  "b" :border-bottom-width
-                                  "l" :border-left-width
-                                  :border-width)]
-                {border-prop (value-unit->css nil
-                                              border-width
-                                              {:number-unit "px"})}))}])
+              (let [{:keys [border-width-value direction]} (into {} component-data)
+                    css-prop (case direction
+                               "t" :border-top-width
+                               "r" :border-right-width
+                               "b" :border-bottom-width
+                               "l" :border-left-width
+                               :border-width)]
+                {css-prop (if (nil? border-width-value)
+                            "1px"
+                            (value-unit->css nil border-width-value {:number-unit "px"}))}))}])
