@@ -71,4 +71,66 @@
                     (if (some? a)
                       {:border-color (color->css color)}
                       {:--gi-border-opacity 1
-                       :border--color (color->css [r g b "var(--gi-border-opacity)"])})))))}])
+                       :border--color (color->css [r g b "var(--gi-border-opacity)"])})))))}
+
+   {:id :border-opacity
+    :rules "
+    border-opacity = <'border-opacity-'> number
+    "
+    :garden (fn [] nil)}
+   {:id :border-style
+    :rules "
+    border-style = <'border-'> border-style-name
+    border-style-name = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
+    "
+    :garden (fn [] nil)}
+   {:id :divide-width
+    :rules "
+    divide-width = <'divide-'> axis (<'-'> divide-width-value)?
+    divide-width-value = number | length | length-unit
+    "
+    :garden (fn [] nil)}
+   {:id :divide-color
+    :rules "
+    divide-color = <'divide-'> color
+    "
+    :garden (fn [] nil)}
+   {:id :divide-opacity
+    :rules "
+    divide-opacity = <'divide-'> number
+    "
+    :garden (fn [] nil)}
+   {:id :divide-style
+    :rules "
+    divide-style = <'divide-style-'> number <'-'> border-style-name
+    "
+    :garden (fn [] nil)}
+   {:id :ring-width
+    :rules "
+    ring-width = <'ring'> (<'-'> ring-width-size)?
+    ring-width-size = number | 'inset'
+    "
+    :garden (fn [] nil)}
+   {:id :ring-color
+    :rules "
+    ring-color = <'ring-'> color
+    "
+    :garden (fn [] nil)}
+   {:id :ring-opacity
+    :rules "
+    ring-opacity = <'ring-opacity-'> number
+    "
+    :garden (fn [] nil)}
+   {:id :ring-offset-width
+    :rules "
+    ring-offset-width = <'ring-offset-'> number
+    "
+    :garden (fn [] nil)}
+   {:id :ring-offset-color
+    :rules "
+    ring-offset-color = <'ring-offset-'> color
+    "
+    :garden (fn [] nil)}])
+
+
+

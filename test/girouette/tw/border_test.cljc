@@ -5,7 +5,7 @@
 (deftest component-test
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
-    ;; Border Radius – https://tailwindcss.com/docs/border-radius
+    ;; Border Radius
     "rounded-none"
     [".rounded-none" {:border-radius "0px"}]
 
@@ -22,8 +22,7 @@
     "rounded-tl-full"
     [".rounded-tl-full" {:border-top-left-radius "9999px"}]
 
-    ;; Border Width - https://tailwindcss.com/docs/border-width
-
+    ;; Border Width
     "border"
     [".border" {:border-width "1px"}]
 
@@ -48,19 +47,69 @@
 
     "border-green-300"
     [".border-green-300" {:--gi-border-opacity 1
-                          :border--color "rgba(134, 239, 172, var(--gi-border-opacity))"}]
+                          :border--color       "rgba(134, 239, 172, var(--gi-border-opacity))"}]
     ;; Border Opacity
+    "border-opacity-25"
+    [".border-opacity-25" {:--gi-border-opacity 0.25}]
+
     ;; Border Style
+    "border-solid"
+    [".border-solid" {:border-style "solid"}]
+
     ;; Divide Width
+    "divide-x"
+    [#garden.selectors.CSSSelector{:selector ".divide-x > * + *"}
+     {:--gi-divide-x-reverse 0
+      :border-right-width    "calc(1px * var(--gi-divide-x-reverse))"
+      :border-left-width     "calc(1px * calc(1 - var(--gi-divide-x-reverse))"}]
+
     ;; Divide Color
+    "divide-current"
+    [#garden.selectors.CSSSelector{:selector ".divide-current > * + *"}
+     {:border-color "transparent"}]
+
+    "divide-gray-100"
+    [#garden.selectors.CSSSelector{:selector ".divide-transparent > * + *"}
+     {:--gi-divide-opacity 1
+      :border-color "rgba(243, 244, 246, var(--gi-divide-opacity))"}]
+
     ;; Divide Opacity
+    "divide-opacity-70"
+    [".divide-opacity-70" {:--gi-divide-opacity 0.7}]
+
     ;; Divide Style
+    "divide-double"
+    [#garden.selectors.CSSSelector{:selector ".divide-double > * + *"}
+     {:border-style "double"}]
+
     ;; Ring Width
+    ;; TODO: Test for `*	box-shadow: 0 0 #0000;`
+    "ring"
+    [".ring" {:box-shadow "var(--gi-ring-inset) 0 0 0 calc(3px + var(--gi-ring-offset-width)) var(--gi-ring-color)"}]
+    "ring-4"
+    [".ring-4" {:box-shadow "var(--gi-ring-inset) 0 0 0 calc(4px + var(--gi-ring-offset-width)) var(--gi-ring-color)"}]
+    "ring-inset"
+    [".ring-inset" {:--gi-ring-inset "inset"}]
+
     ;; Ring Color
+    "ring-pink-400"
+    [".ring-pink-400", {:--gi-ring-color "rgba(244, 114, 182, var(--gi-ring-opacity))"}]
+
     ;; Ring Opacity
+    "ring-opacity-50"
+    [".ring-opacity-50" {:--gi-ring-opacity 0.5}]
+
     ;; Ring Offset Width
+    "ring-offset-1"
+    [".ring-offset-1" {:--gi-ring-offset-width "1px"
+                       :box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"}]
+
     ;; Ring Offset Color
-    ,))
+    "ring-offset-black"
+    [".ring-offset-black" {:--gi-ring-offset-color "#000"
+                           :box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--ring-shadow)"}]))
+
+
 
 
 
