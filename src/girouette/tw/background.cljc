@@ -30,7 +30,7 @@
     :garden (fn [{[[_ color]] :component-data}]
               (let [color (read-color color)]
                 (if (string? color)
-                  {:color color}
+                  {:background-color color}
                   (let [[r g b a] color]
                     (if (some? a)
                       {:background-color (color->css color)}

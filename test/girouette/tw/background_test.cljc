@@ -6,6 +6,9 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "bg-transparent"
+    [".bg-transparent" {:background-color "transparent"}]
+
     "bg-green-300"
     [".bg-green-300" {:--gi-bg-opacity 1
                       :background-color "rgba(134, 239, 172, var(--gi-bg-opacity))"}]
