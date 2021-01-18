@@ -12,6 +12,7 @@
     [girouette.tw.typography :as typography]
     [girouette.tw.background :as background]
     [girouette.tw.effect :as effect]
+    [girouette.tw.table :as table]
     [girouette.tw.transform :as transform]
     [girouette.tw.svg :as svg]
     [girouette.tw.accessibility :as accessibility]))
@@ -28,6 +29,7 @@
      typography/components
      background/components
      effect/components
+     table/components
      transform/components
      svg/components
      accessibility/components]))
