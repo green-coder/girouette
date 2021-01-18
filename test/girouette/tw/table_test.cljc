@@ -6,5 +6,8 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
-    "p-0"
-    [".p-0" {:padding "0"}]))
+    "border-separate"
+    [".border-separate" {:border-collapse "separate"}]
+
+    "table-auto"
+    [".table-auto" {:table-layout "auto"}]))

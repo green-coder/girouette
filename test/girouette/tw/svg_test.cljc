@@ -6,5 +6,14 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
-    "p-0"
-    [".p-0" {:padding "0"}]))
+    "fill-current"
+    [".fill-current" {:fill "currentColor"}]
+
+    "stroke-current"
+    [".stroke-current" {:stroke "currentColor"}]
+
+    "stroke-0"
+    [".stroke-0" {:stroke-width "0"}]
+
+    "stroke-3_5"
+    [".stroke-3_5" {:stroke-width "3.5"}]))

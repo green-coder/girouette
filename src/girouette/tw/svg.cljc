@@ -1,10 +1,33 @@
 (ns girouette.tw.svg
-  (:require [girouette.tw.common :refer [value-unit->css]]))
+  (:require [girouette.tw.color :refer [read-color color->css]]
+            [girouette.tw.common :refer [value-unit->css]]))
 
 (def components
-  [{:id :xxx
+  [{:id :fill
     :rules "
-    xxx = <'xxx'> integer
+    fill = <'fill-'> color
     "
-    :garden (fn [{[val] :component-data}]
-              {:xxx (value-unit->css nil val {})})}])
+    :garden (fn [{[[_ color]] :component-data}]
+              (let [color (read-color color)]
+                (if (string? color)
+                  {:fill color}
+                  {:fill (color->css color)})))}
+
+
+   {:id :stroke
+    :rules "
+    stroke = <'stroke-'> color
+    "
+    :garden (fn [{[[_ color]] :component-data}]
+              (let [color (read-color color)]
+                (if (string? color)
+                  {:stroke color}
+                  {:stroke (color->css color)})))}
+
+
+   {:id :stroke-width
+    :rules "
+    stroke-width = <'stroke-'> number
+    "
+    :garden (fn [{[thickness] :component-data}]
+              {:stroke-width (value-unit->css nil thickness {})})}])
