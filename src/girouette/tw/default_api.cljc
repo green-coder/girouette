@@ -14,6 +14,7 @@
     [girouette.tw.effect :as effect]
     [girouette.tw.table :as table]
     [girouette.tw.transform :as transform]
+    [girouette.tw.interactivity :as interactivity]
     [girouette.tw.svg :as svg]
     [girouette.tw.accessibility :as accessibility]))
 
@@ -31,6 +32,7 @@
      effect/components
      table/components
      transform/components
+     interactivity/components
      svg/components
      accessibility/components]))
 
