@@ -12,7 +12,8 @@
     [girouette.tw.typography :as typography]
     [girouette.tw.background :as background]
     [girouette.tw.effect :as effect]
-    [girouette.tw.transform :as transform]))
+    [girouette.tw.transform :as transform]
+    [girouette.tw.accessibility :as accessibility]))
 
 (def default-components
   (util/into-one-vector
@@ -26,7 +27,8 @@
      typography/components
      background/components
      effect/components
-     transform/components]))
+     transform/components
+     accessibility/components]))
 
 
 ;; This is how to build the API using the default components.
