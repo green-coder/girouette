@@ -13,6 +13,7 @@
     [girouette.tw.background :as background]
     [girouette.tw.effect :as effect]
     [girouette.tw.transform :as transform]
+    [girouette.tw.svg :as svg]
     [girouette.tw.accessibility :as accessibility]))
 
 (def default-components
@@ -28,6 +29,7 @@
      background/components
      effect/components
      transform/components
+     svg/components
      accessibility/components]))
 
 
