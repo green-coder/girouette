@@ -18,30 +18,32 @@
                     {side   :border-radius-side
                      corner :border-radius-corner} (into {} [position]) ;; TODO: find more idiomatic way
                     [size-unit val] size
-                    radius (case size-unit
-                             :none "0px"
-                             :full "9999px"
-                             (:media-query-min-width nil) (str (* 0.25 (case val
-                                                                         "sm" 0.5
-                                                                         "md" 1.5
-                                                                         "lg" 2
-                                                                         "xl" 3
-                                                                         "2xl" 4
-                                                                         1)) "rem"))]
-                (if (nil? side)
-                  (let [css-prop (case corner
-                                   "tl" :border-top-left-radius
-                                   "tr" :border-top-right-radius
-                                   "br" :border-bottom-right-radius
-                                   "bl" :border-bottom-left-radius
-                                   :border-radius)]
-                    {css-prop radius})
-                  (let [css-props (case side
-                                    "t" [:border-top-left-radius :border-top-right-radius]
-                                    "r" [:border-top-right-radius :border-bottom-right-radius]
-                                    "b" [:border-bottom-right-radius :border-bottom-left-radius]
-                                    "l" [:border-bottom-left-radius :border-top-left-radius])]
-                    (into {} (map (juxt identity (constantly radius)) css-props))))))}
+                    radius     (case size-unit
+                                 :none "0px"
+                                 :full "9999px"
+                                 (:media-query-min-width nil) (str (* 0.25 (case val
+                                                                             "sm" 0.5
+                                                                             "md" 1.5
+                                                                             "lg" 2
+                                                                             "xl" 3
+                                                                             "2xl" 4
+                                                                             1)) "rem"))
+                    directions (case side
+                                 "t" ["top-left" "top-right"]
+                                 "r" ["top-right" "bottom-right"]
+                                 "b" ["bottom-right" "bottom-left"]
+                                 "l" ["bottom-left" "top-left"]
+                                 (case corner
+                                   "tl" ["top-left"]
+                                   "tr" ["top-right"]
+                                   "br" ["bottom-right"]
+                                   "bl" ["bottom-left"]
+                                   nil))]
+                (if (nil? directions)
+                  {:border-radius radius}
+                  (into {}
+                        (map (fn [direction] [(keyword (str "border-" direction "-radius")) radius]))
+                        directions))))}
 
    {:id     :border-width
     :rules  "
