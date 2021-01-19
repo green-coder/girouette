@@ -1,7 +1,7 @@
 (ns girouette.tw.border
   (:require [garden.selectors :as gs]
             [girouette.tw.common :refer [value-unit->css value->css read-number dot default-pipeline]]
-            [girouette.tw.color :refer [read-color as-transparent color->css]]))
+            [girouette.tw.color :refer [read-color color->css]]))
 
 (def components
   [{:id     :border-radius
@@ -99,9 +99,15 @@
     :pipeline (assoc default-pipeline
                 :class-name [(fn [rule props]
                                [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
-    :garden   (fn [props]
-                {:border-right-width "calc(1px * var(--gi-divide-x-reverse))"
-                 :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse))"})}
+    :garden   (fn [{:keys [component-data]}]
+                (let [{axis  :axis
+                       value :divide-width-value} (into {} component-data)]
+                  (let [width (if (nil? value) "1px" (value-unit->css nil value {:number-unit "px"}))]
+                    (case axis
+                      "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
+                           :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse))")}
+                      "y" {:border-top-width    (str "calc(" width " * var(--gi-divide-y-reverse))")
+                           :border-bottom-width (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse))")}))))}
 
    {:id       :divide-color
     :rules    "

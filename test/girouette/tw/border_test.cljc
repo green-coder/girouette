@@ -64,6 +64,12 @@
       :border-right-width "calc(1px * var(--gi-divide-x-reverse))"
       :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse))"}]
 
+    "divide-y-2"
+    [#garden.selectors.CSSSelector{:selector ".divide-y-2 > * + *"}
+     {;;:--gi-divide-x-reverse 0 ;; Not implemented
+      :border-top-width "calc(2px * var(--gi-divide-y-reverse))"
+      :border-bottom-width  "calc(2px * calc(1 - var(--gi-divide-y-reverse))"}]
+
     ;; Divide Color
     "divide-current"
     [#garden.selectors.CSSSelector{:selector ".divide-current > * + *"}
