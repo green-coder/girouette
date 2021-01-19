@@ -47,31 +47,32 @@
 
     "border-green-300"
     [".border-green-300" {:--gi-border-opacity 1
-                          :border--color       "rgba(134, 239, 172, var(--gi-border-opacity))"}]
+                          :border-color        "rgba(134, 239, 172, var(--gi-border-opacity))"}]
+
     ;; Border Opacity
     "border-opacity-25"
     [".border-opacity-25" {:--gi-border-opacity 0.25}]
 
     ;; Border Style
-    "border-solid"
-    [".border-solid" {:border-style "solid"}]
+    "border-dotted"
+    [".border-dotted" {:border-style "dotted"}]
 
     ;; Divide Width
     "divide-x"
     [#garden.selectors.CSSSelector{:selector ".divide-x > * + *"}
-     {:--gi-divide-x-reverse 0
-      :border-right-width    "calc(1px * var(--gi-divide-x-reverse))"
-      :border-left-width     "calc(1px * calc(1 - var(--gi-divide-x-reverse))"}]
+     {;;:--gi-divide-x-reverse 0 ;; Not implemented
+      :border-right-width "calc(1px * var(--gi-divide-x-reverse))"
+      :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse))"}]
 
     ;; Divide Color
     "divide-current"
     [#garden.selectors.CSSSelector{:selector ".divide-current > * + *"}
-     {:border-color "transparent"}]
+     {:border-color "currentColor"}]
 
     "divide-gray-100"
-    [#garden.selectors.CSSSelector{:selector ".divide-transparent > * + *"}
+    [#garden.selectors.CSSSelector{:selector ".divide-gray-100 > * + *"}
      {:--gi-divide-opacity 1
-      :border-color "rgba(243, 244, 246, var(--gi-divide-opacity))"}]
+      :border-color        "rgba(244, 244, 245, var(--gi-divide-opacity))"}]
 
     ;; Divide Opacity
     "divide-opacity-70"
@@ -102,17 +103,9 @@
     ;; Ring Offset Width
     "ring-offset-1"
     [".ring-offset-1" {:--gi-ring-offset-width "1px"
-                       :box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"}]
+                        :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"}]
 
     ;; Ring Offset Color
-    "ring-offset-black"
-    [".ring-offset-black" {:--gi-ring-offset-color "#000"
-                           :box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--ring-shadow)"}]))
-
-
-
-
-
-
-
-
+    "ring-offset-yellow-300"
+    [".ring-offset-yellow-300" {:--gi-ring-offset-color "rgba(253, 224, 71, var(--gi-ring-opacity))"
+                                 :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--ring-shadow)"}]))

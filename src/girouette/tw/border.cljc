@@ -1,6 +1,7 @@
 (ns girouette.tw.border
-    (:require [girouette.tw.common :refer [value-unit->css]]
-              [girouette.tw.color :refer [read-color as-transparent color->css]]))
+  (:require [garden.selectors :as gs]
+            [girouette.tw.common :refer [value-unit->css value->css read-number dot default-pipeline]]
+            [girouette.tw.color :refer [read-color as-transparent color->css]]))
 
 (def components
   [{:id     :border-radius
@@ -58,8 +59,8 @@
                 {css-prop (if (nil? border-width-value)
                             "1px"
                             (value-unit->css nil border-width-value {:number-unit "px"}))}))}
-   {:id :border-color
-    :rules "
+   {:id     :border-color
+    :rules  "
     border-color = <'border-'> color
     "
     ;; Copy-pasted from background; could be extracted into util?
@@ -71,66 +72,125 @@
                     (if (some? a)
                       {:border-color (color->css color)}
                       {:--gi-border-opacity 1
-                       :border--color (color->css [r g b "var(--gi-border-opacity)"])})))))}
+                       :border-color        (color->css [r g b "var(--gi-border-opacity)"])})))))}
 
-   {:id :border-opacity
-    :rules "
+   {:id     :border-opacity
+    :rules  "
     border-opacity = <'border-opacity-'> number
     "
-    :garden (fn [] nil)}
-   {:id :border-style
-    :rules "
+    :garden (fn [{[[_ value]] :component-data}]
+              {:--gi-border-opacity (value->css (/ (read-number value) 100.0))})}
+
+   {:id     :border-style
+    :rules  "
     border-style = <'border-'> border-style-name
     border-style-name = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
     "
-    :garden (fn [] nil)}
-   {:id :divide-width
-    :rules "
+    :garden (fn [{[[_ border-style]] :component-data}]
+              {:border-style border-style})}
+
+   {:id       :divide-width
+    :rules    "
     divide-width = <'divide-'> axis (<'-'> divide-width-value)?
     divide-width-value = number | length | length-unit
     "
-    :garden (fn [] nil)}
-   {:id :divide-color
-    :rules "
+    :pipeline (assoc default-pipeline
+                :class-name [(fn [rule props]
+                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
+    :garden   (fn [props]
+                {:border-right-width "calc(1px * var(--gi-divide-x-reverse))"
+                 :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse))"})}
+
+   {:id       :divide-color
+    :rules    "
     divide-color = <'divide-'> color
     "
-    :garden (fn [] nil)}
-   {:id :divide-opacity
-    :rules "
-    divide-opacity = <'divide-'> number
+    :pipeline (assoc default-pipeline
+                :class-name [(fn [rule props]
+                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
+    :garden   (fn [{[[_ color]] :component-data}]
+                (let [color (read-color color)]
+                  (if (string? color)
+                    {:border-color color}
+                    (let [[r g b a] color]
+                      (if (some? a)
+                        {:border-color (color->css color)}
+                        {:--gi-divide-opacity 1
+                         :border-color        (color->css [r g b "var(--gi-divide-opacity)"])})))))}
+
+   {:id     :divide-opacity
+    :rules  "
+    divide-opacity = <'divide-opacity-'> number
     "
-    :garden (fn [] nil)}
-   {:id :divide-style
-    :rules "
-    divide-style = <'divide-style-'> number <'-'> border-style-name
+    :garden (fn [{[[_ value]] :component-data}]
+              {:--gi-divide-opacity (value->css (/ (read-number value) 100.0))})}
+
+   {:id       :divide-style
+    :rules    "
+    divide-style = <'divide-'> divide-style-name
+    divide-style-name = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
     "
-    :garden (fn [] nil)}
-   {:id :ring-width
-    :rules "
+    :pipeline (assoc default-pipeline
+                :class-name [(fn [rule props]
+                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
+    :garden   (fn [{[[_ border-style]] :component-data}]
+                {:border-style border-style})}
+
+   {:id     :ring-width
+    :rules  "
     ring-width = <'ring'> (<'-'> ring-width-size)?
-    ring-width-size = number | 'inset'
+    ring-width-size = 'inset' | number | length | length-unit
     "
-    :garden (fn [] nil)}
-   {:id :ring-color
-    :rules "
+    :garden (fn [{[[_ size]] :component-data}]
+              (if (= size "inset")
+                {:--gi-ring-inset "inset"}
+                (let [size (if (nil? size)
+                             "3px"
+                             (value-unit->css nil size {:number-unit "px"}))]
+                  {:box-shadow (str "var(--gi-ring-inset) 0 0 0 calc("
+                                    size
+                                    " + var(--gi-ring-offset-width))"
+                                    " var(--gi-ring-color)")})))}
+
+   {:id     :ring-color
+    :rules  "
     ring-color = <'ring-'> color
     "
-    :garden (fn [] nil)}
-   {:id :ring-opacity
-    :rules "
+    :garden (fn [{[[_ color]] :component-data}]
+              (let [color (read-color color)]
+                (if (string? color)
+                  {:--gi-ring-color color}
+                  (let [[r g b a] color]
+                    (if (some? a)
+                      {:--gi-ring-color (color->css color)}
+                      {:--gi-ring-color (color->css [r g b "var(--gi-ring-opacity)"])})))))}
+   {:id     :ring-opacity
+    :rules  "
     ring-opacity = <'ring-opacity-'> number
     "
-    :garden (fn [] nil)}
-   {:id :ring-offset-width
-    :rules "
-    ring-offset-width = <'ring-offset-'> number
+    :garden (fn [{[[_ value]] :component-data}]
+              {:--gi-ring-opacity (value->css (/ (read-number value) 100.0))})}
+
+   {:id     :ring-offset-width
+    :rules  "
+    ring-offset-width = <'ring-offset-'> ring-offset-size
+    ring-offset-size = number | length | length-unit
     "
-    :garden (fn [] nil)}
-   {:id :ring-offset-color
-    :rules "
+    :garden (fn [{[[_ value]] :component-data}]
+              {:--gi-ring-offset-width (value-unit->css nil value {:number-unit "px"})
+               :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"})}
+
+   {:id     :ring-offset-color
+    :rules  "
     ring-offset-color = <'ring-offset-'> color
     "
-    :garden (fn [] nil)}])
-
-
-
+    :garden (fn [{[[_ color]] :component-data}]
+              (conj
+                (let [color (read-color color)]
+                  (if (string? color)
+                    {:--gi-ring-offset-color color}
+                    (let [[r g b a] color]
+                      (if (some? a)
+                        {:--gi-ring-offset-color (color->css color)}
+                        {:--gi-ring-offset-color (color->css [r g b "var(--gi-ring-opacity)"])}))))
+                {:box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--ring-shadow)"}))}])
