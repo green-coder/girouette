@@ -80,10 +80,9 @@
 
    {:id     :border-style
     :rules  "
-    border-style = <'border-'> border-style-name
-    border-style-name = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
+    border-style = <'border-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none')
     "
-    :garden (fn [{[[_ border-style]] :component-data}]
+    :garden (fn [{[border-style] :component-data}]
               {:border-style border-style})}
 
    {:id       :divide-width
