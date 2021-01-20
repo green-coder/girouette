@@ -16,7 +16,9 @@
     [girouette.tw.transform :as transform]
     [girouette.tw.interactivity :as interactivity]
     [girouette.tw.svg :as svg]
-    [girouette.tw.accessibility :as accessibility]))
+    [girouette.tw.accessibility :as accessibility]
+    [girouette.tw.border :as border]
+    [girouette.tw.effect :as effect]))
 
 (def default-components
   (util/into-one-vector
@@ -29,6 +31,7 @@
      sizing/components
      typography/components
      background/components
+     border/components
      effect/components
      table/components
      transform/components
