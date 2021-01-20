@@ -7,38 +7,33 @@
   [{:id     :border-radius
     :rules  "
     border-radius = <'rounded'>  (<'-'> border-radius-position)? (<'-'> border-radius-size)?
-    border-radius-position  = border-radius-side | border-radius-corner
-    border-radius-side = 't' | 'r' | 'b' | 'l'
-    border-radius-corner = 'tl' | 'tr' | 'br' | 'bl'
-    border-radius-size = none | full | media-query-min-width
+    border-radius-position  = 't' | 'r' | 'b' | 'l' | 'tl' | 'tr' | 'br' | 'bl'
+    border-radius-size = 'none' | 'full' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
     "
     :garden (fn [{:keys [component-data]}]
               (let [{position :border-radius-position
                      size     :border-radius-size} (into {} component-data)
-                    {side   :border-radius-side
-                     corner :border-radius-corner} (into {} [position]) ;; TODO: find more idiomatic way
-                    [size-unit val] size
-                    radius     (case size-unit
-                                 :none "0px"
-                                 :full "9999px"
-                                 (:media-query-min-width nil) (str (* 0.25 (case val
-                                                                             "sm" 0.5
-                                                                             "md" 1.5
-                                                                             "lg" 2
-                                                                             "xl" 3
-                                                                             "2xl" 4
-                                                                             1)) "rem"))
-                    directions (case side
+                    radius     (case size
+                                 "none" "0px"
+                                 "full" "9999px"
+                                 (str (* 0.25 (case size
+                                                "sm" 0.5
+                                                "md" 1.5
+                                                "lg" 2
+                                                "xl" 3
+                                                "2xl" 4
+                                                "3xl" 6
+                                                1)) "rem"))
+                    directions (case position
                                  "t" ["top-left" "top-right"]
                                  "r" ["top-right" "bottom-right"]
                                  "b" ["bottom-right" "bottom-left"]
                                  "l" ["bottom-left" "top-left"]
-                                 (case corner
-                                   "tl" ["top-left"]
-                                   "tr" ["top-right"]
-                                   "br" ["bottom-right"]
-                                   "bl" ["bottom-left"]
-                                   nil))]
+                                 "tl" ["top-left"]
+                                 "tr" ["top-right"]
+                                 "br" ["bottom-right"]
+                                 "bl" ["bottom-left"]
+                                 nil)]
                 (if (nil? directions)
                   {:border-radius radius}
                   (into {}
@@ -135,26 +130,24 @@
 
    {:id       :divide-style
     :rules    "
-    divide-style = <'divide-'> divide-style-name
-    divide-style-name = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
+    divide-style = <'divide-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none')
     "
     :pipeline (assoc default-pipeline
                 :class-name [(fn [rule props]
                                [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
-    :garden   (fn [{[[_ border-style]] :component-data}]
+    :garden   (fn [{[border-style] :component-data}]
                 {:border-style border-style})}
 
    {:id     :ring-width
     :rules  "
-    ring-width = <'ring'> (<'-'> ring-width-size)?
-    ring-width-size = 'inset' | number | length | length-unit
+    ring-width = <'ring'> (<'-'> ('inset' | number | length | length-unit))?
     "
-    :garden (fn [{[[_ size]] :component-data}]
-              (if (= size "inset")
+    :garden (fn [{[value] :component-data}]
+              (if (= value "inset")
                 {:--gi-ring-inset "inset"}
-                (let [size (if (nil? size)
+                (let [size (if (nil? value)
                              "3px"
-                             (value-unit->css nil size {:number-unit "px"}))]
+                             (value-unit->css nil value {:number-unit "px"}))]
                   {:box-shadow (str "var(--gi-ring-inset) 0 0 0 calc("
                                     size
                                     " + var(--gi-ring-offset-width))"
@@ -181,10 +174,9 @@
 
    {:id     :ring-offset-width
     :rules  "
-    ring-offset-width = <'ring-offset-'> ring-offset-size
-    ring-offset-size = number | length | length-unit
+    ring-offset-width = <'ring-offset-'> (number | length | length-unit)
     "
-    :garden (fn [{[[_ value]] :component-data}]
+    :garden (fn [{[value] :component-data}]
               {:--gi-ring-offset-width (value-unit->css nil value {:number-unit "px"})
                :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"})}
 
@@ -201,4 +193,4 @@
                       (if (some? a)
                         {:--gi-ring-offset-color (color->css color)}
                         {:--gi-ring-offset-color (color->css [r g b "var(--gi-ring-opacity)"])}))))
-                {:box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--ring-shadow)"}))}])
+                {:box-shadow "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"}))}])

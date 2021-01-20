@@ -114,4 +114,4 @@
     ;; Ring Offset Color
     "ring-offset-yellow-300"
     [".ring-offset-yellow-300" {:--gi-ring-offset-color "rgba(253, 224, 71, var(--gi-ring-opacity))"
-                                 :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--ring-shadow)"}]))
+                                 :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"}]))
