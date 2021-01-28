@@ -9,7 +9,7 @@
     "
     :garden (fn [{[flex-grow-value] :component-data}]
               {:flex-grow (if-let [[_ data] flex-grow-value]
-                            (value-unit->css nil data {})
+                            (value-unit->css data {})
                             "1")})}
 
 
@@ -20,7 +20,7 @@
     "
     :garden (fn [{[flex-shrink-value] :component-data}]
               {:flex-shrink (if-let [[_ data] flex-shrink-value]
-                              (value-unit->css nil data {})
+                              (value-unit->css data {})
                               "1")})}
 
 
@@ -31,8 +31,8 @@
     "
     :garden (fn [{[flex-basis-value] :component-data}]
               {:flex-basis (if-let [[_ data] flex-basis-value]
-                             (value-unit->css nil data {:number-unit :quarter-rem
-                                                        :fraction-unit "%"})
+                             (value-unit->css data {:number-unit :quarter-rem
+                                                    :fraction-unit "%"})
                              "1")})}
 
 
@@ -50,21 +50,21 @@
                          "none"    "none"
                          "initial" "0 1 auto"
                          "auto"    "1 1 auto"
-                         (let [size (value-unit->css nil (first args) {})]
+                         (let [size (value-unit->css (first args) {})]
                            (str size " " size " 0%")))
 
                        :flex-shorthand-2-args
                        (let [[[_ grow-data] [_ shrink-basis-data]] args
-                             grow-value (value-unit->css nil grow-data {})
-                             shrink-basis-value (value-unit->css nil shrink-basis-data {})]
+                             grow-value (value-unit->css grow-data {})
+                             shrink-basis-value (value-unit->css shrink-basis-data {})]
                          (str grow-value " " shrink-basis-value))
 
                        :flex-shorthand-3-args
                        (let [[[_ grow-data] [_ shrink-data] [_ basis-data]] args
-                             grow-value (value-unit->css nil grow-data {})
-                             shrink-value (value-unit->css nil shrink-data {})
-                             basis-value (value-unit->css nil basis-data {:number-unit :quarter-rem
-                                                                          :fraction-unit "%"})]
+                             grow-value (value-unit->css grow-data {})
+                             shrink-value (value-unit->css shrink-data {})
+                             basis-value (value-unit->css basis-data {:number-unit :quarter-rem
+                                                                      :fraction-unit "%"})]
                          (str grow-value " " shrink-value " " basis-value)))})}
 
 
@@ -98,4 +98,4 @@
                           "first" "-9999"
                           "last" "9999"
                           "none" "0"
-                          (value-unit->css signus order-param {}))}))}])
+                          (value-unit->css order-param {:signus signus}))}))}])

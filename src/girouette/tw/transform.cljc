@@ -88,9 +88,9 @@
               (let [{:keys [signus axis translate-value]} (into {} data)
                     attribute ({"x" :--gi-translate-x
                                 "y" :--gi-translate-y} axis)]
-                {attribute (value-unit->css signus
-                                            translate-value
-                                            {:number-unit :quarter-rem
+                {attribute (value-unit->css translate-value
+                                            {:signus signus
+                                             :number-unit :quarter-rem
                                              :fraction-unit "%"})}))}
 
 

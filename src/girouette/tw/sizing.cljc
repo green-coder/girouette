@@ -10,8 +10,7 @@
                     auto | screen-100vw | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:width (value-unit->css nil
-                                       value-data
+              {:width (value-unit->css value-data
                                        {:number-unit :quarter-rem
                                         :fraction-unit "%"})})}
 
@@ -22,8 +21,7 @@
                             auto | screen-100vw | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:width (value-unit->css nil
-                                       value-data
+              {:width (value-unit->css value-data
                                        {:number-unit :quarter-rem
                                         :fraction-unit "%"})})}
 
@@ -34,8 +32,7 @@
                             none | screen-100vw | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:width (value-unit->css nil
-                                       value-data
+              {:width (value-unit->css value-data
                                        {:number-unit :quarter-rem
                                         :fraction-unit "%"})})}
 
@@ -46,8 +43,7 @@
                      auto | screen-100vh | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:height (value-unit->css nil
-                                        value-data
+              {:height (value-unit->css value-data
                                         {:number-unit :quarter-rem
                                          :fraction-unit "%"})})}
 
@@ -58,8 +54,7 @@
                              auto | screen-100vh | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:min-height (value-unit->css nil
-                                            value-data
+              {:min-height (value-unit->css value-data
                                             {:number-unit :quarter-rem
                                              :fraction-unit "%"})})}
 
@@ -70,7 +65,6 @@
                              none | screen-100vh | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:max-height (value-unit->css nil
-                                            value-data
+              {:max-height (value-unit->css value-data
                                             {:number-unit :quarter-rem
                                              :fraction-unit "%"})})}])

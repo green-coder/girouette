@@ -78,8 +78,8 @@
                 (let [[x y] data
                       options {:number-unit :quarter-rem
                                :fraction-unit "%"}]
-                  {:background-size [[(value-unit->css nil x options)
-                                      (value-unit->css nil y options)]]})))}
+                  {:background-size [[(value-unit->css x options)
+                                      (value-unit->css y options)]]})))}
 
 
    {:id :background-image

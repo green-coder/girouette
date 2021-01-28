@@ -36,7 +36,8 @@
     (double value)))
 
 
-(defn value-unit->css [signus [data-type & data] options]
+(defn value-unit->css [[data-type & data] {:as options
+                                           :keys [signus]}]
   (case data-type
     :auto "auto"
     :none "none"

@@ -26,7 +26,7 @@
     transition-duration = <'duration-'> number
     "
     :garden (fn [{[duration] :component-data}]
-              {:transition-duration (value-unit->css nil duration {:number-unit "ms"})})}
+              {:transition-duration (value-unit->css duration {:number-unit "ms"})})}
 
 
    {:id :transition-timing-function
@@ -45,7 +45,7 @@
     transition-delay = <'delay-'> number
     "
     :garden (fn [{[duration] :component-data}]
-              {:transition-delay (value-unit->css nil duration {:number-unit "ms"})})}
+              {:transition-delay (value-unit->css duration {:number-unit "ms"})})}
 
 
    {:id :animation

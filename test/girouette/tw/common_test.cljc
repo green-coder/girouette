@@ -6,52 +6,56 @@
 
 
 (deftest value-unit->css-test
-  (are [signus data options expected-output]
-    (= expected-output (value-unit->css signus data options))
+  (are [data options expected-output]
+    (= expected-output (value-unit->css data options))
 
-    nil [:auto] {} "auto"
-    "-" [:auto] {} "auto"
-    nil [:full] {} "full"
-    "-" [:full] {} "full"
+    [:auto] {} "auto"
+    [:auto] {:signus "-"} "auto"
+    [:full] {} "full"
+    [:full] {:signus "-"} "full"
 
-    nil [:full-100%] {} "100%"
-    nil [:screen-100vw] {} "100vw"
-    nil [:screen-100vh] {} "100vh"
-    "-" [:screen-100vh] {} "-100vh"
+    [:full-100%] {} "100%"
+    [:screen-100vw] {} "100vw"
+    [:screen-100vh] {} "100vh"
+    [:screen-100vh] {:signus "-"} "-100vh"
 
-    nil [:integer "1"] {} "1"
-    nil [:number "1"] {} "1"
-    nil [:number "1_5"] {} "1.5"
-    nil [:number "1.5"] {} "1.5"
-    "-" [:number "1.5"] {} "-1.5"
-    nil [:integer "1"] {:number-unit "foo"} "1foo"
-    nil [:number "1_5"] {:number-unit "foo"} "1.5foo"
-    nil [:number "1.5"] {:number-unit "foo"} "1.5foo"
-    "-" [:number "1.5"] {:number-unit "foo"} "-1.5foo"
+    [:integer "1"] {} "1"
+    [:number "1"] {} "1"
+    [:number "1_5"] {} "1.5"
+    [:number "1.5"] {} "1.5"
+    [:number "1.5"] {:signus "-"} "-1.5"
+    [:integer "1"] {:number-unit "foo"} "1foo"
+    [:number "1_5"] {:number-unit "foo"} "1.5foo"
+    [:number "1.5"] {:number-unit "foo"} "1.5foo"
+    [:number "1.5"] {:signus "-"
+                     :number-unit "foo"} "-1.5foo"
 
-    nil [:length [:number "0"] "cm"] {} "0"
-    "-" [:length [:number "0"] "cm"] {} "0"
-    nil [:length [:number "0"] "cm"] {:zero-unit "banana"} "0banana"
-    "-" [:length [:number "0"] "cm"] {:zero-unit "banana"} "0banana"
-    nil [:length [:number "1_5"] "cm"] {} "1.5cm"
-    nil [:length-unit "cm"] {} "1cm"
-    "-" [:length-unit "cm"] {} "-1cm"
+    [:length [:number "0"] "cm"] {} "0"
+    [:length [:number "0"] "cm"] {:signus "-"} "0"
+    [:length [:number "0"] "cm"] {:zero-unit "banana"} "0banana"
+    [:length [:number "0"] "cm"] {:signus "-"
+                                  :zero-unit "banana"} "0banana"
+    [:length [:number "1_5"] "cm"] {} "1.5cm"
+    [:length-unit "cm"] {} "1cm"
+    [:length-unit "cm"] {:signus "-"} "-1cm"
 
-    nil [:percentage [:number "1_5"]] {} "1.5%"
-    "-" [:percentage [:number "1_5"]] {} "-1.5%"
+    [:percentage [:number "1_5"]] {} "1.5%"
+    [:percentage [:number "1_5"]] {:signus "-"} "-1.5%"
 
-    nil [:fraction [:number "5"] [:number "2_5"]] {} "2"
-    nil [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "px"} "2px"
-    nil [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit :quarter-rem} "0.5rem"
-    "-" [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit :quarter-rem} "-0.5rem"
-    nil [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "%"} "200%"
-    nil [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "apple"
-                                                   :zero-unit "banana"} "2apple"
+    [:fraction [:number "5"] [:number "2_5"]] {} "2"
+    [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "px"} "2px"
+    [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit :quarter-rem} "0.5rem"
+    [:fraction [:number "5"] [:number "2_5"]] {:signus "-"
+                                               :fraction-unit :quarter-rem} "-0.5rem"
+    [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "%"} "200%"
+    [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "apple"
+                                               :zero-unit "banana"} "2apple"
 
-    nil [:fraction [:number "0"] [:number "2_5"]] {:fraction-unit "apple"
-                                                   :zero-unit "banana"} "0banana"
-    "-" [:fraction [:number "0"] [:number "2_5"]] {:fraction-unit "apple"
-                                                   :zero-unit "banana"} "0banana"))
+    [:fraction [:number "0"] [:number "2_5"]] {:fraction-unit "apple"
+                                               :zero-unit "banana"} "0banana"
+    [:fraction [:number "0"] [:number "-2_5"]] {:signus "-"
+                                                :fraction-unit "apple"
+                                                :zero-unit "banana"} "0banana"))
 
 (deftest prefixes-test
   (are [class-name expected-garden]
