@@ -9,7 +9,7 @@
     "
     :garden (fn [{[flex-grow-value] :component-data}]
               {:flex-grow (if-let [[_ data] flex-grow-value]
-                            (value-unit->css data {})
+                            (value-unit->css data)
                             "1")})}
 
 
@@ -20,7 +20,7 @@
     "
     :garden (fn [{[flex-shrink-value] :component-data}]
               {:flex-shrink (if-let [[_ data] flex-shrink-value]
-                              (value-unit->css data {})
+                              (value-unit->css data)
                               "1")})}
 
 
@@ -50,19 +50,19 @@
                          "none"    "none"
                          "initial" "0 1 auto"
                          "auto"    "1 1 auto"
-                         (let [size (value-unit->css (first args) {})]
+                         (let [size (value-unit->css (first args))]
                            (str size " " size " 0%")))
 
                        :flex-shorthand-2-args
                        (let [[[_ grow-data] [_ shrink-basis-data]] args
-                             grow-value (value-unit->css grow-data {})
-                             shrink-basis-value (value-unit->css shrink-basis-data {})]
+                             grow-value (value-unit->css grow-data)
+                             shrink-basis-value (value-unit->css shrink-basis-data)]
                          (str grow-value " " shrink-basis-value))
 
                        :flex-shorthand-3-args
                        (let [[[_ grow-data] [_ shrink-data] [_ basis-data]] args
-                             grow-value (value-unit->css grow-data {})
-                             shrink-value (value-unit->css shrink-data {})
+                             grow-value (value-unit->css grow-data)
+                             shrink-value (value-unit->css shrink-data)
                              basis-value (value-unit->css basis-data {:number-unit :quarter-rem
                                                                       :fraction-unit "%"})]
                          (str grow-value " " shrink-value " " basis-value)))})}

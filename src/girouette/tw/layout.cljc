@@ -141,4 +141,4 @@
     z-index = <'z-'> (integer | auto)
     "
     :garden (fn [{[index] :component-data}]
-              {:z-index (value-unit->css index {})})}])
+              {:z-index (value-unit->css index)})}])

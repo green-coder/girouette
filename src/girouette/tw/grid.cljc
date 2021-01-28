@@ -7,7 +7,7 @@
     grid-template-columns = <'grid-cols-'> (integer | none)
     "
     :garden (fn [{[repeat] :component-data}]
-              (let [repeat (value-unit->css repeat {})]
+              (let [repeat (value-unit->css repeat)]
                 {:grid-template-columns (if (#{"none" "0"} repeat)
                                           "none"
                                           (str "repeat(" repeat ", minmax(0, 1fr))"))}))}
@@ -26,7 +26,7 @@
     grid-column-span = <'col-span-'> (integer | full)
     "
     :garden (fn [{[param] :component-data}]
-              (let [param (value-unit->css param {})]
+              (let [param (value-unit->css param)]
                 {:grid-column (if (= param "full")
                                 "-1 / 1"
                                 ;; TODO: do we need to repeat the span twice?
@@ -38,7 +38,7 @@
     grid-column-start = <'col-start-'> (integer | auto)
     "
     :garden (fn [{[param] :component-data}]
-              {:grid-column-start (value-unit->css param {})})}
+              {:grid-column-start (value-unit->css param)})}
 
 
    {:id :grid-column-end
@@ -46,7 +46,7 @@
     grid-column-end = <'col-end-'> (integer | auto)
     "
     :garden (fn [{[param] :component-data}]
-              {:grid-column-end (value-unit->css param {})})}
+              {:grid-column-end (value-unit->css param)})}
 
 
    {:id :grid-template-rows
@@ -54,7 +54,7 @@
     grid-template-rows = <'grid-rows-'> (integer | none)
     "
     :garden (fn [{[repeat] :component-data}]
-              (let [repeat (value-unit->css repeat {})]
+              (let [repeat (value-unit->css repeat)]
                 {:grid-template-rows (if (#{"none" "0"} repeat)
                                        "none"
                                        (str "repeat(" repeat ", minmax(0, 1fr))"))}))}
@@ -73,7 +73,7 @@
     grid-row-span = <'row-span-'> (integer | full)
     "
     :garden (fn [{[param] :component-data}]
-              (let [param (value-unit->css param {})]
+              (let [param (value-unit->css param)]
                 {:grid-row (if (= param "full")
                              "-1 / 1"
                              ;; TODO: do we need to repeat the span twice?
@@ -85,7 +85,7 @@
     grid-row-start = <'row-start-'> (integer | auto)
     "
     :garden (fn [{[param] :component-data}]
-              {:grid-row-start (value-unit->css param {})})}
+              {:grid-row-start (value-unit->css param)})}
 
 
    {:id :grid-row-end
@@ -93,7 +93,7 @@
     grid-row-end = <'row-end-'> (integer | auto)
     "
     :garden (fn [{[param] :component-data}]
-              {:grid-row-end (value-unit->css param {})})}
+              {:grid-row-end (value-unit->css param)})}
 
 
    {:id :grid-auto-flow

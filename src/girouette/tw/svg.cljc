@@ -30,4 +30,4 @@
     stroke-width = <'stroke-'> number
     "
     :garden (fn [{[thickness] :component-data}]
-              {:stroke-width (value-unit->css thickness {})})}])
+              {:stroke-width (value-unit->css thickness)})}])

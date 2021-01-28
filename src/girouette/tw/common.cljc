@@ -36,32 +36,34 @@
     (double value)))
 
 
-(defn value-unit->css [[data-type & data] {:as options
-                                           :keys [signus]}]
-  (case data-type
-    :auto "auto"
-    :none "none"
-    :full "full"
-    :min-content "min-content"
-    :max-content "max-content"
-    (let [[value unit] (case data-type
-                         (:integer :number) [(read-number (first data)) (:number-unit options)]
-                         :length [(read-number (second (first data))) (second data)]
-                         :length-unit [1 (first data)]
-                         :percentage [(read-number (second (first data))) "%"]
-                         :fraction (let [[[_ numerator] [_ denominator]] data
-                                         ratio (/ (read-number numerator) (read-number denominator))
-                                         unit (:fraction-unit options)]
-                                     [(cond-> ratio (= unit "%") (* 100)) unit])
-                         :full-100% [100 "%"]
-                         :screen-100vw [100 "vw"]
-                         :screen-100vh [100 "vh"])
-          [value unit] (cond
-                         (zero? value) [0 (:zero-unit options)]
-                         (= unit :quarter-rem) [(/ value 4) "rem"]
-                         :else [value unit])
-          value (cond-> value (= signus "-") (* -1))]
-     (str (value->css value) unit))))
+(defn value-unit->css
+  ([data] (value-unit->css data {}))
+  ([[data-type & data] {:as   options
+                        :keys [signus]}]
+   (case data-type
+     :auto "auto"
+     :none "none"
+     :full "full"
+     :min-content "min-content"
+     :max-content "max-content"
+     (let [[value unit] (case data-type
+                          (:integer :number) [(read-number (first data)) (:number-unit options)]
+                          :length [(read-number (second (first data))) (second data)]
+                          :length-unit [1 (first data)]
+                          :percentage [(read-number (second (first data))) "%"]
+                          :fraction (let [[[_ numerator] [_ denominator]] data
+                                          ratio (/ (read-number numerator) (read-number denominator))
+                                          unit (:fraction-unit options)]
+                                      [(cond-> ratio (= unit "%") (* 100)) unit])
+                          :full-100% [100 "%"]
+                          :screen-100vw [100 "vw"]
+                          :screen-100vh [100 "vh"])
+           [value unit] (cond
+                          (zero? value) [0 (:zero-unit options)]
+                          (= unit :quarter-rem) [(/ value 4) "rem"]
+                          :else [value unit])
+           value (cond-> value (= signus "-") (* -1))]
+       (str (value->css value) unit)))))
 
 
 (defn inner-state-variants-transform [rule props]
