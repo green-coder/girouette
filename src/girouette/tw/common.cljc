@@ -1,8 +1,7 @@
 (ns girouette.tw.common
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
-            [garden.stylesheet :as gs]
-            [girouette.util :as util]))
+            [garden.stylesheet :as gs]))
 
 
 (defn dot [class]
