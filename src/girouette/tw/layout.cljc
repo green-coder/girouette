@@ -106,7 +106,7 @@
     :rules "
     positioning = signus? positioning-mode <'-'> positioning-value
     positioning-mode = 'top' | 'right' | 'bottom' | 'left' | #'inset(-x|-y)?'
-    positioning-value = number | length | length-unit | fraction | percentage-full | auto
+    positioning-value = number | length | length-unit | fraction | percentage | full-100% | auto
     "
     :garden (fn [{component-data :component-data}]
               (let [{:keys [signus positioning-mode positioning-value]} (into {} component-data)

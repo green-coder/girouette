@@ -166,27 +166,21 @@
   none = 'none'
   full = 'full'
 
-  <percentage-full> = percentage | full-100%
-
   (* source: https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units *)
   integer = #'\\d+'
   number = #'\\d+([._]\\d+)?'
   percentage = number <'%'>
 
-  <dimension> = length | angle | time | resolution
-
   length = number (absolute-length-unit | relative-length-unit)
   length-unit = absolute-length-unit | relative-length-unit
   <absolute-length-unit> = 'cm' | 'mm' | 'in' | 'pc' | 'pt' | 'px'
   <relative-length-unit> = 'em' | 'ex' | 'ch' | 'rem' | 'lh' | 'vw' | 'vh' | 'vmin' | 'vmax'
-  <length-percentage> = length | percentage
 
   angle = number angle-unit
   <angle-unit> = 'deg' | 'grad' | 'rad' | 'turn'
 
   time = number time-unit
   <time-unit> = 's' | 'ms'
-  <time-percentage> = time | percentage
 
   resolution = number resolution-unit
   <resolution-unit> = 'dpi' | 'dpcm' | 'dppx' | 'x'

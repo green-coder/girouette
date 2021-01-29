@@ -82,7 +82,7 @@
    {:id :translate
     :rules "
     translate = signus? <'translate-'> axis <'-'> translate-value
-    translate-value = number | length | length-unit | fraction | percentage-full
+    translate-value = number | length | length-unit | fraction | percentage | full-100%
     "
     :garden (fn [{data :component-data}]
               (let [{:keys [signus axis translate-value]} (into {} data)

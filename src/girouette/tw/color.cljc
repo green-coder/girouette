@@ -263,8 +263,7 @@
   default-color-with-darkness = (" default-color-names ") <'-'>
                                 ('50' | '100' | '200' | '300' | '400' |
                                  '500' | '600' | '700' | '800' | '900')
-                                (<'-'> color-opacity)?
-  <color-opacity> = integer
+                                (<'-'> integer)?
 
   (* Not sure if it will be used *)
   color-code = rgb-color-code | rgba-color-code
