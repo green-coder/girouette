@@ -58,7 +58,7 @@
                       :right "auto"}]
 
     "top-0"
-    [".top-0" {:top "0"}]
+    [".top-0" {:top 0}]
 
     "top-0.5"
     [".top-0\\.5" {:top "0.125rem"}]
@@ -88,10 +88,10 @@
     [".top-full" {:top "100%"}]
 
     "z-0"
-    [".z-0" {:z-index "0"}]
+    [".z-0" {:z-index 0}]
 
     "z-1"
-    [".z-1" {:z-index "1"}]
+    [".z-1" {:z-index 1}]
 
     "z-auto"
     [".z-auto" {:z-index "auto"}]))

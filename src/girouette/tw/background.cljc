@@ -43,7 +43,7 @@
     background-opacity = <'bg-opacity-'> integer
     "
     :garden (fn [{[value] :component-data}]
-              {:--gi-bg-opacity (value->css (/ (read-number value) 100.0))})}
+              {:--gi-bg-opacity (value-unit->css value {:value-fn #(/ % 100.0)})})}
 
 
    {:id :background-position

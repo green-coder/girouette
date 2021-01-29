@@ -8,7 +8,7 @@
     "
     :garden (fn [{[repeat] :component-data}]
               (let [repeat (value-unit->css repeat)]
-                {:grid-template-columns (if (#{"none" "0"} repeat)
+                {:grid-template-columns (if (#{"none" 0} repeat)
                                           "none"
                                           (str "repeat(" repeat ", minmax(0, 1fr))"))}))}
 
@@ -55,7 +55,7 @@
     "
     :garden (fn [{[repeat] :component-data}]
               (let [repeat (value-unit->css repeat)]
-                {:grid-template-rows (if (#{"none" "0"} repeat)
+                {:grid-template-rows (if (#{"none" 0} repeat)
                                        "none"
                                        (str "repeat(" repeat ", minmax(0, 1fr))"))}))}
 

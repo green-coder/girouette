@@ -59,8 +59,8 @@
                     axes ({"x" ["x"]
                            "y" ["y"]
                            nil ["x" "y"]} axis)
-                    ;; TODO: improve the utility functions to handle this kind of case
-                    value (str signus (value->css (/ (read-number scale-value) 100.0)))]
+                    value (value-unit->css scale-value {:signus signus
+                                                        :value-fn #(/ % 100.0)})]
                 (into {}
                       (map (fn [axis]
                              [(keyword (str "--gi-scale-" axis)) value]))

@@ -76,7 +76,7 @@
     border-opacity = <'border-opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:--gi-border-opacity (value->css (/ (read-number value) 100.0))})}
+              {:--gi-border-opacity (value-unit->css value {:value-fn #(/ % 100.0)})})}
 
    {:id     :border-style
     :rules  "
@@ -125,7 +125,7 @@
     divide-opacity = <'divide-opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:--gi-divide-opacity (value->css (/ (read-number value) 100.0))})}
+              {:--gi-divide-opacity (value-unit->css value {:value-fn #(/ % 100.0)})})}
 
    {:id       :divide-style
     :rules    "
@@ -169,7 +169,7 @@
     ring-opacity = <'ring-opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:--gi-ring-opacity (value->css (/ (read-number value) 100.0))})}
+              {:--gi-ring-opacity (value-unit->css value {:value-fn #(/ % 100.0)})})}
 
    {:id     :ring-offset-width
     :rules  "

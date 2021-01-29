@@ -19,19 +19,21 @@
     [:screen-100vh] {} "100vh"
     [:screen-100vh] {:signus "-"} "-100vh"
 
-    [:integer "1"] {} "1"
-    [:number "1"] {} "1"
-    [:number "1_5"] {} "1.5"
-    [:number "1.5"] {} "1.5"
-    [:number "1.5"] {:signus "-"} "-1.5"
+    [:integer "1"] {} 1
+    [:number "1"] {} 1
     [:integer "1"] {:number-unit "foo"} "1foo"
+    [:integer "100"] {:value-fn #(/ % 100)} 1
+    [:number "1_5"] {} 1.5
+    [:number "1.5"] {} 1.5
+    [:number "1.5"] {:signus "-"} -1.5
+    [:number "100_5"] {:value-fn #(/ % 100)} 1.005
     [:number "1_5"] {:number-unit "foo"} "1.5foo"
     [:number "1.5"] {:number-unit "foo"} "1.5foo"
     [:number "1.5"] {:signus "-"
                      :number-unit "foo"} "-1.5foo"
 
-    [:length [:number "0"] "cm"] {} "0"
-    [:length [:number "0"] "cm"] {:signus "-"} "0"
+    [:length [:number "0"] "cm"] {} 0
+    [:length [:number "0"] "cm"] {:signus "-"} 0
     [:length [:number "0"] "cm"] {:zero-unit "banana"} "0banana"
     [:length [:number "0"] "cm"] {:signus "-"
                                   :zero-unit "banana"} "0banana"
@@ -42,7 +44,7 @@
     [:percentage [:number "1_5"]] {} "1.5%"
     [:percentage [:number "1_5"]] {:signus "-"} "-1.5%"
 
-    [:fraction [:number "5"] [:number "2_5"]] {} "2"
+    [:fraction [:number "5"] [:number "2_5"]] {} 2
     [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit "px"} "2px"
     [:fraction [:number "5"] [:number "2_5"]] {:fraction-unit :quarter-rem} "0.5rem"
     [:fraction [:number "5"] [:number "2_5"]] {:signus "-"

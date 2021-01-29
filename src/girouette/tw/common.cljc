@@ -46,7 +46,11 @@
                  ;; TODO: find a better name, like {:integer {:unit ...}, :number {:unit ...}}
                  number-unit
                  ;; TODO: find a better name, like {:fraction {:unit ...}}
-                 fraction-unit] :as options}]
+                 fraction-unit
+                 ;; TODO: should also work 'per data type' like {:integer {:value-fn ...}}
+                 value-fn]
+          :or {value-fn identity}
+          :as options}]
    (case (first data)
      :auto "auto"
      :none "none"
@@ -65,12 +69,14 @@
                           :full-100% [100 "%"]
                           :screen-100vw [100 "vw"]
                           :screen-100vh [100 "vh"])
+           value (value-fn value)
            [value unit] (cond
                           (zero? value) [0 zero-unit]
                           (= unit :quarter-rem) [(/ value 4) "rem"]
                           :else [value unit])
            value (cond-> value (= signus "-") (* -1))]
-       (str (value->css value) unit)))))
+       (cond-> (value->css value)
+         (some? unit) (str unit))))))
 
 
 (defn inner-state-variants-transform [rule props]

@@ -7,10 +7,10 @@
     (= expected-garden (class-name->garden class-name))
 
     "p-0"
-    [".p-0" {:padding "0"}]
+    [".p-0" {:padding 0}]
 
     "-p-0"
-    [".-p-0" {:padding "0"}]
+    [".-p-0" {:padding 0}]
 
     "p-1"
     [".p-1" {:padding "0.25rem"}]

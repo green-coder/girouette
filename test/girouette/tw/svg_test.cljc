@@ -13,7 +13,7 @@
     [".stroke-current" {:stroke "currentColor"}]
 
     "stroke-0"
-    [".stroke-0" {:stroke-width "0"}]
+    [".stroke-0" {:stroke-width 0}]
 
     "stroke-3_5"
-    [".stroke-3_5" {:stroke-width "3.5"}]))
+    [".stroke-3_5" {:stroke-width 3.5}]))

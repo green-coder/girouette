@@ -10,7 +10,7 @@
     :garden (fn [{[flex-grow-value] :component-data}]
               {:flex-grow (if-let [[_ data] flex-grow-value]
                             (value-unit->css data)
-                            "1")})}
+                            1)})}
 
 
    {:id :flex-shrink
@@ -21,7 +21,7 @@
     :garden (fn [{[flex-shrink-value] :component-data}]
               {:flex-shrink (if-let [[_ data] flex-shrink-value]
                               (value-unit->css data)
-                              "1")})}
+                              1)})}
 
 
    {:id :flex-basis
@@ -33,7 +33,7 @@
               {:flex-basis (if-let [[_ data] flex-basis-value]
                              (value-unit->css data {:number-unit :quarter-rem
                                                     :fraction-unit "%"})
-                             "1")})}
+                             1)})}
 
 
    {:id :flex-shorthand
@@ -95,7 +95,7 @@
     :garden (fn [props]
               (let [{:keys [signus order-param]} (into {} (:component-data props))]
                 {:order (case order-param
-                          "first" "-9999"
-                          "last" "9999"
-                          "none" "0"
+                          "first" -9999
+                          "last" 9999
+                          "none" 0
                           (value-unit->css order-param {:signus signus}))}))}])
