@@ -30,7 +30,7 @@
 
    {:id :opacity
     :rules "
-    opacity = <'opacity-'> integer
+    opacity = <'opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
               {:opacity (value-unit->css value {:value-fn div-100})})}])

@@ -40,7 +40,7 @@
 
    {:id :background-opacity
     :rules "
-    background-opacity = <'bg-opacity-'> integer
+    background-opacity = <'bg-opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
               {:--gi-bg-opacity (value-unit->css value {:value-fn div-100})})}

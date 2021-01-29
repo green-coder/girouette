@@ -182,7 +182,7 @@
 
    {:id :text-opacity
     :rules "
-    text-opacity = <'text-opacity-'> integer
+    text-opacity = <'text-opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
               {:--gi-text-opacity (value-unit->css value {:value-fn div-100})})}

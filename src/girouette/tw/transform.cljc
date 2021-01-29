@@ -52,7 +52,7 @@
    {:id :scale
     :rules "
     scale = signus? <'scale-'> (axis <'-'>)? scale-value
-    scale-value = integer
+    scale-value = number
     "
     :garden (fn [{data :component-data}]
               (let [{:keys [signus axis scale-value]} (into {} data)
