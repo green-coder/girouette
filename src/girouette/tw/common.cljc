@@ -23,10 +23,11 @@
    "2xl" "1536px"})
 
 
-(defn read-number [s]
-  (-> s
-      (str/escape {\_ \.})
-      edn/read-string))
+(defn read-number [data]
+  (let [number-str (cond-> data (vector? data) second)]
+    (-> number-str
+        (str/escape {\_ \.})
+        edn/read-string)))
 
 
 (defn value->css [value]
@@ -37,29 +38,35 @@
 
 
 (defn value-unit->css
-  ([data] (value-unit->css data {}))
-  ([[data-type & data] {:as   options
-                        :keys [signus]}]
-   (case data-type
+  ([data]
+   (value-unit->css data {}))
+  ([data {:keys [signus
+                 ;; TODO: find a better name, like {:zero {:unit ...}}
+                 zero-unit
+                 ;; TODO: find a better name, like {:integer {:unit ...}, :number {:unit ...}}
+                 number-unit
+                 ;; TODO: find a better name, like {:fraction {:unit ...}}
+                 fraction-unit] :as options}]
+   (case (first data)
      :auto "auto"
      :none "none"
      :full "full"
      :min-content "min-content"
      :max-content "max-content"
-     (let [[value unit] (case data-type
-                          (:integer :number) [(read-number (first data)) (:number-unit options)]
-                          :length [(read-number (second (first data))) (second data)]
-                          :length-unit [1 (first data)]
-                          :percentage [(read-number (second (first data))) "%"]
-                          :fraction (let [[[_ numerator] [_ denominator]] data
-                                          ratio (/ (read-number numerator) (read-number denominator))
-                                          unit (:fraction-unit options)]
+     (let [[data-type arg1 arg2] data
+           [value unit] (case data-type
+                          (:integer :number) [(read-number arg1) number-unit]
+                          :length [(read-number arg1) arg2]
+                          :length-unit [1 arg1]
+                          :percentage [(read-number arg1) "%"]
+                          :fraction (let [ratio (/ (read-number arg1) (read-number arg2))
+                                          unit fraction-unit]
                                       [(cond-> ratio (= unit "%") (* 100)) unit])
                           :full-100% [100 "%"]
                           :screen-100vw [100 "vw"]
                           :screen-100vh [100 "vh"])
            [value unit] (cond
-                          (zero? value) [0 (:zero-unit options)]
+                          (zero? value) [0 zero-unit]
                           (= unit :quarter-rem) [(/ value 4) "rem"]
                           :else [value unit])
            value (cond-> value (= signus "-") (* -1))]

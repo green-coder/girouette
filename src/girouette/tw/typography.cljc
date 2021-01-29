@@ -184,7 +184,7 @@
     :rules "
     text-opacity = <'text-opacity-'> integer
     "
-    :garden (fn [{[[_ value]] :component-data}]
+    :garden (fn [{[value] :component-data}]
               {:--gi-text-opacity (value->css (/ (read-number value) 100.0))})}
 
 

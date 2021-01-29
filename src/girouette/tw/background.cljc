@@ -42,7 +42,7 @@
     :rules "
     background-opacity = <'bg-opacity-'> integer
     "
-    :garden (fn [{[[_ value]] :component-data}]
+    :garden (fn [{[value] :component-data}]
               {:--gi-bg-opacity (value->css (/ (read-number value) 100.0))})}
 
 

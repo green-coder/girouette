@@ -60,7 +60,7 @@
                            "y" ["y"]
                            nil ["x" "y"]} axis)
                     ;; TODO: improve the utility functions to handle this kind of case
-                    value (str signus (value->css (/ (read-number (second scale-value)) 100.0)))]
+                    value (str signus (value->css (/ (read-number scale-value) 100.0)))]
                 (into {}
                       (map (fn [axis]
                              [(keyword (str "--gi-scale-" axis)) value]))
@@ -75,7 +75,7 @@
     :garden (fn [{data :component-data}]
               (let [{:keys [signus rotate-value]} (into {} data)
                     ;; TODO: improve the utility functions to handle this kind of case
-                    value (str signus (value->css (read-number (second rotate-value))) "deg")]
+                    value (str signus (value->css (read-number rotate-value)) "deg")]
                 {:--gi-rotate value}))}
 
 
@@ -103,5 +103,5 @@
               (let [{:keys [signus axis skew-value]} (into {} data)
                     attribute (keyword (str "--gi-skew-" axis))
                     ;; TODO: improve the utility functions to handle this kind of case
-                    value (str signus (value->css (read-number (second skew-value))) "deg")]
+                    value (str signus (value->css (read-number skew-value)) "deg")]
                 {attribute value}))}])

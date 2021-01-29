@@ -32,5 +32,5 @@
     :rules "
     opacity = <'opacity-'> integer
     "
-    :garden (fn [{[[_ value]] :component-data}]
+    :garden (fn [{[value] :component-data}]
               {:opacity (value->css (/ (read-number value) 100.0))})}])
