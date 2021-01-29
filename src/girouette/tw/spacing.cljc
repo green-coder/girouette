@@ -22,6 +22,7 @@
                                    "y" ["top" "bottom"]
                                    nil))
                     value-css (value-unit->css padding-value {:signus signus
+                                                              :zero-unit nil
                                                               :number-unit :quarter-rem})]
                 (if (nil? directions)
                   {:padding value-css}
@@ -47,6 +48,7 @@
                                    "y" ["top" "bottom"]
                                    nil))
                     value-css (value-unit->css margin-value {:signus signus
+                                                             :zero-unit nil
                                                              :number-unit :quarter-rem})]
                 (if (nil? directions)
                   {:margin value-css}
@@ -70,5 +72,6 @@
                                 ["y" false] "top"
                                 ["y" true]  "bottom"} [axis (some? space-between-reverse)])
                     value-css (value-unit->css space-between-value {:signus signus
+                                                                    :zero-unit nil
                                                                     :number-unit :quarter-rem})]
                 {(keyword (str "margin-" direction)) value-css}))}])

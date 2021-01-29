@@ -32,8 +32,11 @@
     [:number "1.5"] {:signus "-"
                      :number-unit "foo"} "-1.5foo"
 
-    [:length [:number "0"] "cm"] {} 0
-    [:length [:number "0"] "cm"] {:signus "-"} 0
+    [:length [:number "0"] "cm"] {} "0cm"
+    [:length [:number "0"] "cm"] {:zero-unit nil} 0
+    [:length [:number "0"] "cm"] {:signus "-"} "0cm"
+    [:length [:number "0"] "cm"] {:signus "-"
+                                  :zero-unit nil} 0
     [:length [:number "0"] "cm"] {:zero-unit "banana"} "0banana"
     [:length [:number "0"] "cm"] {:signus "-"
                                   :zero-unit "banana"} "0banana"

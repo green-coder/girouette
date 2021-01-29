@@ -110,19 +110,19 @@
     positioning-value = number | length | length-unit | fraction | percentage-full | auto
     "
     :garden (fn [{component-data :component-data}]
-              ;; TODO: replace index-by by (into {} component-data)
-              (let [{:keys [signus positioning-mode positioning-value]} (util/index-by first next component-data)
+              (let [{:keys [signus positioning-mode positioning-value]} (into {} component-data)
                     directions ({"inset" [:top :right :bottom :left]
                                  "inset-x" [:right :left]
                                  "inset-y" [:top :bottom]
                                  "top" [:top]
                                  "right" [:right]
                                  "bottom" [:bottom]
-                                 "left" [:left]} (first positioning-mode))
-                    value-css (value-unit->css (first positioning-value)
-                                               {:number-unit :quarter-rem
-                                                :fraction-unit "%"
-                                                :signus (first signus)})]
+                                 "left" [:left]} positioning-mode)
+                    value-css (value-unit->css positioning-value
+                                               {:signus signus
+                                                :zero-unit nil
+                                                :number-unit :quarter-rem
+                                                :fraction-unit "%"})]
                 (into {}
                       (map (fn [direction] [direction value-css]))
                       directions)))}

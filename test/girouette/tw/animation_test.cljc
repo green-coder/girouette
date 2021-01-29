@@ -18,6 +18,9 @@
       :transition-timing-function "cubic-bezier(0.4,0,0.2,1)",
       :transition-duration "150ms"}]
 
+    "duration-0"
+    [".duration-0" {:transition-duration "0s"}]
+
     "duration-100"
     [".duration-100" {:transition-duration "100ms"}]
 
@@ -26,6 +29,9 @@
 
     "ease-in"
     [".ease-in" {:transition-timing-function "cubic-bezier(0.4,0,1,1)"}]
+
+    "delay-0"
+    [".delay-0" {:transition-delay "0s"}]
 
     "delay-100"
     [".delay-100" {:transition-delay "100ms"}]
@@ -38,7 +44,7 @@
      [{:animation "spin 1s linear infinite"}
       #garden.types.CSSAtRule{:identifier :keyframes,
                               :value {:identifier "spin",
-                                      :frames ([:from {:transform "rotate(0deg)"}] [:to {:transform "rotate(360deg)"}])}}]]
+                                      :frames ([:from {:transform "rotate(0)"}] [:to {:transform "rotate(360deg)"}])}}]]
 
     "animate-ping"
     [".animate-ping"

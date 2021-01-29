@@ -76,7 +76,8 @@
               (if (= (count data) 1)
                 {:background-size (first data)}
                 (let [[x y] data
-                      options {:number-unit :quarter-rem
+                      options {:zero-unit nil
+                               :number-unit :quarter-rem
                                :fraction-unit "%"}]
                   {:background-size [[(value-unit->css x options)
                                       (value-unit->css y options)]]})))}

@@ -139,4 +139,5 @@
                 {({"x" :column-gap
                    "y" :row-gap
                    nil :gap} axis)
-                 (value-unit->css gap-value {:number-unit :quarter-rem})}))}])
+                 (value-unit->css gap-value {:zero-unit nil
+                                             :number-unit :quarter-rem})}))}])

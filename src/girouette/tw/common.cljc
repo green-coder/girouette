@@ -41,12 +41,16 @@
   ([data]
    (value-unit->css data {}))
   ([data {:keys [signus
-                 ;; TODO: find a better name, like {:zero {:unit ...}}
-                 zero-unit
+
+                 ;; TODO: should also work 'per data type' like {:fraction {:zero-unit ...}}
+                 ;;zero-unit
+
                  ;; TODO: find a better name, like {:integer {:unit ...}, :number {:unit ...}}
                  number-unit
+
                  ;; TODO: find a better name, like {:fraction {:unit ...}}
                  fraction-unit
+
                  ;; TODO: should also work 'per data type' like {:integer {:value-fn ...}}
                  value-fn]
           :or {value-fn identity}
@@ -71,7 +75,7 @@
                           :screen-100vh [100 "vh"])
            value (value-fn value)
            [value unit] (cond
-                          (zero? value) [0 zero-unit]
+                          (zero? value) [0 (:zero-unit options unit)]
                           (= unit :quarter-rem) [(/ value 4) "rem"]
                           :else [value unit])
            value (cond-> value (= signus "-") (* -1))]

@@ -11,7 +11,8 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
-                                       {:number-unit :quarter-rem
+                                       {:zero-unit nil
+                                        :number-unit :quarter-rem
                                         :fraction-unit "%"})})}
 
 
@@ -22,7 +23,8 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
-                                       {:number-unit :quarter-rem
+                                       {:zero-unit nil
+                                        :number-unit :quarter-rem
                                         :fraction-unit "%"})})}
 
 
@@ -33,7 +35,8 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
-                                       {:number-unit :quarter-rem
+                                       {:zero-unit nil
+                                        :number-unit :quarter-rem
                                         :fraction-unit "%"})})}
 
 
@@ -44,7 +47,8 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:height (value-unit->css value-data
-                                        {:number-unit :quarter-rem
+                                        {:zero-unit nil
+                                         :number-unit :quarter-rem
                                          :fraction-unit "%"})})}
 
 
@@ -55,7 +59,8 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:min-height (value-unit->css value-data
-                                            {:number-unit :quarter-rem
+                                            {:zero-unit nil
+                                             :number-unit :quarter-rem
                                              :fraction-unit "%"})})}
 
 
@@ -66,5 +71,6 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:max-height (value-unit->css value-data
-                                            {:number-unit :quarter-rem
+                                            {:zero-unit nil
+                                             :number-unit :quarter-rem
                                              :fraction-unit "%"})})}])

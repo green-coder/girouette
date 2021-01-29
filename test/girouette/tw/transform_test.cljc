@@ -39,7 +39,7 @@
     [".-scale-y-30" {:--gi-scale-y -0.3}]
 
     "rotate-0"
-    [".rotate-0" {:--gi-rotate "0deg"}]
+    [".rotate-0" {:--gi-rotate 0}]
 
     "rotate-45"
     [".rotate-45" {:--gi-rotate "45deg"}]
@@ -69,7 +69,7 @@
     [".translate-y-full" {:--gi-translate-y "100%"}]
 
     "skew-x-0"
-    [".skew-x-0" {:--gi-skew-x "0deg"}]
+    [".skew-x-0" {:--gi-skew-x 0}]
 
     "-skew-y-10"
     [".-skew-y-10" {:--gi-skew-y "-10deg"}]))

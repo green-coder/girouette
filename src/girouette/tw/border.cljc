@@ -55,7 +55,8 @@
                                :border-width)]
                 {css-prop (if (nil? border-width-value)
                             "1px"
-                            (value-unit->css border-width-value {:number-unit "px"}))}))}
+                            (value-unit->css border-width-value {:zero-unit nil
+                                                                 :number-unit "px"}))}))}
    {:id     :border-color
     :rules  "
     border-color = <'border-'> color
@@ -96,7 +97,8 @@
     :garden   (fn [{:keys [component-data]}]
                 (let [{axis  :axis
                        value :divide-width-value} (into {} component-data)]
-                  (let [width (if (nil? value) "1px" (value-unit->css value {:number-unit "px"}))]
+                  (let [width (if (nil? value) "1px" (value-unit->css value {:zero-unit nil
+                                                                             :number-unit "px"}))]
                     (case axis
                       "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
                            :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse))")}
@@ -146,7 +148,8 @@
                 {:--gi-ring-inset "inset"}
                 (let [size (if (nil? value)
                              "3px"
-                             (value-unit->css value {:number-unit "px"}))]
+                             (value-unit->css value {:zero-unit nil
+                                                     :number-unit "px"}))]
                   {:box-shadow (str "var(--gi-ring-inset) 0 0 0 calc("
                                     size
                                     " + var(--gi-ring-offset-width))"
@@ -176,7 +179,8 @@
     ring-offset-width = <'ring-offset-'> (number | length | length-unit)
     "
     :garden (fn [{[value] :component-data}]
-              {:--gi-ring-offset-width (value-unit->css value {:number-unit "px"})
+              {:--gi-ring-offset-width (value-unit->css value {:zero-unit nil
+                                                               :number-unit "px"})
                :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"})}
 
    {:id     :ring-offset-color

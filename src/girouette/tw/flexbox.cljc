@@ -31,7 +31,8 @@
     "
     :garden (fn [{[flex-basis-value] :component-data}]
               {:flex-basis (if-let [[_ data] flex-basis-value]
-                             (value-unit->css data {:number-unit :quarter-rem
+                             (value-unit->css data {:zero-unit nil
+                                                    :number-unit :quarter-rem
                                                     :fraction-unit "%"})
                              1)})}
 
@@ -63,7 +64,8 @@
                        (let [[[_ grow-data] [_ shrink-data] [_ basis-data]] args
                              grow-value (value-unit->css grow-data)
                              shrink-value (value-unit->css shrink-data)
-                             basis-value (value-unit->css basis-data {:number-unit :quarter-rem
+                             basis-value (value-unit->css basis-data {:zero-unit nil
+                                                                      :number-unit :quarter-rem
                                                                       :fraction-unit "%"})]
                          (str grow-value " " shrink-value " " basis-value)))})}
 
