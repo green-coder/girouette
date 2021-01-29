@@ -23,10 +23,9 @@
 
    {:id :transition-duration
     :rules "
-    transition-duration = <'duration-'> number
+    transition-duration = <'duration-'> (number | time)
     "
     :garden (fn [{[duration] :component-data}]
-              ;; TODO: add support for explicit ms and s units
               {:transition-duration (value-unit->css duration {:zero-unit "s"
                                                                :number {:unit "ms"}})})}
 
@@ -44,7 +43,7 @@
 
    {:id :transition-delay
     :rules "
-    transition-delay = <'delay-'> number
+    transition-delay = <'delay-'> (number | time)
     "
     :garden (fn [{[duration] :component-data}]
               {:transition-delay (value-unit->css duration {:zero-unit "s"

@@ -68,16 +68,15 @@
 
 
    {:id :rotate
-    ;; TODO: add angle units .. deg, rad, grad, turn, etc...
     :rules "
     rotate = signus? <'rotate-'> rotate-value
-    rotate-value = integer
+    rotate-value = number | angle
     "
     :garden (fn [{data :component-data}]
               (let [{:keys [signus rotate-value]} (into {} data)]
                 {:--gi-rotate (value-unit->css rotate-value {:signus signus
                                                              :zero-unit nil
-                                                             :integer {:unit "deg"}})}))}
+                                                             :number {:unit "deg"}})}))}
 
 
    {:id :translate
@@ -101,12 +100,12 @@
    {:id :skew
     :rules  "
     skew = signus? <'skew-'> axis <'-'> skew-value
-    skew-value = integer
+    skew-value = number | angle
     "
     :garden (fn [{data :component-data}]
               (let [{:keys [signus axis skew-value]} (into {} data)
                     attribute (keyword (str "--gi-skew-" axis))
                     value (value-unit->css skew-value {:signus signus
                                                        :zero-unit nil
-                                                       :integer {:unit "deg"}})]
+                                                       :number {:unit "deg"}})]
                 {attribute value}))}])

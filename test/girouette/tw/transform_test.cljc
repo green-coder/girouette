@@ -47,6 +47,9 @@
     "-rotate-45"
     [".-rotate-45" {:--gi-rotate "-45deg"}]
 
+    "-rotate-2turn"
+    [".-rotate-2turn" {:--gi-rotate "-2turn"}]
+
     "translate-x-0"
     [".translate-x-0" {:--gi-translate-x 0}]
 
@@ -71,5 +74,11 @@
     "skew-x-0"
     [".skew-x-0" {:--gi-skew-x 0}]
 
+    "skew-y-10"
+    [".skew-y-10" {:--gi-skew-y "10deg"}]
+
     "-skew-y-10"
-    [".-skew-y-10" {:--gi-skew-y "-10deg"}]))
+    [".-skew-y-10" {:--gi-skew-y "-10deg"}]
+
+    "-skew-y-0_5rad"
+    [".-skew-y-0_5rad" {:--gi-skew-y "-0.5rad"}]))

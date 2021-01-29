@@ -24,6 +24,12 @@
     "duration-100"
     [".duration-100" {:transition-duration "100ms"}]
 
+    "duration-100ms"
+    [".duration-100ms" {:transition-duration "100ms"}]
+
+    "duration-2s"
+    [".duration-2s" {:transition-duration "2s"}]
+
     "ease-linear"
     [".ease-linear" {:transition-timing-function "linear"}]
 
@@ -35,6 +41,12 @@
 
     "delay-100"
     [".delay-100" {:transition-delay "100ms"}]
+
+    "delay-100ms"
+    [".delay-100ms" {:transition-delay "100ms"}]
+
+    "delay-2s"
+    [".delay-2s" {:transition-delay "2s"}]
 
     "animate-none"
     [".animate-none" {:animation "none"}]

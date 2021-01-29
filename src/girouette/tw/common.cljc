@@ -67,6 +67,8 @@
                           :number [(read-number arg1) nil]
                           :length [(read-number arg1) arg2]
                           :length-unit [1 arg1]
+                          :angle [(read-number arg1) arg2]
+                          :time [(read-number arg1) arg2]
                           :percentage [(read-number arg1) "%"]
                           :fraction [(/ (read-number arg1) (read-number arg2)) nil]
                           :full-100% [100 "%"]
