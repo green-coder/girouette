@@ -1,6 +1,6 @@
 (ns girouette.tw.typography
   (:require [garden.selectors :refer [defpseudoelement]]
-            [girouette.tw.common :refer [read-number value->css value-unit->css div-100]]
+            [girouette.tw.common :refer [value-unit->css div-100]]
             [girouette.tw.color :refer [read-color color->css]]))
 
 

@@ -1,7 +1,7 @@
 (ns girouette.tw.spacing
   (:require [garden.selectors :as gs]
             [girouette.util :as util]
-            [girouette.tw.common :refer [dot value-unit->css default-pipeline div-100 div-4 mul-100]]))
+            [girouette.tw.common :refer [value-unit->css dot default-pipeline div-4]]))
 
 
 (def components

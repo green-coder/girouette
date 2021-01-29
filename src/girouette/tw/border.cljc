@@ -1,7 +1,6 @@
 (ns girouette.tw.border
   (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css value->css read-number dot default-pipeline
-                                         div-100]]
+            [girouette.tw.common :refer [value-unit->css dot default-pipeline div-100]]
             [girouette.tw.color :refer [read-color color->css]]))
 
 (def components

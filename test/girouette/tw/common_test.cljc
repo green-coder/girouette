@@ -1,8 +1,35 @@
 (ns girouette.tw.common-test
   (:require
     [clojure.test :refer [deftest testing is are]]
-    [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]
+    [girouette.tw.common :refer [read-number number->double-or-int value-unit->css
+                                 div-100 div-4 mul-100]]
     [girouette.tw.default-api :refer [class-name->garden]]))
+
+
+(deftest read-number-test
+  (are [input expected-output]
+    (= expected-output (read-number input))
+
+    [:integer "2"]   2
+    [:number  "2"]   2
+    [:number  "2_5"] 2.5
+    [:number  "2.5"] 2.5
+
+    "2"   2
+    "2_5" 2.5
+    "2.5" 2.5))
+
+
+(deftest number->double-or-int-test
+  (are [input expected-output]
+    (= expected-output (number->double-or-int input))
+
+    2.5       2.5
+    5         5
+
+    ;; Note: ratio numbers do not exist in CLJS.
+    (/ 10 4)  2.5
+    (/ 10 2)  5))
 
 
 (deftest value-unit->css-test
@@ -66,6 +93,7 @@
     [:fraction [:number "0"] [:number "-2_5"]] {:signus "-"
                                                 :fraction {:unit "apple"
                                                            :zero-unit "banana"}} "0banana"))
+
 
 (deftest prefixes-test
   (are [class-name expected-garden]

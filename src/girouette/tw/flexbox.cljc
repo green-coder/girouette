@@ -1,5 +1,5 @@
 (ns girouette.tw.flexbox
-  (:require [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :flex-grow

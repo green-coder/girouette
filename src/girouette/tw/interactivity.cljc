@@ -1,5 +1,4 @@
-(ns girouette.tw.interactivity
-  (:require [girouette.tw.common :refer [value-unit->css]]))
+(ns girouette.tw.interactivity)
 
 (def components
   [{:id :appearance

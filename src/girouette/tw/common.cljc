@@ -23,19 +23,26 @@
    "2xl" "1536px"})
 
 
-(defn div-100 [x] (/ x 100.0))
+(defn div-100 [x] (/ x 100))
 (defn div-4   [x] (/ x 4))
 (defn mul-100 [x] (* x 100))
 
 
-(defn read-number [data]
+(defn read-number
+  "Converts the input into a number.
+   Accepts the formats [:integer \"1\"], [:number \"1\"] or \"1\".
+   This function might become private at some point, do not use if possible."
+  [data]
   (let [number-str (cond-> data (vector? data) second)]
     (-> number-str
         (str/escape {\_ \.})
         edn/read-string)))
 
 
-(defn value->css [value]
+(defn number->double-or-int
+  "Convert numeric value to a double, or a int if the value can be converted without a loss.
+   Useful for getting rid of ratio numbers like 5/2."
+  [value]
   (if (= (double (int value))
          (double value))
     (int value)
@@ -73,7 +80,7 @@
                           [0 zero-unit]
                           [value unit])
            value (cond-> value (= signus "-") (* -1))]
-       (cond-> (value->css value)
+       (cond-> (number->double-or-int value)
          (some? unit) (str unit))))))
 
 

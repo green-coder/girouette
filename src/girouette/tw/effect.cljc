@@ -1,5 +1,5 @@
 (ns girouette.tw.effect
-  (:require [girouette.tw.common :refer [read-number value->css value-unit->css div-100]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-100]]))
 
 (def components
   [{:id :box-shadow
