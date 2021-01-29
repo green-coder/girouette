@@ -2,7 +2,8 @@
   (:require [clojure.string :as str]
             [girouette.util :as util]
             [girouette.tw.common :refer [value-unit->css
-                                         breakpoint->pixels]]))
+                                         breakpoint->pixels
+                                         div-100 div-4 mul-100]]))
 
 (def components
   [{:id :container
@@ -121,8 +122,10 @@
                     value-css (value-unit->css positioning-value
                                                {:signus signus
                                                 :zero-unit nil
-                                                :number-unit :quarter-rem
-                                                :fraction-unit "%"})]
+                                                :number {:unit "rem"
+                                                         :value-fn div-4}
+                                                :fraction {:unit "%"
+                                                           :value-fn mul-100}})]
                 (into {}
                       (map (fn [direction] [direction value-css]))
                       directions)))}

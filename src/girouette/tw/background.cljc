@@ -1,6 +1,7 @@
 (ns girouette.tw.background
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [read-number value->css value-unit->css]]
+            [girouette.tw.common :refer [read-number value->css value-unit->css
+                                         div-100 div-4 mul-100]]
             [girouette.tw.color :refer [read-color as-transparent color->css]]))
 
 (def components
@@ -43,7 +44,7 @@
     background-opacity = <'bg-opacity-'> integer
     "
     :garden (fn [{[value] :component-data}]
-              {:--gi-bg-opacity (value-unit->css value {:value-fn #(/ % 100.0)})})}
+              {:--gi-bg-opacity (value-unit->css value {:value-fn div-100})})}
 
 
    {:id :background-position
@@ -52,9 +53,8 @@
                                    'left-top' | 'left' | 'left-bottom' |
                                    'right-top' | 'right' | 'right-bottom')
     "
-    :garden (fn [{data :component-data}]
-              (if (= (count data) 1)
-                {:background-position (str/escape (first data) {\- \space})}))}
+    :garden (fn [{[position] :component-data}]
+              {:background-position (str/escape position {\- \space})})}
 
 
    {:id :background-repeat
@@ -70,15 +70,17 @@
     :rules "
     background-size = <'bg-'> ('auto' | 'cover' | 'contain' |
                                <'size-'> background-size-length <'-'> background-size-length)
-    <background-size-length> = auto | length | length-unit | fraction | percentage
+    <background-size-length> = auto | number | length | length-unit | fraction | percentage
     "
     :garden (fn [{data :component-data}]
               (if (= (count data) 1)
                 {:background-size (first data)}
                 (let [[x y] data
                       options {:zero-unit nil
-                               :number-unit :quarter-rem
-                               :fraction-unit "%"}]
+                               :number {:unit "rem"
+                                        :value-fn div-4}
+                               :fraction {:unit "%"
+                                          :value-fn mul-100}}]
                   {:background-size [[(value-unit->css x options)
                                       (value-unit->css y options)]]})))}
 

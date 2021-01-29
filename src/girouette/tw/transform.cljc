@@ -1,6 +1,6 @@
 (ns girouette.tw.transform
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [read-number value->css value-unit->css]]))
+            [girouette.tw.common :refer [read-number value->css value-unit->css div-100 div-4 mul-100]]))
 
 (def components
   [{:id :transform
@@ -60,7 +60,7 @@
                            "y" ["y"]
                            nil ["x" "y"]} axis)
                     value (value-unit->css scale-value {:signus signus
-                                                        :value-fn #(/ % 100.0)})]
+                                                        :value-fn div-100})]
                 (into {}
                       (map (fn [axis]
                              [(keyword (str "--gi-scale-" axis)) value]))
@@ -77,7 +77,7 @@
               (let [{:keys [signus rotate-value]} (into {} data)]
                 {:--gi-rotate (value-unit->css rotate-value {:signus signus
                                                              :zero-unit nil
-                                                             :number-unit "deg"})}))}
+                                                             :integer {:unit "deg"}})}))}
 
 
    {:id :translate
@@ -92,8 +92,10 @@
                 {attribute (value-unit->css translate-value
                                             {:signus signus
                                              :zero-unit nil
-                                             :number-unit :quarter-rem
-                                             :fraction-unit "%"})}))}
+                                             :number {:unit "rem"
+                                                      :value-fn div-4}
+                                             :fraction {:unit "%"
+                                                        :value-fn mul-100}})}))}
 
 
    {:id :skew
@@ -106,5 +108,5 @@
                     attribute (keyword (str "--gi-skew-" axis))
                     value (value-unit->css skew-value {:signus signus
                                                        :zero-unit nil
-                                                       :number-unit "deg"})]
+                                                       :integer {:unit "deg"}})]
                 {attribute value}))}])

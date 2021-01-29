@@ -23,6 +23,11 @@
    "2xl" "1536px"})
 
 
+(defn div-100 [x] (/ x 100.0))
+(defn div-4   [x] (/ x 4))
+(defn mul-100 [x] (* x 100))
+
+
 (defn read-number [data]
   (let [number-str (cond-> data (vector? data) second)]
     (-> number-str
@@ -40,21 +45,9 @@
 (defn value-unit->css
   ([data]
    (value-unit->css data {}))
-  ([data {:keys [signus
-
-                 ;; TODO: should also work 'per data type' like {:fraction {:zero-unit ...}}
-                 ;;zero-unit
-
-                 ;; TODO: find a better name, like {:integer {:unit ...}, :number {:unit ...}}
-                 number-unit
-
-                 ;; TODO: find a better name, like {:fraction {:unit ...}}
-                 fraction-unit
-
-                 ;; TODO: should also work 'per data type' like {:integer {:value-fn ...}}
-                 value-fn]
-          :or {value-fn identity}
-          :as options}]
+  ;; The options also contain :unit, :zero-unit and :value-fn, at the root and
+  ;; can also contain an override per data-type, e.g. {:fraction {:unit ...}}
+  ([data {:keys [signus] :as options}]
    (case (first data)
      :auto "auto"
      :none "none"
@@ -63,21 +56,22 @@
      :max-content "max-content"
      (let [[data-type arg1 arg2] data
            [value unit] (case data-type
-                          (:integer :number) [(read-number arg1) number-unit]
+                          :integer [(read-number arg1) nil]
+                          :number [(read-number arg1) nil]
                           :length [(read-number arg1) arg2]
                           :length-unit [1 arg1]
                           :percentage [(read-number arg1) "%"]
-                          :fraction (let [ratio (/ (read-number arg1) (read-number arg2))
-                                          unit fraction-unit]
-                                      [(cond-> ratio (= unit "%") (* 100)) unit])
+                          :fraction [(/ (read-number arg1) (read-number arg2)) nil]
                           :full-100% [100 "%"]
                           :screen-100vw [100 "vw"]
                           :screen-100vh [100 "vh"])
+           value-fn (get-in options [data-type :value-fn] (:value-fn options identity))
            value (value-fn value)
-           [value unit] (cond
-                          (zero? value) [0 (:zero-unit options unit)]
-                          (= unit :quarter-rem) [(/ value 4) "rem"]
-                          :else [value unit])
+           unit (get-in options [data-type :unit] (:unit options unit))
+           zero-unit (get-in options [data-type :zero-unit] (:zero-unit options unit))
+           [value unit] (if (zero? value)
+                          [0 zero-unit]
+                          [value unit])
            value (cond-> value (= signus "-") (* -1))]
        (cond-> (value->css value)
          (some? unit) (str unit))))))

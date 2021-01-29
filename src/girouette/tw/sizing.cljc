@@ -1,7 +1,7 @@
 (ns girouette.tw.sizing
   (:require [clojure.string :as str]
             [girouette.util :as util]
-            [girouette.tw.common :refer [value-unit->css]]))
+            [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]))
 
 (def components
   [{:id :width
@@ -12,8 +12,10 @@
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
                                        {:zero-unit nil
-                                        :number-unit :quarter-rem
-                                        :fraction-unit "%"})})}
+                                        :number {:unit "rem"
+                                                 :value-fn div-4}
+                                        :fraction {:unit "%"
+                                                   :value-fn mul-100}})})}
 
 
    {:id :min-width
@@ -24,8 +26,10 @@
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
                                        {:zero-unit nil
-                                        :number-unit :quarter-rem
-                                        :fraction-unit "%"})})}
+                                        :number {:unit "rem"
+                                                 :value-fn div-4}
+                                        :fraction {:unit "%"
+                                                   :value-fn mul-100}})})}
 
 
    {:id :max-width
@@ -36,8 +40,10 @@
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
                                        {:zero-unit nil
-                                        :number-unit :quarter-rem
-                                        :fraction-unit "%"})})}
+                                        :number {:unit "rem"
+                                                 :value-fn div-4}
+                                        :fraction {:unit "%"
+                                                   :value-fn mul-100}})})}
 
 
    {:id :height
@@ -48,8 +54,10 @@
     :garden (fn [{[value-data] :component-data}]
               {:height (value-unit->css value-data
                                         {:zero-unit nil
-                                         :number-unit :quarter-rem
-                                         :fraction-unit "%"})})}
+                                         :number {:unit "rem"
+                                                  :value-fn div-4}
+                                         :fraction {:unit "%"
+                                                    :value-fn mul-100}})})}
 
 
    {:id :min-height
@@ -60,8 +68,10 @@
     :garden (fn [{[value-data] :component-data}]
               {:min-height (value-unit->css value-data
                                             {:zero-unit nil
-                                             :number-unit :quarter-rem
-                                             :fraction-unit "%"})})}
+                                             :number {:unit "rem"
+                                                      :value-fn div-4}
+                                             :fraction {:unit "%"
+                                                        :value-fn mul-100}})})}
 
 
    {:id :max-height
@@ -72,5 +82,7 @@
     :garden (fn [{[value-data] :component-data}]
               {:max-height (value-unit->css value-data
                                             {:zero-unit nil
-                                             :number-unit :quarter-rem
-                                             :fraction-unit "%"})})}])
+                                             :number {:unit "rem"
+                                                      :value-fn div-4}
+                                             :fraction {:unit "%"
+                                                        :value-fn mul-100}})})}])
