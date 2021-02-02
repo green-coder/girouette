@@ -18,8 +18,17 @@
       :transition-timing-function "cubic-bezier(0.4,0,0.2,1)",
       :transition-duration "150ms"}]
 
+    "duration-0"
+    [".duration-0" {:transition-duration "0s"}]
+
     "duration-100"
     [".duration-100" {:transition-duration "100ms"}]
+
+    "duration-100ms"
+    [".duration-100ms" {:transition-duration "100ms"}]
+
+    "duration-2s"
+    [".duration-2s" {:transition-duration "2s"}]
 
     "ease-linear"
     [".ease-linear" {:transition-timing-function "linear"}]
@@ -27,8 +36,17 @@
     "ease-in"
     [".ease-in" {:transition-timing-function "cubic-bezier(0.4,0,1,1)"}]
 
+    "delay-0"
+    [".delay-0" {:transition-delay "0s"}]
+
     "delay-100"
     [".delay-100" {:transition-delay "100ms"}]
+
+    "delay-100ms"
+    [".delay-100ms" {:transition-delay "100ms"}]
+
+    "delay-2s"
+    [".delay-2s" {:transition-delay "2s"}]
 
     "animate-none"
     [".animate-none" {:animation "none"}]
@@ -38,7 +56,7 @@
      [{:animation "spin 1s linear infinite"}
       #garden.types.CSSAtRule{:identifier :keyframes,
                               :value {:identifier "spin",
-                                      :frames ([:from {:transform "rotate(0deg)"}] [:to {:transform "rotate(360deg)"}])}}]]
+                                      :frames ([:from {:transform "rotate(0)"}] [:to {:transform "rotate(360deg)"}])}}]]
 
     "animate-ping"
     [".animate-ping"
@@ -60,7 +78,7 @@
                                       :frames (["0%"
                                                 "100%"
                                                 {:transform "translateY(-25%)",
-                                                 :animationTimingFunction "cubic-bezier(0.8,0,1,1)"}]
+                                                 :animation-timing-function "cubic-bezier(0.8,0,1,1)"}]
                                                ["50%"
                                                 {:transform "translateY(0)",
-                                                 :animationTimingFunction "cubic-bezier(0,0,0.2,1)"}])}}]]))
+                                                 :animation-timing-function "cubic-bezier(0,0,0.2,1)"}])}}]]))

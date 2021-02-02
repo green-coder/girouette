@@ -1,7 +1,7 @@
 (ns girouette.tw.spacing
   (:require [garden.selectors :as gs]
             [girouette.util :as util]
-            [girouette.tw.common :refer [dot value-unit->css default-pipeline]]))
+            [girouette.tw.common :refer [value-unit->css dot default-pipeline div-4]]))
 
 
 (def components
@@ -11,7 +11,7 @@
     padding-value = number | length | length-unit
     "
     :garden (fn [{component-data :component-data}]
-              (let [{:keys [signus direction axis padding-value]} (util/index-by first second component-data)
+              (let [{:keys [signus direction axis padding-value]} (into {} component-data)
                     directions (case direction
                                  "t" ["top"]
                                  "r" ["right"]
@@ -21,7 +21,10 @@
                                    "x" ["left" "right"]
                                    "y" ["top" "bottom"]
                                    nil))
-                    value-css (value-unit->css signus padding-value {:number-unit :quarter-rem})]
+                    value-css (value-unit->css padding-value {:signus signus
+                                                              :zero-unit nil
+                                                              :number {:unit "rem"
+                                                                       :value-fn div-4}})]
                 (if (nil? directions)
                   {:padding value-css}
                   (into {}
@@ -45,7 +48,10 @@
                                    "x" ["left" "right"]
                                    "y" ["top" "bottom"]
                                    nil))
-                    value-css (value-unit->css signus margin-value {:number-unit :quarter-rem})]
+                    value-css (value-unit->css margin-value {:signus signus
+                                                             :zero-unit nil
+                                                             :number {:unit "rem"
+                                                                      :value-fn div-4}})]
                 (if (nil? directions)
                   {:margin value-css}
                   (into {}
@@ -67,5 +73,8 @@
                                 ["x" true]  "right"
                                 ["y" false] "top"
                                 ["y" true]  "bottom"} [axis (some? space-between-reverse)])
-                    value-css (value-unit->css signus space-between-value {:number-unit :quarter-rem})]
+                    value-css (value-unit->css space-between-value {:signus signus
+                                                                    :zero-unit nil
+                                                                    :number {:unit "rem"
+                                                                             :value-fn div-4}})]
                 {(keyword (str "margin-" direction)) value-css}))}])

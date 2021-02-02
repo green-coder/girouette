@@ -1,6 +1,6 @@
 (ns girouette.tw.typography
   (:require [garden.selectors :refer [defpseudoelement]]
-            [girouette.tw.common :refer [read-number value->css value-unit->css]]
+            [girouette.tw.common :refer [value-unit->css div-100]]
             [girouette.tw.color :refer [read-color color->css]]))
 
 
@@ -182,10 +182,10 @@
 
    {:id :text-opacity
     :rules "
-    text-opacity = <'text-opacity-'> integer
+    text-opacity = <'text-opacity-'> number
     "
-    :garden (fn [{[[_ value]] :component-data}]
-              {:--gi-text-opacity (value->css (/ (read-number value) 100.0))})}
+    :garden (fn [{[value] :component-data}]
+              {:--gi-text-opacity (value-unit->css value {:value-fn div-100})})}
 
 
    {:id :text-decoration
@@ -248,4 +248,3 @@
                           :word-break "normal"}
                 "words" {:overflow-wrap "break-word"}
                 "all" {:word-break "break-all"}))}])
-

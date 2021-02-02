@@ -1,5 +1,5 @@
 (ns girouette.tw.effect
-  (:require [girouette.tw.common :refer [read-number value->css value-unit->css]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-100]]))
 
 (def components
   [{:id :box-shadow
@@ -30,7 +30,7 @@
 
    {:id :opacity
     :rules "
-    opacity = <'opacity-'> integer
+    opacity = <'opacity-'> number
     "
-    :garden (fn [{[[_ value]] :component-data}]
-              {:opacity (value->css (/ (read-number value) 100.0))})}])
+    :garden (fn [{[value] :component-data}]
+              {:opacity (value-unit->css value {:value-fn div-100})})}])

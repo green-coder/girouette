@@ -7,22 +7,22 @@
     (= expected-garden (class-name->garden class-name))
 
     "flex-grow"
-    [".flex-grow" {:flex-grow "1"}]
+    [".flex-grow" {:flex-grow 1}]
 
     "flex-grow-3"
-    [".flex-grow-3" {:flex-grow "3"}]
+    [".flex-grow-3" {:flex-grow 3}]
 
     "flex-grow-3/2"
-    [".flex-grow-3\\/2" {:flex-grow "1.5"}]
+    [".flex-grow-3\\/2" {:flex-grow 1.5}]
 
     "flex-shrink"
-    [".flex-shrink" {:flex-shrink "1"}]
+    [".flex-shrink" {:flex-shrink 1}]
 
     "flex-shrink-3"
-    [".flex-shrink-3" {:flex-shrink "3"}]
+    [".flex-shrink-3" {:flex-shrink 3}]
 
     "flex-basis"
-    [".flex-basis" {:flex-basis "1"}]
+    [".flex-basis" {:flex-basis 1}]
 
     "flex-basis-3"
     [".flex-basis-3" {:flex-basis "0.75rem"}]
@@ -73,10 +73,10 @@
     [".flex-nowrap" {:flex-wrap "nowrap"}]
 
     "order-none"
-    [".order-none" {:order "0"}]
+    [".order-none" {:order 0}]
 
     "-order-1"
-    [".-order-1" {:order "-1"}]
+    [".-order-1" {:order -1}]
 
     "order-1"
-    [".order-1" {:order "1"}]))
+    [".order-1" {:order 1}]))

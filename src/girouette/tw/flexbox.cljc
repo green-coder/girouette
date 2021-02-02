@@ -1,5 +1,5 @@
 (ns girouette.tw.flexbox
-  (:require [girouette.tw.common :refer [value-unit->css]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :flex-grow
@@ -7,10 +7,11 @@
     flex-grow = <'flex-grow'> (<'-'> flex-grow-value)?
     flex-grow-value = number | fraction
     "
-    :garden (fn [{[flex-grow-value] :component-data}]
-              {:flex-grow (if-let [[_ data] flex-grow-value]
-                            (value-unit->css nil data {})
-                            "1")})}
+    :garden (fn [{data :component-data}]
+              {:flex-grow (let [{:keys [flex-grow-value]} (into {} data)]
+                            (if (nil? flex-grow-value)
+                              1
+                              (value-unit->css flex-grow-value)))})}
 
 
    {:id :flex-shrink
@@ -18,22 +19,27 @@
     flex-shrink = <'flex-shrink'> (<'-'> flex-shrink-value)?
     flex-shrink-value = number | fraction
     "
-    :garden (fn [{[flex-shrink-value] :component-data}]
-              {:flex-shrink (if-let [[_ data] flex-shrink-value]
-                              (value-unit->css nil data {})
-                              "1")})}
+    :garden (fn [{data :component-data}]
+              {:flex-shrink (let [{:keys [flex-shrink-value]} (into {} data)]
+                              (if (nil? flex-shrink-value)
+                                1
+                                (value-unit->css flex-shrink-value)))})}
 
 
    {:id :flex-basis
     :rules "
     flex-basis = <'flex-basis'> (<'-'> flex-basis-value)?
-    flex-basis-value = number | length | length-unit | fraction | percentage-full | auto
+    flex-basis-value = number | length | length-unit | fraction | percentage | full-100% | auto
     "
-    :garden (fn [{[flex-basis-value] :component-data}]
-              {:flex-basis (if-let [[_ data] flex-basis-value]
-                             (value-unit->css nil data {:number-unit :quarter-rem
-                                                        :fraction-unit "%"})
-                             "1")})}
+    :garden (fn [{data :component-data}]
+              {:flex-basis (let [{:keys [flex-basis-value]} (into {} data)]
+                             (if (nil? flex-basis-value)
+                               1
+                               (value-unit->css flex-basis-value {:zero-unit nil
+                                                                  :number {:unit "rem"
+                                                                           :value-fn div-4}
+                                                                  :fraction {:unit "%"
+                                                                             :value-fn mul-100}})))})}
 
 
    {:id :flex-shorthand
@@ -50,21 +56,24 @@
                          "none"    "none"
                          "initial" "0 1 auto"
                          "auto"    "1 1 auto"
-                         (let [size (value-unit->css nil (first args) {})]
+                         (let [size (value-unit->css (first args))]
                            (str size " " size " 0%")))
 
                        :flex-shorthand-2-args
                        (let [[[_ grow-data] [_ shrink-basis-data]] args
-                             grow-value (value-unit->css nil grow-data {})
-                             shrink-basis-value (value-unit->css nil shrink-basis-data {})]
+                             grow-value (value-unit->css grow-data)
+                             shrink-basis-value (value-unit->css shrink-basis-data)]
                          (str grow-value " " shrink-basis-value))
 
                        :flex-shorthand-3-args
                        (let [[[_ grow-data] [_ shrink-data] [_ basis-data]] args
-                             grow-value (value-unit->css nil grow-data {})
-                             shrink-value (value-unit->css nil shrink-data {})
-                             basis-value (value-unit->css nil basis-data {:number-unit :quarter-rem
-                                                                          :fraction-unit "%"})]
+                             grow-value (value-unit->css grow-data)
+                             shrink-value (value-unit->css shrink-data)
+                             basis-value (value-unit->css basis-data {:zero-unit nil
+                                                                      :number {:unit "rem"
+                                                                               :value-fn div-4}
+                                                                      :fraction {:unit "%"
+                                                                                 :value-fn mul-100}})]
                          (str grow-value " " shrink-value " " basis-value)))})}
 
 
@@ -95,7 +104,7 @@
     :garden (fn [props]
               (let [{:keys [signus order-param]} (into {} (:component-data props))]
                 {:order (case order-param
-                          "first" "-9999"
-                          "last" "9999"
-                          "none" "0"
-                          (value-unit->css signus order-param {}))}))}])
+                          "first" -9999
+                          "last" 9999
+                          "none" 0
+                          (value-unit->css order-param {:signus signus}))}))}])

@@ -23,10 +23,11 @@
 
    {:id :transition-duration
     :rules "
-    transition-duration = <'duration-'> number
+    transition-duration = <'duration-'> (number | time)
     "
     :garden (fn [{[duration] :component-data}]
-              {:transition-duration (value-unit->css nil duration {:number-unit "ms"})})}
+              {:transition-duration (value-unit->css duration {:zero-unit "s"
+                                                               :number {:unit "ms"}})})}
 
 
    {:id :transition-timing-function
@@ -42,10 +43,11 @@
 
    {:id :transition-delay
     :rules "
-    transition-delay = <'delay-'> number
+    transition-delay = <'delay-'> (number | time)
     "
     :garden (fn [{[duration] :component-data}]
-              {:transition-delay (value-unit->css nil duration {:number-unit "ms"})})}
+              {:transition-delay (value-unit->css duration {:zero-unit "s"
+                                                            :number {:unit "ms"}})})}
 
 
    {:id :animation
@@ -63,7 +65,7 @@
                 [{:animation "spin 1s linear infinite"}
                  (gs/at-keyframes
                    "spin"
-                   [:from {:transform "rotate(0deg)"}]
+                   [:from {:transform "rotate(0)"}]
                    [:to {:transform "rotate(360deg)"}])]
 
                 "ping"
@@ -85,6 +87,6 @@
                  (gs/at-keyframes
                     "bounce"
                     ["0%" "100%" {:transform "translateY(-25%)"
-                                  :animationTimingFunction "cubic-bezier(0.8,0,1,1)"}]
+                                  :animation-timing-function "cubic-bezier(0.8,0,1,1)"}]
                     ["50%" {:transform "translateY(0)"
-                            :animationTimingFunction "cubic-bezier(0,0,0.2,1)"}])]))}])
+                            :animation-timing-function "cubic-bezier(0,0,0.2,1)"}])]))}])

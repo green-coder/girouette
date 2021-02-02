@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/clojure:tools-deps-1.10.0.442-node
+      - image: circleci/clojure:tools-deps-1.10.1.763-node
     steps:
       - checkout
       - restore_cache:

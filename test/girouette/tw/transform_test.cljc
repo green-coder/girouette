@@ -29,17 +29,17 @@
     [".origin-top-right" {:transform-origin "top right"}]
 
     "scale-10"
-    [".scale-10" {:--gi-scale-x "0.1"
-                  :--gi-scale-y "0.1"}]
+    [".scale-10" {:--gi-scale-x 0.1
+                  :--gi-scale-y 0.1}]
 
     "scale-x-20"
-    [".scale-x-20" {:--gi-scale-x "0.2"}]
+    [".scale-x-20" {:--gi-scale-x 0.2}]
 
     "-scale-y-30"
-    [".-scale-y-30" {:--gi-scale-y "-0.3"}]
+    [".-scale-y-30" {:--gi-scale-y -0.3}]
 
     "rotate-0"
-    [".rotate-0" {:--gi-rotate "0deg"}]
+    [".rotate-0" {:--gi-rotate 0}]
 
     "rotate-45"
     [".rotate-45" {:--gi-rotate "45deg"}]
@@ -47,8 +47,11 @@
     "-rotate-45"
     [".-rotate-45" {:--gi-rotate "-45deg"}]
 
+    "-rotate-2turn"
+    [".-rotate-2turn" {:--gi-rotate "-2turn"}]
+
     "translate-x-0"
-    [".translate-x-0" {:--gi-translate-x "0"}]
+    [".translate-x-0" {:--gi-translate-x 0}]
 
     "translate-x-1"
     [".translate-x-1" {:--gi-translate-x "0.25rem"}]
@@ -69,7 +72,13 @@
     [".translate-y-full" {:--gi-translate-y "100%"}]
 
     "skew-x-0"
-    [".skew-x-0" {:--gi-skew-x "0deg"}]
+    [".skew-x-0" {:--gi-skew-x 0}]
+
+    "skew-y-10"
+    [".skew-y-10" {:--gi-skew-y "10deg"}]
 
     "-skew-y-10"
-    [".-skew-y-10" {:--gi-skew-y "-10deg"}]))
+    [".-skew-y-10" {:--gi-skew-y "-10deg"}]
+
+    "-skew-y-0_5rad"
+    [".-skew-y-0_5rad" {:--gi-skew-y "-0.5rad"}]))

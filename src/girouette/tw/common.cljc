@@ -1,8 +1,7 @@
 (ns girouette.tw.common
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
-            [garden.stylesheet :as gs]
-            [girouette.util :as util]))
+            [garden.stylesheet :as gs]))
 
 
 (defn dot [class]
@@ -24,44 +23,67 @@
    "2xl" "1536px"})
 
 
-(defn read-number [s]
-  (-> s
-      (str/escape {\_ \.})
-      edn/read-string))
+(defn div-100 [x] (/ x 100))
+(defn div-4   [x] (/ x 4))
+(defn mul-100 [x] (* x 100))
 
 
-(defn value->css [value]
+(defn read-number
+  "Converts the input into a number.
+   Accepts the formats [:integer \"1\"], [:number \"1\"] or \"1\".
+   This function might become private at some point, do not use if possible."
+  [data]
+  (let [number-str (cond-> data (vector? data) second)]
+    (-> number-str
+        (str/escape {\_ \.})
+        edn/read-string)))
+
+
+(defn number->double-or-int
+  "Convert numeric value to a double, or a int if the value can be converted without a loss.
+   Useful for getting rid of ratio numbers like 5/2."
+  [value]
   (if (= (double (int value))
          (double value))
     (int value)
     (double value)))
 
 
-(defn value-unit->css [signus [data-type & data] options]
-  (case data-type
-    :auto "auto"
-    :none "none"
-    :full "full"
-    :min-content "min-content"
-    :max-content "max-content"
-    (let [[value unit] (case data-type
-                         (:integer :number) [(read-number (first data)) (:number-unit options)]
-                         :length [(read-number (second (first data))) (second data)]
-                         :length-unit [1 (first data)]
-                         :percentage [(read-number (second (first data))) "%"]
-                         :fraction (let [[[_ numerator] [_ denominator]] data
-                                         ratio (/ (read-number numerator) (read-number denominator))
-                                         unit (:fraction-unit options)]
-                                     [(cond-> ratio (= unit "%") (* 100)) unit])
-                         :full-100% [100 "%"]
-                         :screen-100vw [100 "vw"]
-                         :screen-100vh [100 "vh"])
-          [value unit] (cond
-                         (zero? value) [0 (:zero-unit options)]
-                         (= unit :quarter-rem) [(/ value 4) "rem"]
-                         :else [value unit])
-          value (cond-> value (= signus "-") (* -1))]
-     (str (value->css value) unit))))
+(defn value-unit->css
+  ([data]
+   (value-unit->css data {}))
+  ;; The options also contain :unit, :zero-unit and :value-fn, at the root and
+  ;; can also contain an override per data-type, e.g. {:fraction {:unit ...}}
+  ([data {:keys [signus] :as options}]
+   (case (first data)
+     :auto "auto"
+     :none "none"
+     :full "full"
+     :min-content "min-content"
+     :max-content "max-content"
+     (let [[data-type arg1 arg2] data
+           [value unit] (case data-type
+                          :integer [(read-number arg1) nil]
+                          :number [(read-number arg1) nil]
+                          :length [(read-number arg1) arg2]
+                          :length-unit [1 arg1]
+                          :angle [(read-number arg1) arg2]
+                          :time [(read-number arg1) arg2]
+                          :percentage [(read-number arg1) "%"]
+                          :fraction [(/ (read-number arg1) (read-number arg2)) nil]
+                          :full-100% [100 "%"]
+                          :screen-100vw [100 "vw"]
+                          :screen-100vh [100 "vh"])
+           value-fn (get-in options [data-type :value-fn] (:value-fn options identity))
+           value (value-fn value)
+           unit (get-in options [data-type :unit] (:unit options unit))
+           zero-unit (get-in options [data-type :zero-unit] (:zero-unit options unit))
+           [value unit] (if (zero? value)
+                          [0 zero-unit]
+                          [value unit])
+           value (cond-> value (= signus "-") (* -1))]
+       (cond-> (number->double-or-int value)
+         (some? unit) (str unit))))))
 
 
 (defn inner-state-variants-transform [rule props]
@@ -144,27 +166,21 @@
   none = 'none'
   full = 'full'
 
-  <percentage-full> = percentage | full-100%
-
   (* source: https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units *)
   integer = #'\\d+'
   number = #'\\d+([._]\\d+)?'
   percentage = number <'%'>
 
-  <dimension> = length | angle | time | resolution
-
   length = number (absolute-length-unit | relative-length-unit)
   length-unit = absolute-length-unit | relative-length-unit
   <absolute-length-unit> = 'cm' | 'mm' | 'in' | 'pc' | 'pt' | 'px'
   <relative-length-unit> = 'em' | 'ex' | 'ch' | 'rem' | 'lh' | 'vw' | 'vh' | 'vmin' | 'vmax'
-  <length-percentage> = length | percentage
 
   angle = number angle-unit
   <angle-unit> = 'deg' | 'grad' | 'rad' | 'turn'
 
   time = number time-unit
   <time-unit> = 's' | 'ms'
-  <time-percentage> = time | percentage
 
   resolution = number resolution-unit
   <resolution-unit> = 'dpi' | 'dpcm' | 'dppx' | 'x'

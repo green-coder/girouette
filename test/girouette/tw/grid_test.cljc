@@ -22,12 +22,12 @@
     [".col-span-full" {:grid-column "-1 / 1"}]
 
     "col-start-1"
-    [".col-start-1" {:grid-column-start "1"}]
+    [".col-start-1" {:grid-column-start 1}]
     "col-start-auto"
     [".col-start-auto" {:grid-column-start "auto"}]
 
     "col-end-1"
-    [".col-end-1" {:grid-column-end "1"}]
+    [".col-end-1" {:grid-column-end 1}]
     "col-end-auto"
     [".col-end-auto" {:grid-column-end "auto"}]
 
@@ -47,12 +47,12 @@
     [".row-span-full" {:grid-row "-1 / 1"}]
 
     "row-start-1"
-    [".row-start-1" {:grid-row-start "1"}]
+    [".row-start-1" {:grid-row-start 1}]
     "row-start-auto"
     [".row-start-auto" {:grid-row-start "auto"}]
 
     "row-end-1"
-    [".row-end-1" {:grid-row-end "1"}]
+    [".row-end-1" {:grid-row-end 1}]
     "row-end-auto"
     [".row-end-auto" {:grid-row-end "auto"}]
 
@@ -72,9 +72,9 @@
     [".auto-rows-min" {:grid-auto-rows "min-content"}]
 
     "gap-0"
-    [".gap-0" {:gap "0"}]
+    [".gap-0" {:gap 0}]
     "gap-x-0"
-    [".gap-x-0" {:column-gap "0"}]
+    [".gap-x-0" {:column-gap 0}]
 
     "gap-1"
     [".gap-1" {:gap "0.25rem"}]

@@ -1,5 +1,4 @@
-(ns girouette.tw.accessibility
-  (:require [girouette.tw.common :refer [value-unit->css]]))
+(ns girouette.tw.accessibility)
 
 (def components
   [{:id :screen-reader

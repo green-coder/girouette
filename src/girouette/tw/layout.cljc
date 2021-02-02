@@ -1,8 +1,7 @@
 (ns girouette.tw.layout
   (:require [clojure.string :as str]
             [girouette.util :as util]
-            [girouette.tw.common :refer [value-unit->css
-                                         breakpoint->pixels]]))
+            [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100]]))
 
 (def components
   [{:id :container
@@ -107,21 +106,24 @@
     :rules "
     positioning = signus? positioning-mode <'-'> positioning-value
     positioning-mode = 'top' | 'right' | 'bottom' | 'left' | #'inset(-x|-y)?'
-    positioning-value = number | length | length-unit | fraction | percentage-full | auto
+    positioning-value = number | length | length-unit | fraction | percentage | full-100% | auto
     "
     :garden (fn [{component-data :component-data}]
-              (let [{:keys [signus positioning-mode positioning-value]} (util/index-by first next component-data)
+              (let [{:keys [signus positioning-mode positioning-value]} (into {} component-data)
                     directions ({"inset" [:top :right :bottom :left]
                                  "inset-x" [:right :left]
                                  "inset-y" [:top :bottom]
                                  "top" [:top]
                                  "right" [:right]
                                  "bottom" [:bottom]
-                                 "left" [:left]} (first positioning-mode))
-                    value-css (value-unit->css (first signus)
-                                               (first positioning-value)
-                                               {:number-unit :quarter-rem
-                                                :fraction-unit "%"})]
+                                 "left" [:left]} positioning-mode)
+                    value-css (value-unit->css positioning-value
+                                               {:signus signus
+                                                :zero-unit nil
+                                                :number {:unit "rem"
+                                                         :value-fn div-4}
+                                                :fraction {:unit "%"
+                                                           :value-fn mul-100}})]
                 (into {}
                       (map (fn [direction] [direction value-css]))
                       directions)))}
@@ -140,4 +142,4 @@
     z-index = <'z-'> (integer | auto)
     "
     :garden (fn [{[index] :component-data}]
-              {:z-index (value-unit->css nil index {})})}])
+              {:z-index (value-unit->css index)})}])
