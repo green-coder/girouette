@@ -1,6 +1,5 @@
 (ns girouette.tw.spacing
   (:require [garden.selectors :as gs]
-            [girouette.util :as util]
             [girouette.tw.common :refer [value-unit->css dot default-pipeline div-4]]))
 
 
@@ -38,7 +37,7 @@
     margin-value = number | length | length-unit | auto
     "
     :garden (fn [{component-data :component-data}]
-              (let [{:keys [signus direction axis margin-value]} (util/index-by first second component-data)
+              (let [{:keys [signus direction axis margin-value]} (into {} component-data)
                     directions (case direction
                                  "t" ["top"]
                                  "r" ["right"]
@@ -68,7 +67,7 @@
                 :class-name [(fn [rule props]
                                [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
     :garden (fn [{component-data :component-data}]
-              (let [{:keys [signus axis space-between-value space-between-reverse]} (util/index-by first second component-data)
+              (let [{:keys [signus axis space-between-value space-between-reverse]} (into {} component-data)
                     direction ({["x" false] "left"
                                 ["x" true]  "right"
                                 ["y" false] "top"
