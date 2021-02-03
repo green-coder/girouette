@@ -27,7 +27,7 @@
     :rules "
     background-color = <'bg-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:background-color color}
@@ -107,7 +107,7 @@
     :rules "
     gradient-color-from = <'from-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)
                     transp-color (as-transparent color)]
                 {:--gi-gradient-from (color->css color)
@@ -119,7 +119,7 @@
     :rules "
     gradient-color-to = <'to-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               {:--gi-gradient-to (color->css (read-color color))})}
 
 
@@ -127,7 +127,7 @@
     :rules "
     gradient-color-via = <'via-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)
                     transp-color (as-transparent color)]
                 {:--gi-gradient-stops (str "var(--gi-gradient-from),"
