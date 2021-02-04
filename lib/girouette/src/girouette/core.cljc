@@ -1,4 +1,5 @@
-(ns girouette.core)
+(ns girouette.core
+  #?(:cljs (:require-macros girouette.core)))
 
 (defmacro css
   "This macro should be used as a way to tag the expressions where
@@ -14,8 +15,8 @@
      [expr]
      expr)
 
-(defmacro hiccup
-  "This macro should be used as a way to tag the expressions which are
+#_ (defmacro hiccup
+     "This macro should be used as a way to tag the expressions which are
   in the Hiccup format, hinting code processors at how to find css class names."
-  [expr]
-  expr)
+     [expr]
+     expr)
