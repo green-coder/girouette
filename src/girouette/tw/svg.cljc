@@ -7,22 +7,16 @@
     :rules "
     fill = <'fill-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
-              (let [color (read-color color)]
-                (if (string? color)
-                  {:fill color}
-                  {:fill (color->css color)})))}
+    :garden (fn [{[color] :component-data}]
+              {:fill (color->css (read-color color))})}
 
 
    {:id :stroke
     :rules "
     stroke = <'stroke-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
-              (let [color (read-color color)]
-                (if (string? color)
-                  {:stroke color}
-                  {:stroke (color->css color)})))}
+    :garden (fn [{[color] :component-data}]
+              {:stroke (color->css (read-color color))})}
 
 
    {:id :stroke-width

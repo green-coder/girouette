@@ -45,4 +45,4 @@
     [".to-red-500" {:--gi-gradient-to "#ef4444"}]
 
     "via-white"
-    [".via-white" {:--gi-gradient-stops "var(--gi-gradient-from),#f0f0f0,var(--gi-gradient-to,#f0f0f000)"}]))
+    [".via-white" {:--gi-gradient-stops "var(--gi-gradient-from),#ffffff,var(--gi-gradient-to,#ffffff00)"}]))

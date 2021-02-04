@@ -46,10 +46,10 @@
 
     "text-rgb-733"
     [".text-rgb-733" {:--gi-text-opacity 1
-                      :color "rgba(112, 48, 48, var(--gi-text-opacity))"}]
+                      :color "rgba(119, 51, 51, var(--gi-text-opacity))"}]
 
     "text-rgba-7338"
-    [".text-rgba-7338" {:color "#70303080"}]
+    [".text-rgba-7338" {:color "#77333388"}]
 
     "text-rgba-703030ff"
     [".text-rgba-703030ff" {:color "#703030ff"}]

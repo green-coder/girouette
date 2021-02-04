@@ -253,22 +253,23 @@
                                (map (fn [color] (str "'" color "'")))
                                (str/join " | "))]
   (def color-rules (str "
-  color = rgb-color | rgba-color | default-color
+  color = (<'rgb-'> rgb-color-code) |
+          (<'rgba-'> rgba-color-code) |
+          default-color-single-name |
+          default-color-darkness-opacity
 
-  rgb-color = <'rgb-'> (#'[0-9a-f]{3}' | #'[0-9a-f]{6}')
-  rgba-color = <'rgba-'> (#'[0-9a-f]{4}' | #'[0-9a-f]{8}')
+  rgb-color-code = #'[0-9a-f]{3}' | #'[0-9a-f]{6}'
+  rgba-color-code = #'[0-9a-f]{4}' | #'[0-9a-f]{8}'
 
-  <default-color> = default-color-without-darkness | default-color-with-darkness
-  default-color-without-darkness = 'transparent' | 'current' | 'black' | 'white'
-  default-color-with-darkness = (" default-color-names ") <'-'>
-                                ('50' | '100' | '200' | '300' | '400' |
-                                 '500' | '600' | '700' | '800' | '900')
-                                (<'-'> integer)?
+  default-color-single-name = 'transparent' | 'current' | 'black' | 'white'
+  default-color-darkness-opacity = (" default-color-names ")
 
-  (* Not sure if it will be used *)
-  color-code = rgb-color-code | rgba-color-code
-  rgb-color-code = (#'[0-9a-f]{3}' | #'[0-9a-f]{6}')
-  rgba-color-code = (#'[0-9a-f]{4}' | #'[0-9a-f]{8}')
+                                   (* Darkness *)
+                                    <'-'> ('50' | '100' | '200' | '300' | '400' |
+                                           '500' | '600' | '700' | '800' | '900')
+
+                                   (* Opacity *)
+                                   (<'-'> integer)?
 ")))
 
 (def ^:private zero-to-f "0123456789abcdef")
@@ -277,41 +278,49 @@
   (edn/read-string (str "0x" hex-value)))
 
 (defn- byte->hex [byte]
-  (str (nth zero-to-f (bit-and (bit-shift-right byte 4) 0xf))
-       (nth zero-to-f (bit-and byte 0xf))))
+  (when byte
+    (str (nth zero-to-f (bit-and (bit-shift-right byte 4) 0xf))
+         (nth zero-to-f (bit-and byte 0xf)))))
 
 (defn read-color
   "Returns a 4-elements vector containing the color components, or a string.
    The nil value is returned if a particular component is not specified in the input."
-  [[type param1 param2 [_ param3] :as color]]
-  (case param1
-    "transparent" "transparent"
-    "current" "currentColor"
-    (let [color-code (case param1
-                       "black" "000"
-                       "white" "fff"
-                       (if (= type :default-color-with-darkness)
-                         (str (get-in default-colors [param1 (common/read-number param2)])
-                              (when param3
-                                (byte->hex (min 255 (int (/ (* (edn/read-string param3) 255) 100))))))
-                         param1))]
-      (case (count color-code)
-        3 [(read-hex-value (str (nth color-code 0) 0))
-           (read-hex-value (str (nth color-code 1) 0))
-           (read-hex-value (str (nth color-code 2) 0))
-           nil]
-        4 [(read-hex-value (str (nth color-code 0) 0))
-           (read-hex-value (str (nth color-code 1) 0))
-           (read-hex-value (str (nth color-code 2) 0))
-           (read-hex-value (str (nth color-code 3) 0))]
-        6 [(read-hex-value (subs color-code 0 2))
-           (read-hex-value (subs color-code 2 4))
-           (read-hex-value (subs color-code 4 6))
-           nil]
-        8 [(read-hex-value (subs color-code 0 2))
-           (read-hex-value (subs color-code 2 4))
-           (read-hex-value (subs color-code 4 6))
-           (read-hex-value (subs color-code 6 8))]))))
+  [color]
+  (let [[_ [type param1 param2 param3]] color]
+    (case type
+      :rgb-color-code (case (count param1)
+                        3 [(read-hex-value (str (nth param1 0) (nth param1 0)))
+                           (read-hex-value (str (nth param1 1) (nth param1 1)))
+                           (read-hex-value (str (nth param1 2) (nth param1 2)))
+                           nil]
+                        6 [(read-hex-value (subs param1 0 2))
+                           (read-hex-value (subs param1 2 4))
+                           (read-hex-value (subs param1 4 6))
+                           nil])
+
+      :rgba-color-code (case (count param1)
+                         4 [(read-hex-value (str (nth param1 0) (nth param1 0)))
+                            (read-hex-value (str (nth param1 1) (nth param1 1)))
+                            (read-hex-value (str (nth param1 2) (nth param1 2)))
+                            (read-hex-value (str (nth param1 3) (nth param1 3)))]
+                         8 [(read-hex-value (subs param1 0 2))
+                            (read-hex-value (subs param1 2 4))
+                            (read-hex-value (subs param1 4 6))
+                            (read-hex-value (subs param1 6 8))])
+
+      :default-color-single-name ({"transparent" "transparent"
+                                   "current" "currentColor"
+                                   "black" [0 0 0 nil]
+                                   "white" [255 255 255 nil]} param1)
+
+      :default-color-darkness-opacity
+      (let [color-code (get-in default-colors [param1 (common/read-number param2)])
+            r (read-hex-value (subs color-code 0 2))
+            b (read-hex-value (subs color-code 2 4))
+            g (read-hex-value (subs color-code 4 6))
+            a (when param3
+                (min 255 (int (/ (* (common/read-number param3) 255) 100))))]
+          [r b g a]))))
 
 (defn as-transparent [color]
   (if (string? color)
@@ -319,19 +328,18 @@
     (let [[r g b _] color]
       [r g b 0])))
 
-(defn color->css [[r g b a :as color]]
-  (cond
-    (nil? a) (str "#"
-                  (byte->hex r)
-                  (byte->hex g)
-                  (byte->hex b))
-    (string? a) (str "rgba("
-                      r ", "
-                      g ", "
-                      b ", "
-                      a ")")
-    :else (str "#"
-               (byte->hex r)
-               (byte->hex g)
-               (byte->hex b)
-               (byte->hex a))))
+(defn color->css [color]
+  (if (string? color)
+    color
+    (let [[r g b a] color]
+      (if (string? a)
+        (str "rgba("
+              r ", "
+              g ", "
+              b ", "
+              a ")")
+        (str "#"
+             (byte->hex r)
+             (byte->hex g)
+             (byte->hex b)
+             (byte->hex a))))))

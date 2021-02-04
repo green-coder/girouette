@@ -64,7 +64,7 @@
     border-color = <'border-'> color
     "
     ;; Copy-pasted from background; could be extracted into util?
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:border-color color}
@@ -120,7 +120,7 @@
     :pipeline (assoc default-pipeline
                 :class-name [(fn [rule props]
                                [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:border-color color}
@@ -170,7 +170,7 @@
     :rules "
     ring-color = <'ring-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:--gi-ring-color color}
@@ -203,7 +203,7 @@
     :rules "
     ring-offset-color = <'ring-offset-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               {:--gi-ring-offset-color (let [color (read-color color)]
                                          (if (string? color)
                                            color

@@ -116,9 +116,8 @@
   (let [prefixes (:prefixes props)
         min-width (-> prefixes :media-query-min-width breakpoint->pixels)
         color-scheme (-> prefixes :media-query-color-scheme)
-        reduced-motion (-> prefixes :media-query-reduced-motion
-                           {"motion-safe" "no-preference"
-                            "motion-reduce" "reduced"})
+        reduced-motion (-> prefixes :media-query-reduced-motion {"motion-safe" "no-preference"
+                                                                 "motion-reduce" "reduced"})
         media-query (cond-> {}
                       min-width (assoc :min-width min-width)
                       color-scheme (assoc :prefers-color-scheme color-scheme)

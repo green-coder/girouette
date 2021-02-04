@@ -149,12 +149,9 @@
     :rules "
     placeholder-color = <'placeholder-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               [placeholder-pseudo-element
-               {:color (let [color (read-color color)]
-                         (if (string? color)
-                           color
-                           (color->css color)))}])}
+               {:color (color->css (read-color color))}])}
 
 
    {:id :text-align
@@ -169,7 +166,7 @@
     :rules "
     text-color = <'text-'> color
     "
-    :garden (fn [{[[_ color]] :component-data}]
+    :garden (fn [{[color] :component-data}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:color color}
