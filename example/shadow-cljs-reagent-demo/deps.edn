@@ -1,6 +1,15 @@
 {:paths ["src"]
 
  :deps {org.clojure/clojurescript {:mvn/version "1.10.758"}
-        thheller/shadow-cljs {:mvn/version "2.11.11"}
-        reagent {:mvn/version "0.10.0"}
-        girouette {:local/root "../../"}}}
+        reagent/reagent           {:mvn/version "0.10.0"}
+        girouette/girouette       {:local/root "../../lib/girouette"}}
+
+ :aliases {:girouette {:extra-deps {girouette/processor {:local/root "../../lib/processor"}}
+                       :ns-default girouette.processor
+                       :exec-fn process
+                       :exec-args {:css {:retrieval-method :annotated
+                                         :output-format :css
+                                         :output-file "girouette.css"}
+                                   :garden {:class-name->garden acme.frontend.my-grammar/class-name->garden}
+                                   :watch? true
+                                   :verbose? true}}}}

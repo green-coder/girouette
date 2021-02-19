@@ -1,18 +1,32 @@
 (ns acme.frontend.app
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
-            [girouette.tw.reagent :refer [defc]]))
+            [girouette.core :refer [css]]))
 
 (enable-console-print!)
 
-(defc simple-example []
-  [:h1.flex
-   [:div.flex-1 "hello"]
-   [:div.flex-2 "the"]
-   [:div {:class "flex-9/3"} "world"]])
+(css "text-green-300")
+
+#_(defn simple-example1 []
+    ^:hiccup
+    [:h1.flex
+     [:div.flex-1 "hello"]
+     [:div.flex-2 "the"]
+     [:div {:class "flex-9/3"} "world"]
+     (if true
+       [:div.true]
+       [:div.false])
+     (for [a (range 3)]
+       [:div.item "my item"])])
+
+(defn simple-example2 []
+  [:h1 {:class (css :flex)}
+   [:div {:class (css "flex-1")} "hello"]
+   [:div {:class (css "flex-2")} "the"]
+   [:div {:class (css "flex-9/3")} "world"]])
 
 (defn render []
-  (rdom/render [simple-example] (js/document.getElementById "app")))
+  (rdom/render [simple-example2] (js/document.getElementById "app")))
 
 (defn init []
   (println "(init)")
