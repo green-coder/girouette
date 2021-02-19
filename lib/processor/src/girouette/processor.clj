@@ -17,6 +17,19 @@
 (def ^:private config (atom {}))
 
 
+(defn red-str [& s]
+  (let [s (apply str s)]
+    (if (:color? @config)
+      (str "\u001B[31m" s "\u001B[0m")
+      s)))
+
+(defn green-str [& s]
+  (let [s (apply str s)]
+    (if (:color? @config)
+      (str "\u001B[32m" s "\u001B[0m")
+      s)))
+
+
 (defn- stub-js-deps! [state]
   (let [deps (closure/get-upstream-deps)
         npm-deps (when (map? (:npm-deps deps))
@@ -124,9 +137,9 @@
                    (seq added-classes))
            (println (str relative-path ": "
                          (when (seq removed-classes)
-                           (str "[- " (str/join " " removed-classes) "] "))
+                           (red-str "[- " (str/join " " removed-classes) "] "))
                          (when (seq added-classes)
-                           (str "[+ " (str/join " " added-classes) "]"))))))))))
+                           (green-str "[+ " (str/join " " added-classes) "]"))))))))))
 
 
 (defn process
@@ -144,9 +157,11 @@
           output-format :css}} :css
     watch? :watch?
     verbose? :verbose?
+    color? :color?
     :or {invocation-hook-symb 'girouette.core/css
          watch? false
-         verbose? true}}]
+         verbose? true
+         color? true}}]
 
   (assert (and (seq source-paths)
                (every? string? source-paths))
@@ -173,6 +188,8 @@
           "watch? should be a boolean")
   (assert (boolean? verbose?)
           "verbose? should be a boolean")
+  (assert (boolean? color?)
+          "color? should be a boolean")
 
   (let [class-name->garden (cond-> class-name->garden
                              (#{:garden :css} output-format) requiring-resolve)
@@ -188,7 +205,8 @@
                     :output-format output-format
                     :output-file output-file
                     :watch? watch?
-                    :verbose? verbose?})
+                    :verbose? verbose?
+                    :color? color?})
     (when verbose?
       (pp/pprint @config))
 
