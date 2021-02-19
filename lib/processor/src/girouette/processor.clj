@@ -45,7 +45,7 @@
 
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
-        passes [(invoke-hook 'girouette.core/css
+        passes [(invoke-hook (:invocation-hook-symb @config)
                              (fn [form]
                                (walk/postwalk (fn [x]
                                                 (when (or (string? x)
@@ -133,17 +133,20 @@
   [{{:keys [source-paths
             file-filters]
      :or {source-paths (find-source-paths)
-          file-filters [".clj" ".cljc" ".cljs"]}} :input
+          file-filters [".cljs" ".cljc" ".clj"]}} :input
+    invocation-hook-symb :invocation-hook-symb
     {:keys [class-name->garden]
      :or {class-name->garden 'girouette.tw.default-api/class-name->garden}} :garden
     {:keys [retrieval-method
             output-format
             output-file]
      :or {retrieval-method :anything
-          output-format :css
-          output-file "girouette.css"}} :css
+          output-format :css}} :css
     watch? :watch?
-    verbose? :verbose?}]
+    verbose? :verbose?
+    :or {invocation-hook-symb 'girouette.core/css
+         watch? false
+         verbose? true}}]
 
   (assert (and (seq source-paths)
                (every? string? source-paths))
@@ -152,6 +155,9 @@
                (every? string? file-filters))
           "file-filters should be a sequence of strings")
 
+  (assert (qualified-symbol? invocation-hook-symb)
+          "invocation-hook-symb should be a qualified symbol")
+
   (assert (qualified-symbol? class-name->garden)
           "class-name->garden should be a qualified symbol")
 
@@ -159,7 +165,8 @@
           "retrieval-method should be in #{:anything :annotated}")
   (assert (contains? #{:css-classes :garden :css} output-format)
           "output-format should be in #{:css-classes :garden :css}")
-  (assert (string? output-file)
+  (assert (or (nil? output-file)
+              (string? output-file))
           "output-file should be a string")
 
   (assert (boolean? watch?)
@@ -168,9 +175,14 @@
           "verbose? should be a boolean")
 
   (let [class-name->garden (cond-> class-name->garden
-                             (#{:garden :css} output-format) requiring-resolve)]
+                             (#{:garden :css} output-format) requiring-resolve)
+        output-file (cond
+                      (some? output-file) output-file
+                      (= output-format :css) "girouette.css"
+                      :else "girouette.edn")]
     (reset! config {:source-paths source-paths
                     :file-filters file-filters
+                    :invocation-hook-symb invocation-hook-symb
                     :class-name->garden class-name->garden
                     :retrieval-method retrieval-method
                     :output-format output-format
@@ -194,7 +206,7 @@
       (when verbose?
         (println (str "Watching files in " (str/join ", " source-paths) " ...")))
       (hawk/watch! [{:paths source-paths
-                     :handler (fn [ctx {:keys [^File file kind] :as event}]
+                     :handler (fn [ctx {:keys [^File file kind]}]
                                 (when (input-file? file)
                                   (on-file-changed file kind)
                                   (spit-output))
