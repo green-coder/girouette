@@ -10,11 +10,9 @@
             [clojure.tools.deps.alpha.util.dir :refer [*the-dir*]]
             [clojure.walk :as walk]
             [garden.core :as garden]
-            [hawk.core :as hawk])
+            [hawk.core :as hawk]
+            [girouette.processor.env :refer [config]])
   (:import (java.io File)))
-
-
-(def ^:private config (atom {}))
 
 
 (defn red-str [& s]
@@ -58,12 +56,11 @@
 
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
-        passes [(invoke-hook (:invocation-hook-symb @config)
+        passes [(invoke-hook (:css-symb @config)
                              (fn [form]
                                (walk/postwalk (fn [x]
-                                                (when (or (string? x)
-                                                          (keyword? x))
-                                                  (swap! css-classes conj (name x))))
+                                                (when (string? x)
+                                                  (swap! css-classes conj x)))
                                               form)))]
         ns-info (ana-api/parse-ns file)
         ns (:ns ns-info)]
@@ -110,7 +107,7 @@
       (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
         (pp/pprint @file-data file-writer))
       (let [all-cs-classes (into #{} (mapcat :css-classes) (vals @file-data))
-            all-garden-defs (into [] (keep (:class-name->garden @config)) (sort all-cs-classes))]
+            all-garden-defs (into [] (keep (:garden-fn @config)) (sort all-cs-classes))]
         (if (= output-format :garden)
           ;; garden
           (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
@@ -143,22 +140,17 @@
 
 
 (defn process
-  [{{:keys [source-paths
-            file-filters]
+  [{{:keys [source-paths file-filters]
      :or {source-paths (find-source-paths)
           file-filters [".cljs" ".cljc" ".clj"]}} :input
-    invocation-hook-symb :invocation-hook-symb
-    {:keys [class-name->garden]
-     :or {class-name->garden 'girouette.tw.default-api/class-name->garden}} :garden
-    {:keys [retrieval-method
-            output-format
-            output-file]
-     :or {retrieval-method :anything
+
+    {:keys [retrieval-method output-format output-file]
+     :or {retrieval-method :annotated
           output-format :css}} :css
-    watch? :watch?
-    verbose? :verbose?
-    color? :color?
-    :or {invocation-hook-symb 'girouette.core/css
+
+    :keys [css-symb garden-fn watch? verbose? color?]
+    :or {css-symb 'girouette.core/css
+         garden-fn 'girouette.tw.default-api/class-name->garden
          watch? false
          verbose? true
          color? true}}]
@@ -170,20 +162,18 @@
                (every? string? file-filters))
           "file-filters should be a sequence of strings")
 
-  (assert (qualified-symbol? invocation-hook-symb)
-          "invocation-hook-symb should be a qualified symbol")
-
-  (assert (qualified-symbol? class-name->garden)
-          "class-name->garden should be a qualified symbol")
-
-  (assert (contains? #{:anything :annotated} retrieval-method)
-          "retrieval-method should be in #{:anything :annotated}")
+  (assert (contains? #{#_:anything :annotated} retrieval-method)
+          "retrieval-method should be in #{:annotated}")
   (assert (contains? #{:css-classes :garden :css} output-format)
           "output-format should be in #{:css-classes :garden :css}")
   (assert (or (nil? output-file)
               (string? output-file))
           "output-file should be a string")
 
+  (assert (qualified-symbol? css-symb)
+          "css-symb should be a qualified symbol")
+  (assert (qualified-symbol? garden-fn)
+          "garden-fn should be a qualified symbol")
   (assert (boolean? watch?)
           "watch? should be a boolean")
   (assert (boolean? verbose?)
@@ -191,19 +181,19 @@
   (assert (boolean? color?)
           "color? should be a boolean")
 
-  (let [class-name->garden (cond-> class-name->garden
-                             (#{:garden :css} output-format) requiring-resolve)
+  (let [garden-fn (cond-> garden-fn
+                    (#{:garden :css} output-format) requiring-resolve)
         output-file (cond
                       (some? output-file) output-file
                       (= output-format :css) "girouette.css"
                       :else "girouette.edn")]
     (reset! config {:source-paths source-paths
                     :file-filters file-filters
-                    :invocation-hook-symb invocation-hook-symb
-                    :class-name->garden class-name->garden
                     :retrieval-method retrieval-method
                     :output-format output-format
                     :output-file output-file
+                    :css-symb css-symb
+                    :garden-fn garden-fn
                     :watch? watch?
                     :verbose? verbose?
                     :color? color?})

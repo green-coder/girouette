@@ -2,9 +2,10 @@
   (:require [girouette.core :refer [css]]))
 
 (css "text-green-300")
+#_(css (str "text-" "red" "-300"))
 
 (defn simple-example []
-  [:h1 {:class (css :flex)}
+  [:h1 {:class (css "flex")}
    [:div {:class (css "flex-10")} "hello"]
    [:div {:class (css "flex-20")} "the"]
    [:div {:class (css "flex-21")} "the"]

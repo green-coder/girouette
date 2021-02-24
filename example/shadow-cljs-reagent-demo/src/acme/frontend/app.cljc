@@ -20,7 +20,7 @@
        [:div.item "my item"])])
 
 (defn simple-example2 []
-  [:h1 {:class (css :flex)}
+  [:h1 {:class (css "flex")}
    [:div {:class (css "flex-1")} "hello"]
    [:div {:class (css "flex-2")} "the"]
    [:div {:class (css "flex-9/3")} "world"]])
