@@ -7,6 +7,4 @@
  :builds
  {:frontend
   {:target :browser
-   :modules {:main {:init-fn acme.frontend.app/init}}
-   :build-hooks [(girouette.tw.shadow-cljs/generate-css {:output-filename "public/style/girouette.css"
-                                                         :cache-class-names? true})]}}}
+   :modules {:main {:init-fn acme.frontend.app/init}}}}}
