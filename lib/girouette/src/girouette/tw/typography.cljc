@@ -1,6 +1,6 @@
 (ns girouette.tw.typography
   (:require [garden.selectors :refer [defpseudoelement]]
-            [girouette.tw.common :refer [value-unit->css div-100]]
+            [girouette.tw.common :refer [value-unit->css div-4 mul-100 div-100]]
             [girouette.tw.color :refer [read-color color->css]]))
 
 
@@ -21,10 +21,10 @@
                               "font-mono" "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace")})}
 
 
-   {:id :font-size
+   {:id :text-font-size
     :rules "
-    font-size = <'text-'> ('xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' |
-                           '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl')
+    text-font-size = <'text-'> ('xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' |
+                                '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl')
     "
     :garden (fn [{[font-size] :component-data}]
               (let [[size height] ({"xs"   [0.75  1]
@@ -42,6 +42,19 @@
                                     "9xl"  [8     1]} font-size)]
                    {:font-size (str size "rem")
                     :line-height (str height "rem")}))}
+
+
+   ;; This is an extra, not from Tailwind.
+   {:id :font-size
+    :rules "
+    font-size = <'font-size-'> (number | length | fraction | percentage)
+    "
+    :garden (fn [{[value-data] :component-data}]
+              {:font-size (value-unit->css value-data
+                                           {:number {:unit "rem"
+                                                     :value-fn div-4}
+                                            :fraction {:unit "%"
+                                                       :value-fn mul-100}})})}
 
 
    {:id :font-smoothing

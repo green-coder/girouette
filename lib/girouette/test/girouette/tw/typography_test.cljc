@@ -13,6 +13,15 @@
     "text-sm"
     [".text-sm" {:font-size (str 0.875 "rem"), :line-height (str 1.25 "rem")}]
 
+    "font-size-10"
+    [".font-size-10" {:font-size "2.5rem"}]
+
+    "font-size-10%"
+    [".font-size-10\\%" {:font-size "10%"}]
+
+    "font-size-10vw"
+    [".font-size-10vw" {:font-size "10vw"}]
+
     "antialiased"
     [".antialiased" {:-webkit-font-smoothing "antialiased", :-moz-osx-font-smoothing "grayscale"}]
 
