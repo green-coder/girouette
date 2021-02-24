@@ -1,5 +1,6 @@
 (ns girouette.tw.typography-test
   (:require [clojure.test :refer [deftest testing is are]]
+            [girouette.tw.typography :refer [placeholder-pseudo-element]]
             [girouette.tw.default-api :refer [class-name->garden]]))
 
 (deftest component-test
@@ -29,6 +30,22 @@
 
     "leading-normal"
     [".leading-normal" {:line-height 1.5}]
+
+    "placeholder-current"
+    [".placeholder-current" [placeholder-pseudo-element
+                             {:color "currentColor"}]]
+
+    "placeholder-green-300"
+    [".placeholder-green-300" [placeholder-pseudo-element
+                               {:--gi-placeholder-opacity 1
+                                :color "rgba(134, 239, 172, var(--gi-placeholder-opacity))"}]]
+
+    "placeholder-green-300-50"
+    [".placeholder-green-300-50" [placeholder-pseudo-element
+                                  {:color "#86efac7f"}]]
+
+    "placeholder-opacity-20"
+    [".placeholder-opacity-20" {:--gi-placeholder-opacity 0.2}]
 
     "text-black"
     [".text-black" {:--gi-text-opacity 1

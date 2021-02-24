@@ -151,7 +151,22 @@
     "
     :garden (fn [{[color] :component-data}]
               [placeholder-pseudo-element
-               {:color (color->css (read-color color))}])}
+               (let [color (read-color color)]
+                 (if (string? color)
+                   {:color color}
+                   (let [[r g b a] color]
+                     (if (some? a)
+                       {:color (color->css color)}
+                       {:--gi-placeholder-opacity 1
+                        :color (color->css [r g b "var(--gi-placeholder-opacity)"])}))))])}
+
+
+   {:id :placeholder-opacity
+    :rules "
+    placeholder-opacity = <'placeholder-opacity-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-placeholder-opacity (value-unit->css value {:value-fn div-100})})}
 
 
    {:id :text-align
