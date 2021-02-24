@@ -1,9 +1,9 @@
 {
-  "name": "shadow-cljs-reagent-demo",
+  "name": "reagent-demo",
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "shadow-cljs": "2.11.11"
+    "shadow-cljs": "2.11.18"
   },
   "dependencies": {
     "react": "16.13.0",

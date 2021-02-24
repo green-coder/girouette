@@ -1,28 +1,18 @@
-# Shadow-CLJS Reagent demo
+# Reagent demo
 
 This demonstrates one of the way Girouette can be used in a
-Single Page Application (SPA) using Shadow-CLJS and Reagent.
+Single Page Application (SPA) using Reagent.
 
 The same would work for a Re-Frame application.
 
 ## How it works
 
-### CSS class names in metadata
+We use the macro `girouette.core/css` to annotate the CSS class names in the source code
+and differenciate them from any other text the source code might contain.
 
-The source code is using the macro `girouette.tw.reagent/defc`
-which adds a set of potentially used CSS class-names in the metadata
-attributes of  the program's Clojure vars.
-
-### Shadow-CLJS Compilation Hook
-
-A compilation hook is invoked right after the source code compilation finishes.
-It is passed a data structure `build-state` which contains the metadata of all the
-Clojure vars in the compiled program. The hook collect the class names stored in
-the metadata in the step above, then uses `girouette` and `garden` to generate a
-CSS file.
-
-`Shadow-CLJS` has a built-in mechanism to reload CSS file into your webapp which is
-running in the browser.
+The Girouette Processor tool is then parsing the source code in the background, finds the
+CSS class names, and generates the content of `public/style/girouette.css` based on
+the CSS class names found.
 
 ## Launching the webapp
 
@@ -34,6 +24,11 @@ npm i
 Then launch the compiler in watch mode:
 ```shell
 shadow-cljs watch frontend
+```
+
+In parallel, launch Girouette's CSS processor in watch mode:
+```shell
+clojure -X:girouette
 ```
 
 Browse your webapp by clicking on the link displayed by the compiler
