@@ -6,6 +6,12 @@
   <artifactId>processor</artifactId>
   <version>0.0.1</version>
   <name>processor</name>
+  <scm>
+    <url>https://github.com/green-coder/girouette</url>
+    <connection>scm:git:git://github.com/green-coder/girouette.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/green-coder/girouette.git</developerConnection>
+    <tag>master</tag>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>org.clojure</groupId>
