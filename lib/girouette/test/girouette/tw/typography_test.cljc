@@ -11,7 +11,8 @@
     [".font-sans" {:font-family "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""}]
 
     "text-sm"
-    [".text-sm" {:font-size (str 0.875 "rem"), :line-height (str 1.25 "rem")}]
+    [".text-sm" {:font-size (str 0.875 "rem")
+                 :line-height (str 1.25 "rem")}]
 
     "font-size-10"
     [".font-size-10" {:font-size "2.5rem"}]
@@ -23,7 +24,8 @@
     [".font-size-10vw" {:font-size "10vw"}]
 
     "antialiased"
-    [".antialiased" {:-webkit-font-smoothing "antialiased", :-moz-osx-font-smoothing "grayscale"}]
+    [".antialiased" {:-webkit-font-smoothing "antialiased"
+                     :-moz-osx-font-smoothing "grayscale"}]
 
     "italic"
     [".italic" {:font-style "italic"}]

@@ -11,15 +11,15 @@
                 :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
     "shadow-none"
-    [".shadow-none" {:--gi-shadow "0 0 #0000",
+    [".shadow-none" {:--gi-shadow "0 0 #0000"
                      :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
     "shadow-inner"
-    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
+    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0,0.06)"
                       :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
     "shadow-2xl"
-    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0,0.25)",
+    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0,0.25)"
                     :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
     "opacity-0"

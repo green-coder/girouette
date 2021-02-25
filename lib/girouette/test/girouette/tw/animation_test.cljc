@@ -8,14 +8,14 @@
 
     "transition"
     [".transition"
-     {:transition-property "background-color,border-color,color,fill,stroke,opacity,box-shadow,transform",
-      :transition-timing-function "cubic-bezier(0.4,0,0.2,1)",
+     {:transition-property "background-color,border-color,color,fill,stroke,opacity,box-shadow,transform"
+      :transition-timing-function "cubic-bezier(0.4,0,0.2,1)"
       :transition-duration "150ms"}]
 
     "transition-colors"
     [".transition-colors"
-     {:transition-property "background-color,border-color,color,fill,stroke",
-      :transition-timing-function "cubic-bezier(0.4,0,0.2,1)",
+     {:transition-property "background-color,border-color,color,fill,stroke"
+      :transition-timing-function "cubic-bezier(0.4,0,0.2,1)"
       :transition-duration "150ms"}]
 
     "duration-0"
@@ -54,31 +54,34 @@
     "animate-spin"
     [".animate-spin"
      [{:animation "spin 1s linear infinite"}
-      #garden.types.CSSAtRule{:identifier :keyframes,
-                              :value {:identifier "spin",
-                                      :frames ([:from {:transform "rotate(0)"}] [:to {:transform "rotate(360deg)"}])}}]]
+      #garden.types.CSSAtRule{:identifier :keyframes
+                              :value {:identifier "spin"
+                                      :frames ([:from {:transform "rotate(0)"}]
+                                               [:to {:transform "rotate(360deg)"}])}}]]
 
     "animate-ping"
     [".animate-ping"
      [{:animation "ping 1s cubic-bezier(0,0,0.2,1) infinite"}
-      #garden.types.CSSAtRule{:identifier :keyframes,
-                              :value {:identifier "ping", :frames (["75%" "100%" {:transform "scale(2)", :opacity 0}])}}]]
+      #garden.types.CSSAtRule{:identifier :keyframes
+                              :value {:identifier "ping"
+                                      :frames (["75%" "100%" {:transform "scale(2)", :opacity 0}])}}]]
 
     "animate-pulse"
     [".animate-pulse"
      [{:animation "pulse 2s cubic-bezier(0.4,0,0.6,1) infinite"}
-      #garden.types.CSSAtRule{:identifier :keyframes,
-                              :value {:identifier "pulse", :frames (["0%" "100%" {:opacity 1}] ["50%" {:opacity 0.5}])}}]]
+      #garden.types.CSSAtRule{:identifier :keyframes
+                              :value {:identifier "pulse"
+                                      :frames (["0%" "100%" {:opacity 1}] ["50%" {:opacity 0.5}])}}]]
 
     "animate-bounce"
     [".animate-bounce"
      [{:animation "bounce 1s infinite"}
-      #garden.types.CSSAtRule{:identifier :keyframes,
-                              :value {:identifier "bounce",
+      #garden.types.CSSAtRule{:identifier :keyframes
+                              :value {:identifier "bounce"
                                       :frames (["0%"
                                                 "100%"
-                                                {:transform "translateY(-25%)",
+                                                {:transform "translateY(-25%)"
                                                  :animation-timing-function "cubic-bezier(0.8,0,1,1)"}]
                                                ["50%"
-                                                {:transform "translateY(0)",
+                                                {:transform "translateY(0)"
                                                  :animation-timing-function "cubic-bezier(0,0,0.2,1)"}])}}]]))
