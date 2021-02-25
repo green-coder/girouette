@@ -12,6 +12,15 @@
 > Dès que les vents tourneront, nous nous en allerons.
 
 Girouette is a grammar-based, generative approach to CSS.
+It translates a classname into a Garden data structure representing CSS.
+
+```clojure
+(class-name->garden "w-10")
+; => [".w-10" {:width "2.5rem"}]
+```
+
+Girouette also make it easy to use you own grammar rules to generate anything
+you may dream of.
 
 ## Introduction
 
@@ -30,6 +39,17 @@ This "on demand" generative approach allows to have any combination of parameter
 class name, while opening the door to the most creative grammars which a human would want
 to use to communicate its intent.
 
+### Documentation & Resources
+
+Girouette supports [all the classes available in Tailwind 2.0.2](https://tailwindcss.com/docs)
+
+Presentation @ the Bay Area Clojure Meetup:
+- [The slides](https://app.pitch.com/app/presentation/a760be33-4a5b-4e73-bd25-07387cd197dc/7282e9fa-8789-43bc-8b2d-eaec38711d98)
+- [Video recording](https://www.youtube.com/watch?v=Tnv6SvZM6tg)
+
+The project has example projects in `example/`:
+- A simple [demo project using Reagent](example/reagent-demo).
+
 ## How it works
 
 `Girouette` is using the awesome [`Instaparse`](https://github.com/Engelberg/instaparse)
@@ -39,29 +59,28 @@ library for parsing the class names, and is converting them into the
 Its API mainly consists in the function `class-name->garden` which is pretty explicit.
 
 ```clojure
-(class-name->garden "top-42%")
-;=> [".top-42\\%" {:top "42%"}]
+(class-name->garden "w-42%")
+;=> [".w-42\\%" {:width "42%"}]
 ```
 
-To have the CSS generated automatically during a build, the user needs to extract the
-CSS class names used in his project and feed them to `Girouette`.
+You can use `Girouette processor tool` to extract the CSS class names from
+your source code and generate the CSS in realtime as you develop.
 
-How to do this is up to the user, and varies between frontend frameworks.
-Some class name extractors and a better tooling integration will be added to the project
-at some point.
+See the [demo project](example/reagent-demo) for more information.
+
 
 ## Advantages of this approach
 
-Any parameters can be combined in the class names without leaving your usual REPL workflow,
-as long as a supporting grammar was previously created.
+With the right Girouette components in place, any parameters can be combined
+in the class names without leaving your usual REPL workflow.
 
 ### Large range on numbers
 
 No need to stop what you are doing and to modify some config files just because
 `mx-13` is not supported by default while `mx-12` is.
 
-Any color can be represented directly in class names like `rgba-f59d`, `rgba-f05090d0`,
-or with any variant applied like `rgba-f59d-10%-darker`
+Any color can be represented directly in class names,
+like `rgba-f59d` or `rgba-ff5599dd`.
 
 ### Limitless class name descriptiveness
 
@@ -78,30 +97,9 @@ It is possible to create grammars which support very long class names.
  "
 ```
 
-## Where we are now
+## Contribute
 
-We just started! Still a PoC at the moment.
-
-`Girouette` can use any grammar. To help the community adoption,
-an effort is currently being made to create a grammar which is compatible
-with the class names used by [`Tailwind CSS`](https://tailwindcss.com/).
-
-Once compatibility is achieved, the goal is to leverage the approach of
-`Girouette` and develop its grammar into a more expressive one.
-
-If enough people are interested (and contribute), we may as well have a
-separate grammar  which is compatible with [`Tachyons`](https://tachyons.io/).
-
-## Contribution first
-
-This project is "contribution first", it means that it will only be completed if
-people contribute.
-
-The initial codebase was made specifically to make contributing easy. Contributors
-are very welcome.
-
-All contributions you make to this project have to be your own, and  in agreement
-with the license terms below.
+Contributions are very welcome.
 
 ## License terms
 
