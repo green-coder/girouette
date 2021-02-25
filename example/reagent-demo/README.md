@@ -3,12 +3,12 @@
 This demonstrates one of the way Girouette can be used in a
 Single Page Application (SPA) using Reagent.
 
-The same would work for a Re-Frame application.
+The same process should work with many other front end frameworks.
 
 ## How it works
 
 We use the macro `girouette.core/css` to annotate the CSS class names in the source code
-and differenciate them from any other text the source code might contain.
+and differentiate them from any other text the source code might contain.
 
 The Girouette Processor tool is then parsing the source code in the background, finds the
 CSS class names, and generates the content of `public/style/girouette.css` based on

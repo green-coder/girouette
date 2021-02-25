@@ -9,22 +9,20 @@
                                 lambdaisland/kaocha-junit-xml {:mvn/version "0.0.76"}
                                 org.clojure/test.check        {:mvn/version "1.1.0"}}}
 
-           :depstar {:replace-deps {seancorfield/depstar {:mvn/version "2.0.171"}}
-                     :ns-default hf.depstar
-                     :exec-args {}}
+           ; clojure -M:outdated --write
+           :outdated {:replace-deps {olical/depot {:mvn/version "2.1.0"}}
+                      :main-opts ["-m" "depot.outdated.main"]}
 
-           ; clojure -A:outdated --write
-           :outdated {:extra-deps {olical/depot {:mvn/version "2.0.1"}}
-                      :main-opts ["-m" "depot.outdated.main"]}}}
-
+           :depstar {:replace-deps {seancorfield/depstar {:mvn/version "2.0.188"}}
+                     :exec-fn hf.depstar/jar
+                     :exec-args {:sync-pom true
+                                 :group-id "girouette"
+                                 :artifact-id "girouette"
+                                 :version "0.0.1"
+                                 :jar "girouette.jar"}}}}
 ;; Memo for deploying a new release:
-;; TODO: update this documentation.
-; - change the version in pom.xml
-; - update the pom.xml's dependencies:
-;     clj -Spom
-; - build the jar:
-;     clojure -A:depstar -m hf.depstar.jar girouette.jar -v
-
+;; - Change the version above, then build the jar:
+;;     clojure -X:depstar
 ;; - deploy:
 ;;     mvn deploy:deploy-file -Dfile=girouette.jar -DpomFile=pom.xml -DrepositoryId=clojars -Durl=https://clojars.org/repo/
 ;; - add a tag "v0.x.y" to the latest commit and push to repo
