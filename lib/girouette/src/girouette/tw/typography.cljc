@@ -21,10 +21,10 @@
                               "font-mono" "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace")})}
 
 
-   {:id :text-font-size
+   {:id :font-size
     :rules "
-    text-font-size = <'text-'> ('xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' |
-                                '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl')
+    font-size = <'text-'> ('xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' |
+                           '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl')
     "
     :garden (fn [{[font-size] :component-data}]
               (let [[size height] ({"xs"   [0.75  1]
@@ -45,9 +45,9 @@
 
 
    ;; This is an extra, not from Tailwind.
-   {:id :font-size
+   {:id :font-size-2
     :rules "
-    font-size = <'font-size-'> (number | length | fraction | percentage)
+    font-size-2 = <'font-size-'> (number | length | fraction | percentage)
     "
     :garden (fn [{[value-data] :component-data}]
               {:font-size (value-unit->css value-data
@@ -140,6 +140,17 @@
                               "normal"  1.5
                               "relaxed" 1.625
                               "loose"   2} size)})}
+
+
+   ;; This is an extra, not from Tailwind.
+   {:id :line-height-2
+    :rules "
+    line-height-2 = <'line-height-'> (number | length | fraction | percentage)
+    "
+    :garden (fn [{[value-data] :component-data}]
+              {:line-height (value-unit->css value-data
+                                             {:fraction {:unit "%"
+                                                         :value-fn mul-100}})})}
 
 
    {:id :list-style-type

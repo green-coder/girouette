@@ -42,6 +42,21 @@
     "leading-normal"
     [".leading-normal" {:line-height 1.5}]
 
+    "line-height-0"
+    [".line-height-0" {:line-height 0}]
+
+    "line-height-0pt"
+    [".line-height-0pt" {:line-height "0pt"}]
+
+    "line-height-1_2"
+    [".line-height-1_2" {:line-height 1.2}]
+
+    "line-height-1/2"
+    [".line-height-1\\/2" {:line-height "50%"}]
+
+    "line-height-80%"
+    [".line-height-80\\%" {:line-height "80%"}]
+
     "placeholder-current"
     [".placeholder-current" [placeholder-pseudo-element
                              {:color "currentColor"}]]
