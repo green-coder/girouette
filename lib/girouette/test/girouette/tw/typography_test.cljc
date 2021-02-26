@@ -31,7 +31,7 @@
     [".italic" {:font-style "italic"}]
 
     "font-thin"
-    [".font-thin" {:font-style 100}]
+    [".font-thin" {:font-weight 100}]
 
     "tracking-wide"
     [".tracking-wide" {:letter-spacing (str 0.025 "em")}]
