@@ -34,26 +34,25 @@
     [".w-max" {:width "max-content"}]
 
     "min-w-auto"
-    [".min-w-auto" {:width "auto"}]
+    [".min-w-auto" {:min-width "auto"}]
 
     "min-w-full"
-    [".min-w-full" {:width "100%"}]
+    [".min-w-full" {:min-width "100%"}]
 
     "min-w-min"
-    [".min-w-min" {:width "min-content"}]
+    [".min-w-min" {:min-width "min-content"}]
 
     "min-w-max"
-    [".min-w-max" {:width "max-content"}]
+    [".min-w-max" {:min-width "max-content"}]
 
     "max-w-none"
-    [".max-w-none" {:width "none"}]
+    [".max-w-none" {:max-width "none"}]
 
     "max-w-full"
-    [".max-w-full" {:width "100%"}]
+    [".max-w-full" {:max-width "100%"}]
 
     "max-w-min"
-    [".max-w-min" {:width "min-content"}]
+    [".max-w-min" {:max-width "min-content"}]
 
     "max-w-max"
-    [".max-w-max" {:width "max-content"}]))
-
+    [".max-w-max" {:max-width "max-content"}]))

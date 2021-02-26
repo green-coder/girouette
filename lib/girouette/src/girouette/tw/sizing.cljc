@@ -1,7 +1,5 @@
 (ns girouette.tw.sizing
-  (:require [clojure.string :as str]
-            [girouette.util :as util]
-            [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :width
@@ -24,12 +22,12 @@
                             auto | screen-100vw | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:width (value-unit->css value-data
-                                       {:zero-unit nil
-                                        :number {:unit "rem"
-                                                 :value-fn div-4}
-                                        :fraction {:unit "%"
-                                                   :value-fn mul-100}})})}
+              {:min-width (value-unit->css value-data
+                                           {:zero-unit nil
+                                            :number {:unit "rem"
+                                                     :value-fn div-4}
+                                            :fraction {:unit "%"
+                                                       :value-fn mul-100}})})}
 
 
    {:id :max-width
@@ -38,12 +36,12 @@
                             none | screen-100vw | min-content | max-content)
     "
     :garden (fn [{[value-data] :component-data}]
-              {:width (value-unit->css value-data
-                                       {:zero-unit nil
-                                        :number {:unit "rem"
-                                                 :value-fn div-4}
-                                        :fraction {:unit "%"
-                                                   :value-fn mul-100}})})}
+              {:max-width (value-unit->css value-data
+                                           {:zero-unit nil
+                                            :number {:unit "rem"
+                                                     :value-fn div-4}
+                                            :fraction {:unit "%"
+                                                       :value-fn mul-100}})})}
 
 
    {:id :height
