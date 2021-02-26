@@ -11,6 +11,7 @@
             [clojure.walk :as walk]
             [garden.core :as garden]
             [hawk.core :as hawk]
+            [girouette.tw.preflight :refer [preflight]]
             [girouette.processor.env :refer [config]])
   (:import (java.io File)))
 
@@ -18,13 +19,25 @@
 (defn red-str [& s]
   (let [s (apply str s)]
     (if (:color? @config)
-      (str "\u001B[31m" s "\u001B[0m")
+      (str "\u001B[31;1m" s "\u001B[0m")
+      s)))
+
+(defn blue-str [& s]
+  (let [s (apply str s)]
+    (if (:color? @config)
+      (str "\u001B[34;1m" s "\u001B[0m")
+      s)))
+
+(defn yellow-str [& s]
+  (let [s (apply str s)]
+    (if (:color? @config)
+      (str "\u001B[33;1m" s "\u001B[0m")
       s)))
 
 (defn green-str [& s]
   (let [s (apply str s)]
     (if (:color? @config)
-      (str "\u001B[32m" s "\u001B[0m")
+      (str "\u001B[32;1m" s "\u001B[0m")
       s)))
 
 
@@ -60,17 +73,21 @@
                              (fn [form]
                                (walk/postwalk (fn [x]
                                                 (when (string? x)
-                                                  (swap! css-classes conj x)))
+                                                  (let [names (->> (str/split x #" ")
+                                                                   (remove str/blank?))]
+                                                    (swap! css-classes into names))))
                                               form)))]
-        ns-info (ana-api/parse-ns file)
+        ns-info (ana-api/no-warn
+                  (ana-api/parse-ns file))
         ns (:ns ns-info)]
     ;; Make sure that we forget about the previous parsed info in that namespace.
     (when ns
       (ana-api/remove-ns state ns))
 
     ;; Parse the file and collect the used CSS classes.
-    (ana-api/with-passes passes
-      (ana-api/analyze-file state file nil))
+    (ana-api/no-warn
+      (ana-api/with-passes passes
+        (ana-api/analyze-file state file nil)))
 
     {:ns ns
      :css-classes (into [] (sort @css-classes))}))
@@ -101,13 +118,14 @@
 
 
 (defn- spit-output []
-  (let [{:keys [output-format output-file]} @config]
+  (let [{:keys [output-format output-file preflight?]} @config]
     (if (= output-format :css-classes)
       ;; css class names by relative file path
       (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
         (pp/pprint @file-data file-writer))
-      (let [all-cs-classes (into #{} (mapcat :css-classes) (vals @file-data))
-            all-garden-defs (into [] (keep (:garden-fn @config)) (sort all-cs-classes))]
+      (let [all-css-classes (into #{} (mapcat :css-classes) (vals @file-data))
+            predef-garden (if preflight? preflight [])
+            all-garden-defs (into predef-garden (keep (:garden-fn @config)) (sort all-css-classes))]
         (if (= output-format :garden)
           ;; garden
           (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
@@ -120,23 +138,36 @@
   ([^File file change-type]
    (let [relative-path (relative-path file)
          css-classes-before (set (-> @file-data (get relative-path) :css-classes))]
-     (when (#{:delete :modify} change-type)
-       (swap! file-data dissoc relative-path))
+     (try
+       (let [gathered-css-classes (gather-css-classes file)]
+         (when (#{:delete :modify} change-type)
+           (swap! file-data dissoc relative-path))
 
-     (when (#{:create :modify} change-type)
-       (swap! file-data assoc relative-path (gather-css-classes file)))
+         (when (#{:create :modify} change-type)
+           (swap! file-data assoc relative-path gathered-css-classes))
 
-     (when (:verbose? @config)
-       (let [css-classes-after (set (-> @file-data (get relative-path) :css-classes))
-             removed-classes (sort (set/difference css-classes-before css-classes-after))
-             added-classes (sort (set/difference css-classes-after css-classes-before))]
-         (when (or (seq removed-classes)
-                   (seq added-classes))
-           (println (str relative-path ": "
-                         (when (seq removed-classes)
-                           (red-str "[- " (str/join " " removed-classes) "] "))
-                         (when (seq added-classes)
-                           (green-str "[+ " (str/join " " added-classes) "]"))))))))))
+         (when (:verbose? @config)
+           (let [css-classes-after (set (-> @file-data (get relative-path) :css-classes))
+                 removed-classes (sort (set/difference css-classes-before css-classes-after))
+                 added-classes (sort (set/difference css-classes-after css-classes-before))
+                 match-grammar? (comp some? (:garden-fn @config))
+                 removed-matching-classes (filter match-grammar? removed-classes)
+                 removed-unknown-classes (remove match-grammar? removed-classes)
+                 added-unknown-classes (remove match-grammar? added-classes)
+                 added-matching-classes (filter match-grammar? added-classes)]
+             (when (or (seq removed-classes)
+                       (seq added-classes))
+               (println (str relative-path ": "
+                             (when (seq added-unknown-classes)
+                               (red-str "[\uD83D\uDE31 " (str/join " " added-unknown-classes) "] "))
+                             (when (seq removed-unknown-classes)
+                               (yellow-str "[\uD83D\uDE24 " (str/join " " removed-unknown-classes) "] "))
+                             (when (seq removed-matching-classes)
+                               (blue-str "[- " (str/join " " removed-matching-classes) "] "))
+                             (when (seq added-matching-classes)
+                               (green-str "[+ " (str/join " " added-matching-classes) "]"))))))))
+       (catch Exception e
+         (println (str relative-path ": \uD83D\uDCA5 parse error!")))))))
 
 
 (defn process
@@ -148,9 +179,10 @@
      :or {retrieval-method :annotated
           output-format :css}} :css
 
-    :keys [css-symb garden-fn watch? verbose? color?]
+    :keys [css-symb garden-fn preflight? watch? verbose? color?]
     :or {css-symb 'girouette.core/css
          garden-fn 'girouette.tw.default-api/class-name->garden
+         preflight? true
          watch? false
          verbose? true
          color? true}}]
@@ -174,6 +206,8 @@
           "css-symb should be a qualified symbol")
   (assert (qualified-symbol? garden-fn)
           "garden-fn should be a qualified symbol")
+  (assert (boolean? preflight?)
+          "preflight? should be a boolean")
   (assert (boolean? watch?)
           "watch? should be a boolean")
   (assert (boolean? verbose?)
@@ -194,11 +228,14 @@
                     :output-file output-file
                     :css-symb css-symb
                     :garden-fn garden-fn
+                    :preflight? preflight?
                     :watch? watch?
                     :verbose? verbose?
                     :color? color?})
     (when verbose?
-      (pp/pprint @config))
+      (println "Settings:")
+      (pp/pprint @config)
+      (println))
 
     ;; Process all the files
     (doseq [^File file (->> (map io/file source-paths)
@@ -208,11 +245,13 @@
 
     ;; Emit the output
     (spit-output)
+    (when verbose?
+      (println "CSS stylesheet generated! \uD83C\uDF89 "))
 
     ;; If requested, listen to the file changes.
     (when watch?
       (when verbose?
-        (println (str "Watching files in " (str/join ", " source-paths) " ...")))
+        (println (str "\nWatching files in " (str/join ", " source-paths) " ... \uD83D\uDC40 ")))
       (hawk/watch! [{:paths source-paths
                      :handler (fn [ctx {:keys [^File file kind]}]
                                 (when (input-file? file)
