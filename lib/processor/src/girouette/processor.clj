@@ -233,7 +233,7 @@
                     :verbose? verbose?
                     :color? color?})
     (when verbose?
-      (println "Settings:")
+      (println "⚙️ Settings:")
       (pp/pprint @config)
       (println))
 
@@ -246,12 +246,12 @@
     ;; Emit the output
     (spit-output)
     (when verbose?
-      (println "CSS stylesheet generated! \uD83C\uDF89 "))
+      (println "\uD83C\uDF89 CSS stylesheet generated!"))
 
     ;; If requested, listen to the file changes.
     (when watch?
       (when verbose?
-        (println (str "\nWatching files in " (str/join ", " source-paths) " ... \uD83D\uDC40 ")))
+        (println (str "\n\uD83D\uDC40 Watching files in " (str/join ", " source-paths) " ...")))
       (hawk/watch! [{:paths source-paths
                      :handler (fn [ctx {:keys [^File file kind]}]
                                 (when (input-file? file)
