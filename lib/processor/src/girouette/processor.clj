@@ -144,6 +144,13 @@
 
 (defn- spit-output []
   (let [{:keys [output-format output-file preflight?]} @config]
+    ;; NOTE output-file is a string, e.g. "public/style/girouette.css"
+    ;; so we should check all parent directories exist
+    (let [file-parent (-> (io/file output-file)
+                          (.getParent)
+                          (io/file))]
+      (when-not (.exists file-parent)
+        (.mkdirs file-parent)))
     (if (= output-format :css-classes)
       ;; css class names by relative file path
       (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
