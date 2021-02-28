@@ -58,6 +58,22 @@
     (stub-js-deps! s)
     s))
 
+(defn- keyword-hook [hook-fn]
+  (fn [env ast opts]
+    (when (and (= (:op ast) :const)
+               (= (:tag ast) 'cljs.core/Keyword))
+      (hook-fn (-> ast :val)))
+    ast))
+
+(defn- string-hook [hook-fn]
+  (fn [env ast opts]
+    (when (and (= (:op ast) :const)
+               (= (:tag ast) 'string))
+      (hook-fn (-> ast :val)))
+    ast))
+
+;(ana-api/analyze nil "hi")
+;(ana-api/analyze nil :hi)
 
 (defn- invoke-hook [qualified-symbol hook-fn]
   (fn [env ast opts]
@@ -66,17 +82,26 @@
       (hook-fn (-> ast :form second)))
     ast))
 
-
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
-        passes [(invoke-hook (:css-symb @config)
-                             (fn [form]
-                               (walk/postwalk (fn [x]
-                                                (when (string? x)
-                                                  (let [names (->> (str/split x #" ")
-                                                                   (remove str/blank?))]
-                                                    (swap! css-classes into names))))
-                                              form)))]
+        passes (case (:retrieval-method @config)
+                 :comprehensive [(string-hook (fn [s]
+                                                (let [names (->> (str/split s #" ")
+                                                                 (remove str/blank?))]
+                                                  (swap! css-classes into names))))
+                                 (keyword-hook (fn [kw]
+                                                 (let [names (->> (name kw)
+                                                                  (re-seq #"\.[^\.#]+")
+                                                                  (map (fn [s] (subs s 1))))]
+                                                   (swap! css-classes into names))))]
+                 :annotated [(invoke-hook (:css-symb @config)
+                                          (fn [form]
+                                            (walk/postwalk (fn [x]
+                                                             (when (string? x)
+                                                               (let [names (->> (str/split x #" ")
+                                                                                (remove str/blank?))]
+                                                                 (swap! css-classes into names))))
+                                                           form)))])
         ns-info (ana-api/no-warn
                   (ana-api/parse-ns file))
         ns (:ns ns-info)]
@@ -176,7 +201,7 @@
           file-filters [".cljs" ".cljc" ".clj"]}} :input
 
     {:keys [retrieval-method output-format output-file]
-     :or {retrieval-method :annotated
+     :or {retrieval-method :comprehensive
           output-format :css}} :css
 
     :keys [css-symb garden-fn preflight? watch? verbose? color?]
@@ -194,8 +219,8 @@
                (every? string? file-filters))
           "file-filters should be a sequence of strings")
 
-  (assert (contains? #{#_:anything :annotated} retrieval-method)
-          "retrieval-method should be in #{:annotated}")
+  (assert (contains? #{:comprehensive :annotated} retrieval-method)
+          "retrieval-method should be in #{:comprehensive :annotated}")
   (assert (contains? #{:css-classes :garden :css} output-format)
           "output-format should be in #{:css-classes :garden :css}")
   (assert (or (nil? output-file)
@@ -258,15 +283,3 @@
                                   (on-file-changed file kind)
                                   (spit-output))
                                 ctx)}]))))
-
-
-(comment
-  (process {:css {:retrieval-method :annotated
-                  :output-format :garden
-                  :output-file "girouette.edn"}
-            :watch? true
-            :verbose? true})
-
-  (hawk/stop! *1)
-
-  ,)

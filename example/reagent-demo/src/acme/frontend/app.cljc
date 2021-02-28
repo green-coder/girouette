@@ -8,13 +8,13 @@
 (defn simple-example []
   [:main
    ;; Demonstrates the use of arbitrary values in flex layouts
-   [:h1 {:class (css ["flex" "space-x-2"])}
-    [:div {:class (css ["flex-1" "p-4" "text-center" "rounded-lg" "bg-red-200"])} "hello"]
-    [:div {:class (css ["flex-2" "p-4" "text-center" "rounded-lg" "bg-green-200"])} "the"]
-    [:div {:class (css ["flex-9/3" "p-4" "text-center" "rounded-lg" "bg-blue-200"])} "world"]]
+   [:h1.flex.space-x-2
+    [:div.flex-1.p-4.text-center.rounded-lg.bg-red-200 "hello"]
+    [:div.flex-2.p-4.text-center.rounded-lg.bg-green-200 "the"]
+    [:div.p-4.text-center.rounded-lg.bg-blue-200 {:class "flex-9/3"} "world"]]
 
    ;; Demonstrates the use of a custom Girouette component which provides the CSS class "rainbow-text"
-   [:div {:class (css ["rainbow-text" "text-center" "font-size-10vw"])}
+   [:div.rainbow-text.text-center.font-size-10vw
     "Everybody needs a rainbow in their life"]])
 
 (defn render []
