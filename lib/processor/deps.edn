@@ -9,7 +9,7 @@
 
         garden/garden {:mvn/version "1.3.10"}
         ;girouette/girouette {:local/root "../girouette"}
-        girouette/girouette {:mvn/version "0.0.1"}}
+        girouette/girouette {:mvn/version "0.0.2"}}
 
  :aliases {:test {:extra-paths ["test"]
                   :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.0.641"}
@@ -30,11 +30,11 @@
                      :exec-args {:sync-pom true
                                  :group-id "girouette"
                                  :artifact-id "processor"
-                                 :version "0.0.1"
+                                 :version "0.0.2"
                                  :jar "processor.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:
 ;;     clojure -X:depstar
+;; - add a tag "v0.x.y" to the latest commit and push to repo
 ;; - deploy:
 ;;     mvn deploy:deploy-file -Dfile=processor.jar -DpomFile=pom.xml -DrepositoryId=clojars -Durl=https://clojars.org/repo/
-;; - add a tag "v0.x.y" to the latest commit and push to repo
