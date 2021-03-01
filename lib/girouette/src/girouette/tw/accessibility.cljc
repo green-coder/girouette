@@ -1,4 +1,4 @@
-(ns girouette.tw.accessibility)
+(ns ^:no-doc girouette.tw.accessibility)
 
 (def components
   [{:id :screen-reader

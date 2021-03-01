@@ -5,7 +5,7 @@
 
 ;; Those color values and names are from Tailwind CSS.
 ;; They are imported here for the purpose of compatibility.
-(def default-colors
+(def ^:no-doc default-colors
   {"rose" {50 "fff1f2"
            100 "ffe4e6"
            200 "fecdd3"
@@ -252,7 +252,7 @@
 (let [default-color-names (->> (keys default-colors)
                                (map (fn [color] (str "'" color "'")))
                                (str/join " | "))]
-  (def color-rules (str "
+  (def ^:no-doc color-rules (str "
   color = (<'rgb-'> rgb-color-code) |
           (<'rgba-'> rgba-color-code) |
           default-color-single-name |
@@ -322,13 +322,17 @@
                 (min 255 (int (/ (* (common/read-number param3) 255) 100))))]
           [r b g a]))))
 
-(defn as-transparent [color]
+(defn as-transparent
+  "Transforms a color into a transparent one when possible."
+  [color]
   (if (string? color)
     color
     (let [[r g b _] color]
       [r g b 0])))
 
-(defn color->css [color]
+(defn color->css
+  "Transform a color structure into a css string."
+  [color]
   (if (string? color)
     color
     (let [[r g b a] color]

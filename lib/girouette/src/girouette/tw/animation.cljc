@@ -1,4 +1,4 @@
-(ns girouette.tw.animation
+(ns ^:no-doc girouette.tw.animation
   (:require [garden.stylesheet :as gs]
             [girouette.tw.common :refer [value-unit->css]]))
 

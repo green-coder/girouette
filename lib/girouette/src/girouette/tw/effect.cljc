@@ -1,4 +1,4 @@
-(ns girouette.tw.effect
+(ns ^:no-doc girouette.tw.effect
   (:require [girouette.tw.common :refer [value-unit->css div-100]]))
 
 (def components

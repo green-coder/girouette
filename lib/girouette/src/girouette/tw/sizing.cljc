@@ -1,4 +1,4 @@
-(ns girouette.tw.sizing
+(ns ^:no-doc girouette.tw.sizing
   (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
 
 (def components

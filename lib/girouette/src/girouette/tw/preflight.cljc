@@ -1,4 +1,4 @@
-(ns girouette.tw.preflight
+(ns ^:no-doc girouette.tw.preflight
   (:require [garden.core :refer [css]]
             [garden.selectors :as s]))
 

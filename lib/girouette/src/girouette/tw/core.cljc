@@ -47,7 +47,9 @@
                  reverse))))
 
 
-(defn make-api [components]
+(defn make-api
+  "Creates an API based on a collection of Girouette components."
+  [components]
   (let [grammar (assemble-grammar components)
         parser (insta/parser grammar)
         component-by-id (into {}

@@ -1,4 +1,4 @@
-(ns girouette.tw.table)
+(ns ^:no-doc girouette.tw.table)
 
 (def components
   [{:id :border-collapse

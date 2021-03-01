@@ -1,4 +1,4 @@
-(ns girouette.tw.spacing
+(ns ^:no-doc girouette.tw.spacing
   (:require [garden.selectors :as gs]
             [girouette.tw.common :refer [value-unit->css dot default-pipeline div-4]]))
 

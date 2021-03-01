@@ -1,4 +1,4 @@
-(ns girouette.tw.grid
+(ns ^:no-doc girouette.tw.grid
   (:require [girouette.tw.common :refer [value-unit->css div-4]]))
 
 (def components

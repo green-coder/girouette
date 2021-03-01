@@ -1,4 +1,4 @@
-(ns girouette.tw.common
+(ns ^:no-doc girouette.tw.common
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
             [garden.stylesheet :as gs]))

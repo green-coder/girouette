@@ -1,4 +1,4 @@
-(ns girouette.tw.interactivity)
+(ns ^:no-doc girouette.tw.interactivity)
 
 (def components
   [{:id :appearance

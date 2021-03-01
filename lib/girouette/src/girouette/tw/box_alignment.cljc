@@ -1,4 +1,4 @@
-(ns girouette.tw.box-alignment)
+(ns ^:no-doc girouette.tw.box-alignment)
 
 (def components
   [{:id :justify-content

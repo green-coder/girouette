@@ -1,4 +1,4 @@
-(ns girouette.util
+(ns ^:no-doc girouette.util
   (:refer-clojure :exclude [group-by])
   (:require [clojure.core :as cc]))
 

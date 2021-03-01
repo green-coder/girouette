@@ -1,4 +1,4 @@
-(ns girouette.tw.transform
+(ns ^:no-doc girouette.tw.transform
   (:require [clojure.string :as str]
             [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]))
 

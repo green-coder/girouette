@@ -1,4 +1,4 @@
-(ns girouette.tw.background
+(ns ^:no-doc girouette.tw.background
   (:require [clojure.string :as str]
             [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]
             [girouette.tw.color :refer [read-color as-transparent color->css]]))

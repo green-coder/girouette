@@ -1,4 +1,4 @@
-(ns girouette.grammar.hiccup-tag
+(ns ^:no-doc girouette.grammar.hiccup-tag
   (:require [instaparse.core :as insta]))
 
 (def hiccup-tag-grammar "

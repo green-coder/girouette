@@ -1,4 +1,4 @@
-(ns girouette.tw.flexbox
+(ns ^:no-doc girouette.tw.flexbox
   (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
 
 (def components

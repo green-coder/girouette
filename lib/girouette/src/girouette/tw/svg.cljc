@@ -1,4 +1,4 @@
-(ns girouette.tw.svg
+(ns ^:no-doc girouette.tw.svg
   (:require [girouette.tw.color :refer [read-color color->css]]
             [girouette.tw.common :refer [value-unit->css]]))
 

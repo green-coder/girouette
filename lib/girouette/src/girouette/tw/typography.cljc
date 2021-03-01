@@ -1,4 +1,4 @@
-(ns girouette.tw.typography
+(ns ^:no-doc girouette.tw.typography
   (:require [garden.selectors :refer [defpseudoelement]]
             [girouette.tw.common :refer [value-unit->css div-4 mul-100 div-100]]
             [girouette.tw.color :refer [read-color color->css]]))
