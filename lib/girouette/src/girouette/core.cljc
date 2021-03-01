@@ -3,7 +3,7 @@
 
 (defmacro css
   "This macro should be used as a way to tag the expressions where
-   all the strings and keywords should be interpreted as css class names."
+   all the strings should be interpreted as css class names."
   [expr]
   expr)
 
