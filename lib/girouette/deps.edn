@@ -18,11 +18,11 @@
                      :exec-args {:sync-pom true
                                  :group-id "girouette"
                                  :artifact-id "girouette"
-                                 :version "0.0.1"
+                                 :version "0.0.2"
                                  :jar "girouette.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:
 ;;     clojure -X:depstar
+;; - add a tag "v0.x.y" to the latest commit and push to repo
 ;; - deploy:
 ;;     mvn deploy:deploy-file -Dfile=girouette.jar -DpomFile=pom.xml -DrepositoryId=clojars -Durl=https://clojars.org/repo/
-;; - add a tag "v0.x.y" to the latest commit and push to repo
