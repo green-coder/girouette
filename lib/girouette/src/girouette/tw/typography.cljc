@@ -122,24 +122,21 @@
 
    {:id :line-height
     :rules "
-    line-height = <'leading-'> (#'[3-9]' | '10' | 'none' | 'tight' | 'snug' |
-                                'normal' | 'relaxed' | 'loose')
+    line-height = <'leading-'> (line-height-size-name | number)
+    line-height-size-name = 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'
     "
-    :garden (fn [{[size] :component-data}]
-              {:line-height ({"3"       (str 0.75 "rem")
-                              "4"       (str 1    "rem")
-                              "5"       (str 1.25 "rem")
-                              "6"       (str 1.5  "rem")
-                              "7"       (str 1.75 "rem")
-                              "8"       (str 2    "rem")
-                              "9"       (str 2.25 "rem")
-                              "10"      (str 2.5  "rem")
-                              "none"    1
-                              "tight"   1.25
-                              "snug"    1.375
-                              "normal"  1.5
-                              "relaxed" 1.625
-                              "loose"   2} size)})}
+    :garden (fn [{[value-data] :component-data}]
+              {:line-height (if (= (first value-data) :line-height-size-name)
+                              ({"none"    1
+                                "tight"   1.25
+                                "snug"    1.375
+                                "normal"  1.5
+                                "relaxed" 1.625
+                                "loose"   2} (second value-data))
+                              (value-unit->css value-data
+                                               {:zero-unit nil
+                                                :number {:unit "rem"
+                                                         :value-fn div-4}}))})}
 
 
    ;; This is an extra, not from Tailwind.

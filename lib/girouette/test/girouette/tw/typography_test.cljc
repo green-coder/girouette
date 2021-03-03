@@ -36,6 +36,9 @@
     "tracking-wide"
     [".tracking-wide" {:letter-spacing (str 0.025 "em")}]
 
+    "leading-0"
+    [".leading-0" {:line-height 0}]
+
     "leading-3"
     [".leading-3" {:line-height (str 0.75 "rem")}]
 
