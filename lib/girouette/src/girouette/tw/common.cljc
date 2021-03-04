@@ -23,8 +23,8 @@
    "2xl" "1536px"})
 
 
-(defn div-100 [x] (/ x 100))
 (defn div-4   [x] (/ x 4))
+(defn div-100 [x] (/ x 100))
 (defn mul-100 [x] (* x 100))
 
 

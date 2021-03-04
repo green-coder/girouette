@@ -11,7 +11,7 @@
 
     "bg-green-300"
     [".bg-green-300" {:--gi-bg-opacity 1
-                      :background-color "rgba(134, 239, 172, var(--gi-bg-opacity))"}]
+                      :background-color "rgba(134,239,172,var(--gi-bg-opacity))"}]
 
     "bg-repeat-round"
     [".bg-repeat-round" {:background-repeat "round"}]

@@ -67,7 +67,7 @@
     "placeholder-green-300"
     [".placeholder-green-300" [placeholder-pseudo-element
                                {:--gi-placeholder-opacity 1
-                                :color "rgba(134, 239, 172, var(--gi-placeholder-opacity))"}]]
+                                :color "rgba(134,239,172,var(--gi-placeholder-opacity))"}]]
 
     "placeholder-green-300-50"
     [".placeholder-green-300-50" [placeholder-pseudo-element
@@ -78,21 +78,21 @@
 
     "text-black"
     [".text-black" {:--gi-text-opacity 1
-                    :color "rgba(0, 0, 0, var(--gi-text-opacity))"}]
+                    :color "rgba(0,0,0,var(--gi-text-opacity))"}]
 
     "text-current"
     [".text-current" {:color "currentColor"}]
 
     "text-green-300"
     [".text-green-300" {:--gi-text-opacity 1
-                        :color "rgba(134, 239, 172, var(--gi-text-opacity))"}]
+                        :color "rgba(134,239,172,var(--gi-text-opacity))"}]
 
     "text-green-300-50"
     [".text-green-300-50" {:color "#86efac7f"}]
 
     "text-rgb-733"
     [".text-rgb-733" {:--gi-text-opacity 1
-                      :color "rgba(119, 51, 51, var(--gi-text-opacity))"}]
+                      :color "rgba(119,51,51,var(--gi-text-opacity))"}]
 
     "text-rgba-7338"
     [".text-rgba-7338" {:color "#77333388"}]

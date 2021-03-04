@@ -47,7 +47,7 @@
 
     "border-green-300"
     [".border-green-300" {:--gi-border-opacity 1
-                          :border-color        "rgba(134, 239, 172, var(--gi-border-opacity))"}]
+                          :border-color        "rgba(134,239,172,var(--gi-border-opacity))"}]
 
     ;; Border Opacity
     "border-opacity-25"
@@ -78,7 +78,7 @@
     "divide-gray-100"
     [#garden.selectors.CSSSelector{:selector ".divide-gray-100 > * + *"}
      {:--gi-divide-opacity 1
-      :border-color        "rgba(244, 244, 245, var(--gi-divide-opacity))"}]
+      :border-color        "rgba(244,244,245,var(--gi-divide-opacity))"}]
 
     ;; Divide Opacity
     "divide-opacity-70"
@@ -100,7 +100,7 @@
 
     ;; Ring Color
     "ring-pink-400"
-    [".ring-pink-400", {:--gi-ring-color "rgba(244, 114, 182, var(--gi-ring-opacity))"}]
+    [".ring-pink-400", {:--gi-ring-color "rgba(244,114,182,var(--gi-ring-opacity))"}]
 
     ;; Ring Opacity
     "ring-opacity-50"
@@ -113,5 +113,5 @@
 
     ;; Ring Offset Color
     "ring-offset-yellow-300"
-    [".ring-offset-yellow-300" {:--gi-ring-offset-color "rgba(253, 224, 71, var(--gi-ring-opacity))"
+    [".ring-offset-yellow-300" {:--gi-ring-offset-color "rgba(253,224,71,var(--gi-ring-opacity))"
                                  :box-shadow             "0 0 0 var(--gi-ring-offset-width) var(--gi-ring-offset-color), var(--gi-ring-shadow)"}]))

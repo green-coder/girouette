@@ -112,12 +112,13 @@
                                     'wide' | 'wider' | 'widest')
     "
     :garden (fn [{[size] :component-data}]
-              {:letter-spacing ({"tighter" (str -0.05  "em")
-                                 "tight"   (str -0.025 "em")
-                                 "normal"  (str 0      "em")
-                                 "wide"    (str 0.025  "em")
-                                 "wider"   (str 0.05   "em")
-                                 "widest"  (str 0.1    "em")} size)})}
+              {:letter-spacing (str ({"tighter" -0.05
+                                      "tight"   -0.025
+                                      "normal"  0
+                                      "wide"    0.025
+                                      "wider"   0.05
+                                      "widest"  0.1} size)
+                                    "em")})}
 
 
    {:id :line-height
