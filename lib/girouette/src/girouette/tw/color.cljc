@@ -267,7 +267,7 @@
   <color-hue> = number
   <color-saturation> = number
   <color-lightness> = number
-  <color-opacity> = number | percentage
+  <color-opacity> = number
 
   default-color-single-name = 'transparent' | 'current' | 'black' | 'white'
   default-color-darkness-opacity = (" default-color-names ")
@@ -319,10 +319,9 @@
       (:color-hsl :color-hsla) (let [{:keys [red green blue]} (gc/hsl->rgb {:hue (value-unit->css param1)
                                                                             :saturation (value-unit->css param2)
                                                                             :lightness (value-unit->css param3)})
-                                     opacity (when (some? param4)
-                                               (value-unit->css param4 {:percentage {:unit nil
-                                                                                     :value-fn (comp clamp-0-255 int div-100 mul-255)}}))]
-                                 [red green blue opacity])
+                                     alpha (when (some? param4)
+                                             (value-unit->css param4 {:value-fn (comp clamp-0-255 int div-100 mul-255)}))]
+                                 [red green blue alpha])
 
       :default-color-single-name ({"transparent" "transparent"
                                    "current" "currentColor"

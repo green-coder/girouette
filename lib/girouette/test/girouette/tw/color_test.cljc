@@ -42,25 +42,13 @@
     [:color [:color-hsla [:number "0"]
                          [:number "100"]
                          [:number "50"]
-                         [:number "255"]]]
-    [0xff 0 0 0xff]
-
-    [:color [:color-hsla [:number "0"]
-                         [:number "100"]
-                         [:number "50"]
-                         [:percentage [:number "0"]]]]
-    [0xff 0 0 0]
-
-    [:color [:color-hsla [:number "0"]
-                         [:number "100"]
-                         [:number "50"]
-                         [:percentage [:number "50"]]]]
+                         [:number "50"]]]
     [0xff 0 0 0x7f]
 
     [:color [:color-hsla [:number "0"]
                          [:number "100"]
                          [:number "50"]
-                         [:percentage [:number "100"]]]]
+                         [:number "100"]]]
     [0xff 0 0 0xff]
 
     [:color [:default-color-single-name "transparent"]]
@@ -75,5 +63,5 @@
     [:color [:default-color-darkness-opacity "green" "300" [:integer "50"]]]
     [134 239 172 127]
 
-    [:color [:default-color-darkness-opacity "green" "300" [:integer "100"]]]
+    [:color [:default-color-darkness-opacity "green" "300" [:number "100"]]]
     [134 239 172 255]))

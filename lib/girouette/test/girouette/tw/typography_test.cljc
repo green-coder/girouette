@@ -90,6 +90,16 @@
     "text-green-300-50"
     [".text-green-300-50" {:color "#86efac7f"}]
 
+    "text-#733"
+    [".text-#733" {:--gi-text-opacity 1
+                   :color "rgba(119,51,51,var(--gi-text-opacity))"}]
+
+    "text-#7338"
+    [".text-#7338" {:color "#77333388"}]
+
+    "text-#703030ff"
+    [".text-#703030ff" {:color "#703030ff"}]
+
     "text-rgb-733"
     [".text-rgb-733" {:--gi-text-opacity 1
                       :color "rgba(119,51,51,var(--gi-text-opacity))"}]
@@ -104,11 +114,8 @@
     [".text-hsl-0-100-50" {:--gi-text-opacity 1
                            :color "rgba(255,0,0,var(--gi-text-opacity))"}]
 
-    "text-hsla-0-100-50-127"
-    [".text-hsla-0-100-50-127" {:color "#ff00007f"}]
-
-    "text-hsla-0-100-50-50%"
-    [".text-hsla-0-100-50-50\\%" {:color "#ff00007f"}]
+    "text-hsla-0-100-50-50"
+    [".text-hsla-0-100-50-50" {:color "#ff00007f"}]
 
     "text-opacity-0"
     [".text-opacity-0" {:--gi-text-opacity 0}]
