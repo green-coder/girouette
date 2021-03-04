@@ -57,11 +57,11 @@
     [:color [:default-color-single-name "current"]]
     "currentColor"
 
-    [:color [:default-color-darkness-opacity "green" "300"]]
+    [:color [:default-color-darkness-opacity "green-300"]]
     [134 239 172 nil]
 
-    [:color [:default-color-darkness-opacity "green" "300" [:integer "50"]]]
+    [:color [:default-color-darkness-opacity "green-300" [:integer "50"]]]
     [134 239 172 127]
 
-    [:color [:default-color-darkness-opacity "green" "300" [:number "100"]]]
+    [:color [:default-color-darkness-opacity "green-300" [:number "100"]]]
     [134 239 172 255]))
