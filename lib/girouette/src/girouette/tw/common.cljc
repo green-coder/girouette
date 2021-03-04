@@ -26,6 +26,8 @@
 (defn div-4   [x] (/ x 4))
 (defn div-100 [x] (/ x 100))
 (defn mul-100 [x] (* x 100))
+(defn mul-255 [x] (* x 255))
+(defn clamp-0-255 [x] (-> x (max 0) (min 255)))
 
 
 (defn read-number

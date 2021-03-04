@@ -1,7 +1,8 @@
 (ns girouette.tw.color
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
-            [girouette.tw.common :as common]))
+            [girouette.tw.common :refer [value-unit->css div-100 mul-255 clamp-0-255]]
+            [garden.color :as gc]))
 
 ;; Those color values and names are from Tailwind CSS.
 ;; They are imported here for the purpose of compatibility.
@@ -253,13 +254,20 @@
                                (map (fn [color] (str "'" color "'")))
                                (str/join " | "))]
   (def ^:no-doc color-rules (str "
-  color = (<'rgb-'> rgb-color-code) |
-          (<'rgba-'> rgba-color-code) |
+  color = color-rgb | color-rgba |
+          color-hsl | color-hsla |
           default-color-single-name |
           default-color-darkness-opacity
 
-  rgb-color-code = #'[0-9a-f]{3}' | #'[0-9a-f]{6}'
-  rgba-color-code = #'[0-9a-f]{4}' | #'[0-9a-f]{8}'
+  color-rgb = (<'#'> | <'rgb-'>) (#'[0-9a-f]{3}' | #'[0-9a-f]{6}')
+  color-rgba = (<'#'> | <'rgba-'>) (#'[0-9a-f]{4}' | #'[0-9a-f]{8}')
+
+  color-hsl = <'hsl-'> color-hue <'-'> color-saturation <'-'> color-lightness
+  color-hsla = <'hsla-'> color-hue <'-'> color-saturation <'-'> color-lightness <'-'> color-opacity
+  <color-hue> = number
+  <color-saturation> = number
+  <color-lightness> = number
+  <color-opacity> = number | percentage
 
   default-color-single-name = 'transparent' | 'current' | 'black' | 'white'
   default-color-darkness-opacity = (" default-color-names ")
@@ -286,27 +294,35 @@
   "Returns a 4-elements vector containing the color components, or a string.
    The nil value is returned if a particular component is not specified in the input."
   [color]
-  (let [[_ [type param1 param2 param3]] color]
+  (let [[_ [type param1 param2 param3 param4]] color]
     (case type
-      :rgb-color-code (case (count param1)
-                        3 [(read-hex-value (str (nth param1 0) (nth param1 0)))
-                           (read-hex-value (str (nth param1 1) (nth param1 1)))
-                           (read-hex-value (str (nth param1 2) (nth param1 2)))
-                           nil]
-                        6 [(read-hex-value (subs param1 0 2))
-                           (read-hex-value (subs param1 2 4))
-                           (read-hex-value (subs param1 4 6))
-                           nil])
+      :color-rgb (case (count param1)
+                   3 [(read-hex-value (str (nth param1 0) (nth param1 0)))
+                      (read-hex-value (str (nth param1 1) (nth param1 1)))
+                      (read-hex-value (str (nth param1 2) (nth param1 2)))
+                      nil]
+                   6 [(read-hex-value (subs param1 0 2))
+                      (read-hex-value (subs param1 2 4))
+                      (read-hex-value (subs param1 4 6))
+                      nil])
 
-      :rgba-color-code (case (count param1)
-                         4 [(read-hex-value (str (nth param1 0) (nth param1 0)))
-                            (read-hex-value (str (nth param1 1) (nth param1 1)))
-                            (read-hex-value (str (nth param1 2) (nth param1 2)))
-                            (read-hex-value (str (nth param1 3) (nth param1 3)))]
-                         8 [(read-hex-value (subs param1 0 2))
-                            (read-hex-value (subs param1 2 4))
-                            (read-hex-value (subs param1 4 6))
-                            (read-hex-value (subs param1 6 8))])
+      :color-rgba (case (count param1)
+                    4 [(read-hex-value (str (nth param1 0) (nth param1 0)))
+                       (read-hex-value (str (nth param1 1) (nth param1 1)))
+                       (read-hex-value (str (nth param1 2) (nth param1 2)))
+                       (read-hex-value (str (nth param1 3) (nth param1 3)))]
+                    8 [(read-hex-value (subs param1 0 2))
+                       (read-hex-value (subs param1 2 4))
+                       (read-hex-value (subs param1 4 6))
+                       (read-hex-value (subs param1 6 8))])
+
+      (:color-hsl :color-hsla) (let [{:keys [red green blue]} (gc/hsl->rgb {:hue (value-unit->css param1)
+                                                                            :saturation (value-unit->css param2)
+                                                                            :lightness (value-unit->css param3)})
+                                     opacity (when (some? param4)
+                                               (value-unit->css param4 {:percentage {:unit nil
+                                                                                     :value-fn (comp clamp-0-255 int div-100 mul-255)}}))]
+                                 [red green blue opacity])
 
       :default-color-single-name ({"transparent" "transparent"
                                    "current" "currentColor"
@@ -321,8 +337,7 @@
             b (read-hex-value (subs color-code 2 4))
             g (read-hex-value (subs color-code 4 6))
             a (when (some? param3)
-                (let [opacity (common/read-number param3)]
-                  (min 255 (int (/ (* opacity 255) 100)))))]
+                (value-unit->css param3 {:value-fn (comp clamp-0-255 int div-100 mul-255)}))]
           [r b g a]))))
 
 (defn as-transparent

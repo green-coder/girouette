@@ -100,6 +100,16 @@
     "text-rgba-703030ff"
     [".text-rgba-703030ff" {:color "#703030ff"}]
 
+    "text-hsl-0-100-50"
+    [".text-hsl-0-100-50" {:--gi-text-opacity 1
+                           :color "rgba(255,0,0,var(--gi-text-opacity))"}]
+
+    "text-hsla-0-100-50-127"
+    [".text-hsla-0-100-50-127" {:color "#ff00007f"}]
+
+    "text-hsla-0-100-50-50%"
+    [".text-hsla-0-100-50-50\\%" {:color "#ff00007f"}]
+
     "text-opacity-0"
     [".text-opacity-0" {:--gi-text-opacity 0}]
 
