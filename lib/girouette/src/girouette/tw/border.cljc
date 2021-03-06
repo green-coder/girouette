@@ -1,7 +1,7 @@
 (ns ^:no-doc girouette.tw.border
   (:require [garden.selectors :as gs]
             [girouette.tw.common :refer [value-unit->css dot default-pipeline div-100]]
-            [girouette.tw.color :refer [read-color color->css]]))
+            [girouette.tw.color :refer [color->css]]))
 
 (def components
   [{:id :border-radius
@@ -64,7 +64,8 @@
     border-color = <'border-'> color
     "
     ;; Copy-pasted from background; could be extracted into util?
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:border-color color}
@@ -120,7 +121,8 @@
     :pipeline (assoc default-pipeline
                 :class-name [(fn [rule props]
                                [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:border-color color}
@@ -170,7 +172,8 @@
     :rules "
     ring-color = <'ring-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:--gi-ring-color color}
@@ -203,7 +206,8 @@
     :rules "
     ring-offset-color = <'ring-offset-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               {:--gi-ring-offset-color (let [color (read-color color)]
                                          (if (string? color)
                                            color

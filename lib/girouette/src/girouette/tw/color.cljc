@@ -6,8 +6,11 @@
 
 ;; Those color values and names are from Tailwind CSS.
 ;; They are imported here for the purpose of compatibility.
-(def ^:no-doc default-colors
-  {"rose-50" "fff1f2"
+(def ^:no-doc default-color-map
+  {"white" "ffffff"
+   "black" "000000"
+
+   "rose-50" "fff1f2"
    "rose-100" "ffe4e6"
    "rose-200" "fecdd3"
    "rose-300" "fda4af"
@@ -250,14 +253,15 @@
    "blueGray-900" "0f172a"})
 
 
-(let [default-color-names (->> (keys default-colors)
-                               (map (fn [color] (str "'" color "'")))
-                               (str/join " | "))]
-  (def ^:no-doc color-rules (str "
+(defn color-rules [color-map]
+  (let [color-names (->> (keys color-map)
+                         (map (fn [color] (str "'" color "'")))
+                         (str/join " | "))]
+    (str "
   color = color-rgb | color-rgba |
           color-hsl | color-hsla |
-          default-color-single-name |
-          default-color-darkness-opacity
+          special-color |
+          predefined-color-opacity
 
   color-rgb = (<'#'> | <'rgb-'>) (#'[0-9a-f]{3}' | #'[0-9a-f]{6}')
   color-rgba = (<'#'> | <'rgba-'>) (#'[0-9a-f]{4}' | #'[0-9a-f]{8}')
@@ -269,11 +273,10 @@
   <color-lightness> = number
   <color-opacity> = number
 
-  default-color-single-name = 'transparent' | 'current' | 'black' | 'white'
-  default-color-darkness-opacity = (" default-color-names ")
+  special-color = 'transparent' | 'current'
+  predefined-color-opacity = predefined-color (<'-'> color-opacity)?
 
-                                   (* Opacity *)
-                                   (<'-'> integer)?
+  <predefined-color> = " color-names "
 ")))
 
 (def ^:private zero-to-f "0123456789abcdef")
@@ -288,8 +291,13 @@
 
 (defn read-color
   "Returns a 4-elements vector containing the color components, or a string.
-   The nil value is returned if a particular component is not specified in the input."
-  [color]
+   The nil value is returned if a particular component is not specified in the input.
+
+   `color-map` is a function which takes a string and returns a string in the hexadecimal RRGGBB format.
+   `color-map` is typically a hashmap.
+
+   `color` is the data structure from the parser which matched a color."
+  [color-map color]
   (let [[_ [type param1 param2 param3 param4]] color]
     (case type
       :color-rgb (case (count param1)
@@ -319,14 +327,11 @@
                                              (value-unit->css param4 {:value-fn (comp clamp-0-255 int div-100 mul-255)}))]
                                  [red green blue alpha])
 
-      :default-color-single-name ({"transparent" "transparent"
-                                   "current" "currentColor"
-                                   "black" [0 0 0 nil]
-                                   "white" [255 255 255 nil]} param1)
+      :special-color ({"transparent" "transparent"
+                       "current" "currentColor"} param1)
 
-      :default-color-darkness-opacity
-      (let [color-name param1
-            color-code (default-colors color-name)
+      :predefined-color-opacity
+      (let [color-code (color-map param1) ;; color-name -> color-code
             r (read-hex-value (subs color-code 0 2))
             b (read-hex-value (subs color-code 2 4))
             g (read-hex-value (subs color-code 4 6))

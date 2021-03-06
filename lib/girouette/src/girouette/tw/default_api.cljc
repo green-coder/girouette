@@ -3,6 +3,7 @@
     [girouette.tw.core :refer [make-api]]
     [girouette.util :as util]
     [girouette.tw.common :as common]
+    [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
     [girouette.tw.flexbox :as flexbox]
     [girouette.tw.grid :as grid]
@@ -43,6 +44,6 @@
 
 ;; This is how to build the API using the default components.
 ;; For a customized experience of Girouette, create your own API in the same way, using altered components.
-(let [{:keys [parser class-name->garden]} (make-api default-components)]
+(let [{:keys [parser class-name->garden]} (make-api default-components {:color-map color/default-color-map})]
   (def parser parser)
   (def class-name->garden class-name->garden))

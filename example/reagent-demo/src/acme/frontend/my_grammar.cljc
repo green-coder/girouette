@@ -3,6 +3,7 @@
     [girouette.tw.core :refer [make-api]]
     [girouette.util :as util]
     [girouette.tw.common :as common]
+    [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
     [girouette.tw.flexbox :as flexbox]
     [girouette.tw.grid :as grid]
@@ -57,7 +58,15 @@
      ,]))
 
 
+;; Adds colors to the existing default ones.
+(def my-color-map
+  (assoc color/default-color-map
+    "cat-white"  "eeeeee"
+    "cat-orange" "e58c56"
+    "cat-black"  "333333"))
+
+
 ;; This example shows how to Girouette on a custom grammar.
 ;; Here, we use only a subset of the Girouette components and we add your own.
 (def class-name->garden
-  (:class-name->garden (make-api my-chosen-components)))
+  (:class-name->garden (make-api my-chosen-components {:color-map my-color-map})))

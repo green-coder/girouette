@@ -1,5 +1,5 @@
 (ns ^:no-doc girouette.tw.svg
-  (:require [girouette.tw.color :refer [read-color color->css]]
+  (:require [girouette.tw.color :refer [color->css]]
             [girouette.tw.common :refer [value-unit->css]]))
 
 (def components
@@ -7,7 +7,8 @@
     :rules "
     fill = <'fill-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               {:fill (color->css (read-color color))})}
 
 
@@ -15,7 +16,8 @@
     :rules "
     stroke = <'stroke-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               {:stroke (color->css (read-color color))})}
 
 
