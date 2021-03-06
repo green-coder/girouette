@@ -1,7 +1,7 @@
 (ns ^:no-doc girouette.tw.typography
   (:require [garden.selectors :refer [defpseudoelement]]
             [girouette.tw.common :refer [value-unit->css div-4 mul-100 div-100]]
-            [girouette.tw.color :refer [read-color color->css]]))
+            [girouette.tw.color :refer [color->css]]))
 
 
 (defpseudoelement
@@ -171,7 +171,8 @@
     :rules "
     placeholder-color = <'placeholder-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               [placeholder-pseudo-element
                (let [color (read-color color)]
                  (if (string? color)
@@ -203,7 +204,8 @@
     :rules "
     text-color = <'text-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:color color}

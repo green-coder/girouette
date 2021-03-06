@@ -1,7 +1,7 @@
 (ns ^:no-doc girouette.tw.background
   (:require [clojure.string :as str]
             [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]
-            [girouette.tw.color :refer [read-color as-transparent color->css]]))
+            [girouette.tw.color :refer [as-transparent color->css]]))
 
 (def components
   [{:id :background-attachment
@@ -27,7 +27,8 @@
     :rules "
     background-color = <'bg-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)]
                 (if (string? color)
                   {:background-color color}
@@ -107,7 +108,8 @@
     :rules "
     gradient-color-from = <'from-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)
                     transp-color (as-transparent color)]
                 {:--gi-gradient-from (color->css color)
@@ -119,7 +121,8 @@
     :rules "
     gradient-color-to = <'to-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               {:--gi-gradient-to (color->css (read-color color))})}
 
 
@@ -127,7 +130,8 @@
     :rules "
     gradient-color-via = <'via-'> color
     "
-    :garden (fn [{[color] :component-data}]
+    :garden (fn [{[color] :component-data
+                  read-color :read-color}]
               (let [color (read-color color)
                     transp-color (as-transparent color)]
                 {:--gi-gradient-stops (str "var(--gi-gradient-from),"
