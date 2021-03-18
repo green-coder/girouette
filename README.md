@@ -97,9 +97,43 @@ It is possible to create grammars which support very long class names.
  "
 ```
 
+## Other CSS projects
+
+### Atomizer
+
+[Atomizer](https://acss.io/) is an older project which is also interpreting CSS class names.
+
+### WindiCSS
+
+Independently and in parallel of Girouette's development, [WindiCSS](https://github.com/windicss/windicss)
+was developed with similar ideas. Please check it out, specially if you are developing directly in the JS environment.
+
+### Tailwind
+
+> plagiarism /ˈpleɪdʒərɪz(ə)m/
+> 
+> "The practice of taking someone else's work or ideas and passing them off as one's own."
+
+This project is a pile of 💩 built on deception. I cannot give credit to it as I would always have a doubt that
+I may inadvertently take part in an upstream plagiarism scheme.
+
+The main maintainer of this project is blatantly taking new ideas from other open source projects, integrate them
+in his project and finally present those ideas as his own. He is misleading the public, its community and fans.
+This kind of behavior is not welcome in the open source world.
+
+For further reading:
+- [WindiCSS and Tailwind](https://antfu.me/posts/windicss-and-tailwind-jit)
+- [The history of Tailwind](https://gist.github.com/voorjaar/b1b5ee2173581e1019b2d378b52db7ce)
+
+You can also look at the [presentation of Girouette in January 2021](https://www.youtube.com/watch?v=Tnv6SvZM6tg)
+and see that it has all the "new ideas" presented as if they were from the Tailwind's team 2 months later.
+
+If one day you suffer from the impostor syndrome 🙀, reading about Tailwind should help you get a sense of relief 😌.
+
 ## Contribute
 
-Contributions are very welcome.
+Contributions are very welcome, just make sure that the contributions are your own,
+and add proper credits in the commit messages if it is not the case.
 
 ## License terms
 
