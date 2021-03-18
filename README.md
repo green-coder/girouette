@@ -19,7 +19,7 @@ It translates a classname into a Garden data structure representing CSS.
 ; => [".w-10" {:width "2.5rem"}]
 ```
 
-Girouette also make it easy to use you own grammar rules to generate anything
+Girouette also makes it easy to use your own grammar rules to generate anything
 you may dream of.
 
 ## Introduction
@@ -64,7 +64,7 @@ Its API mainly consists in the function `class-name->garden` which is pretty exp
 ```
 
 You can use `Girouette processor tool` to extract the CSS class names from
-your source code and generate the CSS in realtime as you develop.
+your source code and generate the CSS in real time as you develop.
 
 See the [demo project](example/reagent-demo) for more information.
 
@@ -72,7 +72,7 @@ See the [demo project](example/reagent-demo) for more information.
 ## Advantages of this approach
 
 With the right Girouette components in place, any parameters can be combined
-in the class names without leaving your usual REPL workflow.
+in class names without leaving your usual REPL workflow.
 
 ### Large range on numbers
 
