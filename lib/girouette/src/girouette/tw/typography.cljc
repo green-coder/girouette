@@ -1,5 +1,6 @@
 (ns ^:no-doc girouette.tw.typography
-  (:require [garden.selectors :refer [defpseudoelement]]
+  (:require [clojure.string :as str]
+            [garden.selectors :refer [defpseudoelement]]
             [girouette.tw.common :refer [value-unit->css div-4 mul-100 div-100]]
             [girouette.tw.color :refer [color->css]]))
 
@@ -9,16 +10,29 @@
   placeholder-pseudo-element)
 
 
+(def default-font-family-map
+  {"sans" "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
+   "serif" "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif"
+   "mono" "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"})
+
+
+(defn font-family-rules [font-family-map]
+  (let [font-family-names (->> (keys font-family-map)
+                               (map (fn [font-family-name] (str "'" font-family-name "'")))
+                               (str/join " | "))]
+    (str "
+  <font-family-name> = " font-family-names "
+")))
+
+
 (def components
   [{:id :font-family
     :rules "
-    font-family = 'font-sans' | 'font-serif' | 'font-mono'
+    font-family = <'font-'> font-family-name
     "
-    :garden (fn [{[font-type] :component-data}]
-              {:font-family (case font-type
-                              "font-sans" "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
-                              "font-serif" "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif"
-                              "font-mono" "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace")})}
+    :garden (fn [{font-family-map :font-family-map
+                  [font-family-name] :component-data}]
+              {:font-family (font-family-map font-family-name)})}
 
 
    {:id :font-size
