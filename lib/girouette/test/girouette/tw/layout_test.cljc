@@ -25,6 +25,12 @@
     "flex"
     [".flex" {:display "flex"}]
 
+    "sm:flex"
+    #garden.types.CSSAtRule {:identifier :media
+                             :value      {:media-queries {:min-width "640px"}
+                                          :rules ([".sm\\:flex"
+                                                   {:display "flex"}])}}
+
     "hidden"
     [".hidden" {:display "none"}]
 

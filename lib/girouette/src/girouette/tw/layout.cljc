@@ -31,10 +31,10 @@
         'table-footer-group' | 'table-header-group' | 'table-row-group' | 'table-row' |
         'flow-root' | 'grid' |'inline-grid' | 'contents' | 'hidden'
     "
-    :garden (fn [{:keys [class-name]}]
-              {:display (if (= "hidden" class-name)
+    :garden (fn [{[display-mode] :component-data}]
+              {:display (if (= "hidden" display-mode)
                           "none"
-                          class-name)})}
+                          display-mode)})}
 
 
    {:id :floats
