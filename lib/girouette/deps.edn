@@ -18,7 +18,7 @@
                      :exec-args {:sync-pom true
                                  :group-id "girouette"
                                  :artifact-id "girouette"
-                                 :version "0.0.2"
+                                 :version "0.0.3"
                                  :jar "girouette.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:
