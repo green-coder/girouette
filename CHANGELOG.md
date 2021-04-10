@@ -2,6 +2,21 @@
 
 (empty)
 
+## v0.0.3
+
+### Added
+
+- Added support for HSL colors.
+- Made the colors easy to customize. Updated the demo.
+- Made the font-family easy to customize.
+- Extended the rule `:line-height` to work with any number.
+- `make-api` does no longer need to have specified colors or font families to work.
+
+### Fixed
+
+- (issue #55) The "display" rule is now working correctly when used with a variant like "sm:".
+  Thanks to @jacobobryant for reporting it.
+
 ## v0.0.2
 
 ### Added
