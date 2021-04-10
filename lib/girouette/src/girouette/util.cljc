@@ -1,6 +1,10 @@
 (ns ^:no-doc girouette.util
+  #?(:cljs (:require-macros girouette.util))
   (:refer-clojure :exclude [group-by])
   (:require [clojure.core :as cc]))
+
+(defmacro comp-> [& args]
+  `(comp ~@(reverse args)))
 
 (defn group-by
   "Same as clojure.core/group-by, but with some handy new arities which apply
