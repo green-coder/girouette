@@ -1,6 +1,5 @@
 (ns acme.frontend.app
-  (:require [reagent.core :as r]
-            [reagent.dom :as rdom]
+  (:require [reagent.dom :as rdom]
             [girouette.core :refer [css]]))
 
 (enable-console-print!)
