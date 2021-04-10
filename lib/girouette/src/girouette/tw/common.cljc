@@ -3,6 +3,9 @@
             [clojure.edn :as edn]
             [garden.stylesheet :as gs]))
 
+;; This Instaparse grammar matches nothing.
+;; It literally means "look ahead to see 'nop', then see 'no-way'".
+(def matches-nothing "&'nop' 'no-way'")
 
 (defn dot [class]
   (str "." (str/escape class {\. "\\."

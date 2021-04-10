@@ -1,7 +1,7 @@
 (ns girouette.tw.color
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
-            [girouette.tw.common :refer [value-unit->css div-100 mul-255 clamp-0-255]]
+            [girouette.tw.common :refer [matches-nothing value-unit->css div-100 mul-255 clamp-0-255]]
             [garden.color :as gc]))
 
 ;; Those color values and names are from Tailwind CSS.
@@ -254,9 +254,11 @@
 
 
 (defn color-rules [color-map]
-  (let [color-names (->> (keys color-map)
-                         (map (fn [color] (str "'" color "'")))
-                         (str/join " | "))]
+  (let [color-names (if (seq color-map)
+                      (->> (keys color-map)
+                           (map (fn [color] (str "'" color "'")))
+                           (str/join " | "))
+                      matches-nothing)]
     (str "
   color = color-rgb | color-rgba |
           color-hsl | color-hsla |

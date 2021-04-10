@@ -1,7 +1,7 @@
 (ns ^:no-doc girouette.tw.typography
   (:require [clojure.string :as str]
             [garden.selectors :refer [defpseudoelement]]
-            [girouette.tw.common :refer [value-unit->css div-4 mul-100 div-100]]
+            [girouette.tw.common :refer [matches-nothing value-unit->css div-4 mul-100 div-100]]
             [girouette.tw.color :refer [color->css]]))
 
 
@@ -17,9 +17,11 @@
 
 
 (defn font-family-rules [font-family-map]
-  (let [font-family-names (->> (keys font-family-map)
-                               (map (fn [font-family-name] (str "'" font-family-name "'")))
-                               (str/join " | "))]
+  (let [font-family-names (if (seq font-family-map)
+                            (->> (keys font-family-map)
+                                 (map (fn [font-family-name] (str "'" font-family-name "'")))
+                                 (str/join " | "))
+                            matches-nothing)]
     (str "
   <font-family-name> = " font-family-names "
 ")))
