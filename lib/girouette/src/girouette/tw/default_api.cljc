@@ -1,7 +1,6 @@
 (ns girouette.tw.default-api
   (:require
     [girouette.tw.core :refer [make-api]]
-    [girouette.util :as util]
     [girouette.tw.common :as common]
     [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
@@ -22,24 +21,23 @@
     [girouette.tw.accessibility :as accessibility]))
 
 (def default-components
-  (util/into-one-vector
-    [common/components
-     layout/components
-     flexbox/components
-     grid/components
-     box-alignment/components
-     spacing/components
-     sizing/components
-     typography/components
-     background/components
-     border/components
-     effect/components
-     table/components
-     animation/components
-     transform/components
-     interactivity/components
-     svg/components
-     accessibility/components]))
+  [common/components
+   layout/components
+   flexbox/components
+   grid/components
+   box-alignment/components
+   spacing/components
+   sizing/components
+   typography/components
+   background/components
+   border/components
+   effect/components
+   table/components
+   animation/components
+   transform/components
+   interactivity/components
+   svg/components
+   accessibility/components])
 
 
 ;; This is how to build the API using the default components.

@@ -57,7 +57,8 @@
 (defn make-api
   "Creates an API based on a collection of Girouette components."
   [components {:keys [color-map font-family-map] :as options}]
-  (let [grammar (assemble-grammar components options)
+  (let [components (util/into-one-vector components) ;; flatten the structure
+        grammar (assemble-grammar components options)
         parser (insta/parser grammar)
         component-by-id (into {}
                               (map (juxt :id identity))

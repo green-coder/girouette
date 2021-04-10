@@ -1,7 +1,6 @@
 (ns acme.frontend.my-grammar
   (:require
     [girouette.tw.core :refer [make-api]]
-    [girouette.util :as util]
     [girouette.tw.common :as common]
     [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
@@ -36,26 +35,25 @@
 
 
 (def my-chosen-components
-  (util/into-one-vector
-    [common/components
-     layout/components
-     flexbox/components
-     grid/components
-     box-alignment/components
-     spacing/components
-     sizing/components
-     typography/components
-     background/components
-     border/components
-     ;effect/components
-     ;table/components
-     ;animation/components
-     ;transform/components
-     ;interactivity/components
-     ;svg/components
-     ;accessibility/components
-     my-custom-components
-     ,]))
+  [common/components
+   layout/components
+   flexbox/components
+   grid/components
+   box-alignment/components
+   spacing/components
+   sizing/components
+   typography/components
+   background/components
+   border/components
+   ;effect/components
+   ;table/components
+   ;animation/components
+   ;transform/components
+   ;interactivity/components
+   ;svg/components
+   ;accessibility/components
+   my-custom-components
+   ,])
 
 
 ;; Adds colors to the existing default ones.
