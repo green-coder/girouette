@@ -40,26 +40,22 @@
 (defonce state
   (let [s (ana-api/empty-state)]
     (ana-api/with-state s
-     (comp/with-core-cljs))
+      (comp/with-core-cljs))
     (stub-js-deps! s)
     s))
 
-(defn- keyword-hook [hook-fn]
-  (fn [env ast opts]
-    (when (and (= (:op ast) :const)
-               (= (:tag ast) 'cljs.core/Keyword))
-      (hook-fn (-> ast :val)))
-    ast))
+(defn- input-type-hook [type hook-fn]
+  (let [hook-type {:keyword 'cljs.core/Keyword
+                   :string  'string
+                   :symbol  'cljs.core/Symbol}]
+    (fn [env ast opts]
+      (when (and (= (:op ast) :const)
+                 (= (:tag ast) (type hook-type)))
+        (hook-fn (-> ast :val)))
+      ast)))
 
-(defn- string-hook [hook-fn]
-  (fn [env ast opts]
-    (when (and (= (:op ast) :const)
-               (= (:tag ast) 'string))
-      (hook-fn (-> ast :val)))
-    ast))
-
-;(ana-api/analyze nil "hi")
-;(ana-api/analyze nil :hi)
+;; (ana-api/analyze nil "hi")
+;; (ana-api/analyze nil :hi)
 
 (defn- invoke-hook [qualified-symbol hook-fn]
   (fn [env ast opts]
@@ -70,27 +66,32 @@
 
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
-        passes (case (:retrieval-method @config)
-                 :comprehensive [(string-hook (fn [s]
-                                                (let [names (->> (str/split s #" ")
-                                                                 (remove str/blank?))]
-                                                  (swap! css-classes into names))))
-                                 (keyword-hook (fn [kw]
-                                                 (let [names (->> (name kw)
-                                                                  (re-seq #"\.[^\.#]+")
-                                                                  (map (fn [s] (subs s 1))))]
-                                                   (swap! css-classes into names))))]
-                 :annotated [(invoke-hook (:css-symb @config)
-                                          (fn [form]
-                                            (walk/postwalk (fn [x]
-                                                             (when (string? x)
-                                                               (let [names (->> (str/split x #" ")
-                                                                                (remove str/blank?))]
-                                                                 (swap! css-classes into names))))
-                                                           form)))])
-        ns-info (ana-api/no-warn
-                  (ana-api/parse-ns file))
-        ns (:ns ns-info)]
+        passes      (case (:retrieval-method @config)
+                      :comprehensive [(input-type-hook :string (fn [s]
+                                                                 (let [names (->> (str/split s #" ")
+                                                                                  (remove str/blank?))]
+                                                                   (swap! css-classes into names))))
+                                      (input-type-hook :keyword (fn [kw]
+                                                                  (let [names (->> (name kw)
+                                                                                   (re-seq #"\.[^\.#]+")
+                                                                                   (map (fn [s] (subs s 1))))]
+                                                                    (swap! css-classes into names))))
+                                      ;; How do I get this hecking thing
+                                      ;; to swallow my symbols??
+                                      (input-type-hook :symbol (fn [sym]
+                                                                 (let [names (sym)]
+                                                                   (swap! css-classes into names))))]
+                      :annotated     [(invoke-hook (:css-symb @config)
+                                                   (fn [form]
+                                                     (walk/postwalk (fn [x]
+                                                                      (when (string? x)
+                                                                        (let [names (->> (str/split x #" ")
+                                                                                         (remove str/blank?))]
+                                                                          (swap! css-classes into names))))
+                                                                    form)))])
+        ns-info     (ana-api/no-warn
+                      (ana-api/parse-ns file))
+        ns          (:ns ns-info)]
     ;; Make sure that we forget about the previous parsed info in that namespace.
     (when ns
       (ana-api/remove-ns state ns))
@@ -100,7 +101,7 @@
       (ana-api/with-passes passes
         (ana-api/analyze-file state file nil)))
 
-    {:ns ns
+    {:ns          ns
      :css-classes (into [] (sort @css-classes))}))
 
 #_ (gather-css-classes (io/file "../../example/shadow-cljs-reagent-demo/src/acme/frontend/app.cljc"))
@@ -109,7 +110,7 @@
 
 (defn- find-source-paths []
   (let [{:keys [root-edn user-edn project-edn]} (t/find-edn-maps)
-        deps (t/merge-edns [root-edn user-edn project-edn])]
+        deps                                    (t/merge-edns [root-edn user-edn project-edn])]
     (:paths deps)))
 
 
