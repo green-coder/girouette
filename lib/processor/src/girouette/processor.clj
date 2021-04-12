@@ -15,37 +15,23 @@
             [girouette.processor.env :refer [config]])
   (:import (java.io File)))
 
-
-(defn red-str [& s]
-  (let [s (apply str s)]
+(defn color-str [color & s]
+  (let [s          (apply str s)
+        ansi-color {:reset         "\u001B[0m"
+                    :bright-red    "\u001B[31;1m"
+                    :bright-blue   "\u001B[34;1m"
+                    :bright-yellow "\u001B[33;1m"
+                    :bright-green  "\u001B[32;1m"}]
     (if (:color? @config)
-      (str "\u001B[31;1m" s "\u001B[0m")
-      s)))
-
-(defn blue-str [& s]
-  (let [s (apply str s)]
-    (if (:color? @config)
-      (str "\u001B[34;1m" s "\u001B[0m")
-      s)))
-
-(defn yellow-str [& s]
-  (let [s (apply str s)]
-    (if (:color? @config)
-      (str "\u001B[33;1m" s "\u001B[0m")
-      s)))
-
-(defn green-str [& s]
-  (let [s (apply str s)]
-    (if (:color? @config)
-      (str "\u001B[32;1m" s "\u001B[0m")
+      (str (color ansi-color) s (:reset ansi-color))
       s)))
 
 
 (defn- stub-js-deps! [state]
-  (let [deps (closure/get-upstream-deps)
-        npm-deps (when (map? (:npm-deps deps))
-                   (keys (:npm-deps deps)))
-        foreign-libs (mapcat :provides (:foreign-libs deps))
+  (let [deps            (closure/get-upstream-deps)
+        npm-deps        (when (map? (:npm-deps deps))
+                          (keys (:npm-deps deps)))
+        foreign-libs    (mapcat :provides (:foreign-libs deps))
         stubbed-js-deps (zipmap (concat npm-deps foreign-libs)
                                 (repeatedly #(gensym "fake$module")))]
     (swap! state update :js-dependency-index #(merge stubbed-js-deps %))))
@@ -168,7 +154,7 @@
 
 (defn- on-file-changed
   ([^File file change-type]
-   (let [relative-path (relative-path file)
+   (let [relative-path      (relative-path file)
          css-classes-before (set (-> @file-data (get relative-path) :css-classes))]
      (try
        (let [gathered-css-classes (gather-css-classes file)]
@@ -179,25 +165,25 @@
            (swap! file-data assoc relative-path gathered-css-classes))
 
          (when (:verbose? @config)
-           (let [css-classes-after (set (-> @file-data (get relative-path) :css-classes))
-                 removed-classes (sort (set/difference css-classes-before css-classes-after))
-                 added-classes (sort (set/difference css-classes-after css-classes-before))
-                 match-grammar? (comp some? (:garden-fn @config))
+           (let [css-classes-after        (set (-> @file-data (get relative-path) :css-classes))
+                 removed-classes          (sort (set/difference css-classes-before css-classes-after))
+                 added-classes            (sort (set/difference css-classes-after css-classes-before))
+                 match-grammar?           (comp some? (:garden-fn @config))
                  removed-matching-classes (filter match-grammar? removed-classes)
-                 removed-unknown-classes (remove match-grammar? removed-classes)
-                 added-unknown-classes (remove match-grammar? added-classes)
-                 added-matching-classes (filter match-grammar? added-classes)]
+                 removed-unknown-classes  (remove match-grammar? removed-classes)
+                 added-unknown-classes    (remove match-grammar? added-classes)
+                 added-matching-classes   (filter match-grammar? added-classes)]
              (when (or (seq removed-classes)
                        (seq added-classes))
                (println (str relative-path ": "
                              (when (seq added-unknown-classes)
-                               (red-str "[\uD83D\uDE31 " (str/join " " added-unknown-classes) "] "))
+                               (color-str :bright-red "[\uD83D\uDE31 " (str/join " " added-unknown-classes) "] "))
                              (when (seq removed-unknown-classes)
-                               (yellow-str "[\uD83D\uDE24 " (str/join " " removed-unknown-classes) "] "))
+                               (color-str :bright-yellow "[\uD83D\uDE24 " (str/join " " removed-unknown-classes) "] "))
                              (when (seq removed-matching-classes)
-                               (blue-str "[- " (str/join " " removed-matching-classes) "] "))
+                               (color-str :bright-blue "[- " (str/join " " removed-matching-classes) "] "))
                              (when (seq added-matching-classes)
-                               (green-str "[+ " (str/join " " added-matching-classes) "]"))))))))
+                               (color-str :bright-green "[+ " (str/join " " added-matching-classes) "]"))))))))
        (catch Exception e
          (println (str relative-path ": \uD83D\uDCA5 parse error!")))))))
 
