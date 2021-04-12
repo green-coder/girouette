@@ -6,3 +6,7 @@
 .cljs_node_repl
 node_modules
 out
+
+*~
+[#]*[#]
+.\#*
