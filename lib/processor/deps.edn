@@ -9,7 +9,7 @@
 
         garden/garden {:mvn/version "1.3.10"}
         ;girouette/girouette {:local/root "../girouette"}
-        girouette/girouette {:mvn/version "0.0.2"}}
+        girouette/girouette {:mvn/version "0.0.3"}}
 
  :aliases {:test {:extra-paths ["test"]
                   :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.0.641"}
