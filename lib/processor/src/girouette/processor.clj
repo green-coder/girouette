@@ -44,18 +44,6 @@
     (stub-js-deps! s)
     s))
 
-;; mark1
-
-(defn- receive-type-hook [type hook-fn]
-  (let [hook-type {:keyword 'cljs.core/Keyword
-                   :string  'string
-                   :symbol  'cljs.core/Symbol}]
-    (fn [env ast opts]
-      (when (and (= (:op ast) :const)
-                 (= (:tag ast) (type hook-type)))
-        (hook-fn (-> ast :val)))
-      ast)))
-
 ;; (ana-api/analyze nil "hi")
 ;; (ana-api/analyze nil :hi)
 
@@ -65,8 +53,6 @@
                (= (-> ast :fn :name) qualified-symbol))
       (hook-fn (-> ast :form second)))
     ast))
-
-#_ (def type :string)
 
 (def receive-hook-fn
   {:keyword #(->> (name %)
@@ -81,9 +67,15 @@
     (let [names ((type receive-hook-fn) x)]
       (swap! css-classes into names))))
 
-(defn receive [type css-classes]
-  (receive-type-hook type
-                     (receive-utility type css-classes)))
+(defn- receive [type css-classes]
+  (let [hook-type {:keyword 'cljs.core/Keyword
+                   :string  'string
+                   :symbol  'cljs.core/Symbol}]
+    (fn [env ast opts]
+      (when (and (= (:op ast) :const)
+                 (= (:tag ast) (type hook-type)))
+        ((receive-utility type css-classes) (-> ast :val)))
+      ast)))
 
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
