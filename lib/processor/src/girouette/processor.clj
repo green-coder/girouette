@@ -72,6 +72,13 @@
       (hook-fn (-> ast :val)))
     ast))
 
+(defn- symbol-hook [hook-fn]
+  (fn [env ast opts]
+    (when (and (= (:op ast) :const)
+               (= (:tag ast) 'cljs.core/Symbol))
+      (hook-fn (-> ast :val)))
+    ast))
+
 ;(ana-api/analyze nil "hi")
 ;(ana-api/analyze nil :hi)
 
@@ -93,6 +100,10 @@
                                                  (let [names (->> (name kw)
                                                                   (re-seq #"\.[^\.#]+")
                                                                   (map (fn [s] (subs s 1))))]
+                                                   (swap! css-classes into names))))
+                                 (symbol-hook (fn [sym]
+                                                 (let [names (->> (name sym)
+                                                                  (re-seq #"[\S]+"))]
                                                    (swap! css-classes into names))))]
                  :annotated [(invoke-hook (:css-symb @config)
                                           (fn [form]
