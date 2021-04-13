@@ -60,7 +60,7 @@
                   (map (fn [s] (subs s 1))))
    :string  #(->> (str/split % #" ")
                   (remove str/blank?))
-   :symbol  #(->> (name %))})
+   :symbol  #(re-seq #"[\w-]+" (name %))})
 
 (defn receive-utility [type css-classes]
   (fn [x]
@@ -74,15 +74,17 @@
     (fn [env ast opts]
       (when (and (= (:op ast) :const)
                  (= (:tag ast) (type hook-type)))
-        ((receive-utility type css-classes) (-> ast :val)))
+        ((receive-utility type css-classes) (:val ast)))
       ast)))
 
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
         passes      (case (:retrieval-method @config)
-                      :comprehensive [(receive :keyword css-classes)
+                      :comprehensive [
+                                      (receive :keyword css-classes)
                                       (receive :string css-classes)
-                                      (receive :symbol css-classes)]
+                                      (receive :symbol css-classes)
+                                      ]
                       :annotated     [(invoke-hook (:css-symb @config)
                                                    (fn [form]
                                                      (walk/postwalk
@@ -105,14 +107,11 @@
     {:ns          ns
      :css-classes (into [] (sort @css-classes))}))
 
-;; mark2
-
 #_ (gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
 #_ (ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
 
 #_ (gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
 #_ (ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
-
 
 (defn- find-source-paths []
   (let [{:keys [root-edn user-edn project-edn]} (t/find-edn-maps)
@@ -143,20 +142,20 @@
                           (.getParent)
                           (io/file))]
       (when-not (.exists file-parent)
-        (.mkdirs file-parent)))
-    (if (= output-format :css-classes)
-      ;; css class names by relative file path
-      (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
-        (pp/pprint @file-data file-writer))
-      (let [all-css-classes (into #{} (mapcat :css-classes) (vals @file-data))
-            predef-garden (if preflight? preflight [])
-            all-garden-defs (into predef-garden (keep (:garden-fn @config)) (sort all-css-classes))]
-        (if (= output-format :garden)
-          ;; garden
-          (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
-            (pp/pprint all-garden-defs file-writer))
-          ;; css stylesheet
-          (spit output-file (garden/css all-garden-defs)))))))
+        (.mkdirs file-parent))
+      (if (= output-format :css-classes)
+        ;; css class names by relative file path
+        (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
+          (pp/pprint @file-data file-writer))
+        (let [all-css-classes (into #{} (mapcat :css-classes) (vals @file-data))
+              predef-garden   (if preflight? preflight [])
+              all-garden-defs (into predef-garden (keep (:garden-fn @config)) (sort all-css-classes))]
+          (if (= output-format :garden)
+            ;; garden
+            (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
+              (pp/pprint all-garden-defs file-writer))
+            ;; css stylesheet
+            (spit output-file (garden/css all-garden-defs))))))))
 
 
 (defn- on-file-changed
