@@ -44,7 +44,9 @@
     (stub-js-deps! s)
     s))
 
-(defn- input-type-hook [type hook-fn]
+;; mark1
+
+(defn- receive-type-hook [type hook-fn]
   (let [hook-type {:keyword 'cljs.core/Keyword
                    :string  'string
                    :symbol  'cljs.core/Symbol}]
@@ -64,31 +66,38 @@
       (hook-fn (-> ast :form second)))
     ast))
 
+#_ (def type :string)
+
+(def receive-hook-fn
+  {:keyword #(->> (name %)
+                  (re-seq #"\.[^\.#]+")
+                  (map (fn [s] (subs s 1))))
+   :string  #(->> (str/split % #" ")
+                  (remove str/blank?))
+   :symbol  #(->> (name %))})
+
+(defn receive-utility [type css-classes]
+  (fn [x]
+    (let [names ((type receive-hook-fn) x)]
+      (swap! css-classes into names))))
+
+(defn receive [type css-classes]
+  (receive-type-hook type
+                     (receive-utility type css-classes)))
+
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
         passes      (case (:retrieval-method @config)
-                      :comprehensive [(input-type-hook :string (fn [s]
-                                                                 (let [names (->> (str/split s #" ")
-                                                                                  (remove str/blank?))]
-                                                                   (swap! css-classes into names))))
-                                      (input-type-hook :keyword (fn [kw]
-                                                                  (let [names (->> (name kw)
-                                                                                   (re-seq #"\.[^\.#]+")
-                                                                                   (map (fn [s] (subs s 1))))]
-                                                                    (swap! css-classes into names))))
-                                      ;; How do I get this hecking thing
-                                      ;; to swallow my symbols??
-                                      (input-type-hook :symbol (fn [sym]
-                                                                 (let [names (sym)]
-                                                                   (swap! css-classes into names))))]
+                      :comprehensive [(receive :keyword css-classes)
+                                      (receive :string css-classes)
+                                      (receive :symbol css-classes)]
                       :annotated     [(invoke-hook (:css-symb @config)
                                                    (fn [form]
-                                                     (walk/postwalk (fn [x]
-                                                                      (when (string? x)
-                                                                        (let [names (->> (str/split x #" ")
-                                                                                         (remove str/blank?))]
-                                                                          (swap! css-classes into names))))
-                                                                    form)))])
+                                                     (walk/postwalk
+                                                       (fn [x]
+                                                         (when (string? x)
+                                                           (receive-utility :string css-classes)))
+                                                       form)))])
         ns-info     (ana-api/no-warn
                       (ana-api/parse-ns file))
         ns          (:ns ns-info)]
@@ -104,8 +113,13 @@
     {:ns          ns
      :css-classes (into [] (sort @css-classes))}))
 
-#_ (gather-css-classes (io/file "../../example/shadow-cljs-reagent-demo/src/acme/frontend/app.cljc"))
-#_ (ana-api/parse-ns (io/file "../../example/shadow-cljs-reagent-demo/src/acme/frontend/app.cljc"))
+;; mark2
+
+#_ (gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
+#_ (ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
+
+#_ (gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
+#_ (ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
 
 
 (defn- find-source-paths []

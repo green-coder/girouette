@@ -6,3 +6,9 @@
 
 (defn drop-in-example []
   [:h1 {:class '[text-5xl underline font-serif]}])
+
+(defn compact-example []
+  [:h1.flex
+   [:div.flex-1 "hello"]
+   [:div.flex-2 "the"]
+   [:div.flex-3 "world"]])
