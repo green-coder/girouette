@@ -26,7 +26,6 @@
       (str (color ansi-color) s (:reset ansi-color))
       s)))
 
-
 (defn- stub-js-deps! [state]
   (let [deps            (closure/get-upstream-deps)
         npm-deps        (when (map? (:npm-deps deps))
@@ -35,7 +34,6 @@
         stubbed-js-deps (zipmap (concat npm-deps foreign-libs)
                                 (repeatedly #(gensym "fake$module")))]
     (swap! state update :js-dependency-index #(merge stubbed-js-deps %))))
-
 
 (defonce state
   (let [s (ana-api/empty-state)]
@@ -60,7 +58,8 @@
                   (map (fn [s] (subs s 1))))
    :string  #(->> (str/split % #" ")
                   (remove str/blank?))
-   :symbol  #(re-seq #"[\w-]+" (name %))})
+   :symbol  #(->> (name %)
+                  (re-seq #"[\S]+"))})
 
 (defn receive-utility [type css-classes]
   (fn [x]
@@ -80,11 +79,9 @@
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
         passes      (case (:retrieval-method @config)
-                      :comprehensive [
-                                      (receive :keyword css-classes)
+                      :comprehensive [(receive :keyword css-classes)
                                       (receive :string css-classes)
-                                      (receive :symbol css-classes)
-                                      ]
+                                      (receive :symbol css-classes)]
                       :annotated     [(invoke-hook (:css-symb @config)
                                                    (fn [form]
                                                      (walk/postwalk
@@ -107,22 +104,20 @@
     {:ns          ns
      :css-classes (into [] (sort @css-classes))}))
 
-#_ (gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
-#_ (ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
+#_(gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
+#_(ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/app.cljc"))
 
-#_ (gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
-#_ (ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
+#_(gather-css-classes (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
+#_(ana-api/parse-ns (io/file "../../example/reagent-demo/src/acme/frontend/drop_in.cljc"))
 
 (defn- find-source-paths []
   (let [{:keys [root-edn user-edn project-edn]} (t/find-edn-maps)
         deps                                    (t/merge-edns [root-edn user-edn project-edn])]
     (:paths deps)))
 
-
 (defn- relative-path [^File file]
   (let [home-path (.toPath *the-dir*)]
     (.toString (.relativize home-path (.toPath (.getCanonicalFile file))))))
-
 
 (defn- input-file? [^File file]
   (let [path (.getPath file)]
@@ -131,8 +126,9 @@
 
 ;; {relative-path {:ns acme.frontend.app
 ;;                 :css-classes #{"flex" "flex-1" "flex-2" "flex-9/3"}}}
-(def file-data (atom (sorted-map-by compare)))
 
+
+(def file-data (atom (sorted-map-by compare)))
 
 (defn- spit-output []
   (let [{:keys [output-format output-file preflight?]} @config]
@@ -156,7 +152,6 @@
               (pp/pprint all-garden-defs file-writer))
             ;; css stylesheet
             (spit output-file (garden/css all-garden-defs))))))))
-
 
 (defn- on-file-changed
   ([^File file change-type]
@@ -193,23 +188,22 @@
        (catch Exception e
          (println (str relative-path ": \uD83D\uDCA5 parse error!")))))))
 
-
 (defn process
   [{{:keys [source-paths file-filters]
-     :or {source-paths (find-source-paths)
-          file-filters [".cljs" ".cljc" ".clj"]}} :input
+     :or   {source-paths (find-source-paths)
+            file-filters [".cljs" ".cljc" ".clj"]}} :input
 
     {:keys [retrieval-method output-format output-file]
-     :or {retrieval-method :comprehensive
-          output-format :css}} :css
+     :or   {retrieval-method :comprehensive
+            output-format    :css}} :css
 
     :keys [css-symb garden-fn preflight? watch? verbose? color?]
-    :or {css-symb 'girouette.core/css
-         garden-fn 'girouette.tw.default-api/class-name->garden
-         preflight? true
-         watch? false
-         verbose? true
-         color? true}}]
+    :or   {css-symb   'girouette.core/css
+           garden-fn  'girouette.tw.default-api/class-name->garden
+           preflight? true
+           watch?     false
+           verbose?   true
+           color?     true}}]
 
   (assert (and (seq source-paths)
                (every? string? source-paths))
@@ -239,23 +233,23 @@
   (assert (boolean? color?)
           "color? should be a boolean")
 
-  (let [garden-fn (cond-> garden-fn
-                    (#{:garden :css} output-format) requiring-resolve)
+  (let [garden-fn   (cond-> garden-fn
+                      (#{:garden :css} output-format) requiring-resolve)
         output-file (cond
-                      (some? output-file) output-file
+                      (some? output-file)    output-file
                       (= output-format :css) "girouette.css"
-                      :else "girouette.edn")]
-    (reset! config {:source-paths source-paths
-                    :file-filters file-filters
+                      :else                  "girouette.edn")]
+    (reset! config {:source-paths     source-paths
+                    :file-filters     file-filters
                     :retrieval-method retrieval-method
-                    :output-format output-format
-                    :output-file output-file
-                    :css-symb css-symb
-                    :garden-fn garden-fn
-                    :preflight? preflight?
-                    :watch? watch?
-                    :verbose? verbose?
-                    :color? color?})
+                    :output-format    output-format
+                    :output-file      output-file
+                    :css-symb         css-symb
+                    :garden-fn        garden-fn
+                    :preflight?       preflight?
+                    :watch?           watch?
+                    :verbose?         verbose?
+                    :color?           color?})
     (when verbose?
       (println "⚙️ Settings:")
       (pp/pprint @config)
@@ -276,7 +270,7 @@
     (when watch?
       (when verbose?
         (println (str "\n\uD83D\uDC40 Watching files in " (str/join ", " source-paths) " ...")))
-      (hawk/watch! [{:paths source-paths
+      (hawk/watch! [{:paths   source-paths
                      :handler (fn [ctx {:keys [^File file kind]}]
                                 (when (input-file? file)
                                   (on-file-changed file kind)
