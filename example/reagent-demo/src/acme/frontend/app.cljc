@@ -2,8 +2,6 @@
   (:require [reagent.dom :as rdom]
             [girouette.core :refer [css]]))
 
-(enable-console-print!)
-
 (defn simple-example []
   [:main
 
