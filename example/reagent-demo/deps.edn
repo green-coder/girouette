@@ -3,9 +3,10 @@
  :deps {org.clojure/clojurescript {:mvn/version "1.10.844"}
         thheller/shadow-cljs      {:mvn/version "2.12.4"}
         reagent/reagent           {:mvn/version "1.0.0"}
-        girouette/girouette       {:local/root "../../lib/girouette"}}
+        girouette/girouette       {:mvn/version "0.0.3"}}
 
- :aliases {:girouette {:extra-deps {girouette/processor {:local/root "../../lib/processor"}}
+ :aliases {; clojure -X:girouette
+           :girouette {:extra-deps {girouette/processor {:mvn/version "0.0.2"}}
                        :ns-default girouette.processor
                        :exec-fn process
                        :exec-args {:css {:output-file "public/style/girouette.css"}
