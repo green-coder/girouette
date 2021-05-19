@@ -125,6 +125,18 @@
     "focus:container"
     [".focus\\:container" [:&:focus {:width "100%"}]]
 
+    "first:container"
+    [".first\\:container" [:&:first-child {:width "100%"}]]
+
+    "last:container"
+    [".last\\:container" [:&:last-child {:width "100%"}]]
+
+    "odd:container"
+    [".odd\\:container" [(keyword "&:nth-child(odd)") {:width "100%"}]]
+
+    "even:container"
+    [".even\\:container" [(keyword "&:nth-child(even)") {:width "100%"}]]
+
     "sm:focus:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:min-width "640px"}
@@ -133,4 +145,4 @@
     "sm:first:focus:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:min-width "640px"}
-                                    :rules ([".sm\\:first\\:focus\\:container" [:&:first [:&:focus {:max-width "640px"}]]])}}))
+                                    :rules ([".sm\\:first\\:focus\\:container" [:&:first-child [:&:focus {:max-width "640px"}]]])}}))
