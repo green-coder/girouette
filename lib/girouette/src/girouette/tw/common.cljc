@@ -7,6 +7,11 @@
 ;; It literally means "look ahead to see 'nop', then see 'no-way'".
 (def matches-nothing "&'nop' 'no-way'")
 
+(def state-variants {"first" "first-child"
+                     "last"  "last-child"
+                     "odd"   "nth-child(odd)"
+                     "even"  "nth-child(even)"})
+
 (defn dot [class]
   (str "." (str/escape class {\. "\\."
                               \: "\\:"
@@ -93,7 +98,7 @@
 
 (defn inner-state-variants-transform [rule props]
   (reduce (fn [rule state-variant]
-            [(keyword (str "&:" state-variant)) rule])
+            [(keyword (str "&:" (get state-variants state-variant state-variant))) rule])
           rule
           (->> props :prefixes :state-variants reverse
                (remove #{"group-hover" "group-focus"
