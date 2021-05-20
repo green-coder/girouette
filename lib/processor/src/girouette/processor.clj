@@ -11,6 +11,8 @@
             [clojure.walk :as walk]
             [garden.core :as garden]
             [hawk.core :as hawk]
+            [girouette.garden.util :as util]
+            [girouette.tw.common :refer [dot]]
             [girouette.tw.preflight :refer [preflight]]
             [girouette.processor.env :refer [config]])
   (:import (java.io File)))
@@ -82,18 +84,21 @@
       (hook-fn (-> ast :form second)))
     ast))
 
+(defn- string->classes [s]
+  (remove str/blank? (str/split s #" ")))
+
+(defn- kw->classes [kw]
+  (->> (name kw)
+       (re-seq #"\.[^\.#]+")
+       (map (fn [s] (subs s 1)))))
+
 (defn- gather-css-classes [file]
   (let [css-classes (atom #{})
         passes (case (:retrieval-method @config)
                  :comprehensive [(string-hook (fn [s]
-                                                (let [names (->> (str/split s #" ")
-                                                                 (remove str/blank?))]
-                                                  (swap! css-classes into names))))
+                                                (swap! css-classes into (string->classes s))))
                                  (keyword-hook (fn [kw]
-                                                 (let [names (->> (name kw)
-                                                                  (re-seq #"\.[^\.#]+")
-                                                                  (map (fn [s] (subs s 1))))]
-                                                   (swap! css-classes into names))))]
+                                                 (swap! css-classes into (kw->classes kw))))]
                  :annotated [(invoke-hook (:css-symb @config)
                                           (fn [form]
                                             (walk/postwalk (fn [x]
@@ -141,9 +146,14 @@
 ;;                 :css-classes #{"flex" "flex-1" "flex-2" "flex-9/3"}}}
 (def file-data (atom (sorted-map-by compare)))
 
+(defn- normalize-classes [x]
+  (map dot ((if (string? x)
+              string->classes
+              kw->classes)
+            x)))
 
 (defn- spit-output []
-  (let [{:keys [output-format output-file preflight?]} @config]
+  (let [{:keys [output-format output-file preflight? apply-classes]} @config]
     ;; NOTE output-file is a string, e.g. "public/style/girouette.css"
     ;; so we should check all parent directories exist
     (let [file-parent (-> (io/file output-file)
@@ -157,7 +167,15 @@
         (pp/pprint @file-data file-writer))
       (let [all-css-classes (into #{} (mapcat :css-classes) (vals @file-data))
             predef-garden (if preflight? preflight [])
-            all-garden-defs (into predef-garden (keep (:garden-fn @config)) (sort all-css-classes))]
+            all-garden-defs (into predef-garden (keep (:garden-fn @config)) (sort all-css-classes))
+            all-garden-defs (reduce (fn [garden [cls classes]]
+                                      (into garden
+                                            (util/apply-class-rules
+                                              garden
+                                              (first (normalize-classes cls))
+                                              (set (mapcat normalize-classes classes)))))
+                                    all-garden-defs
+                                    @(requiring-resolve apply-classes))]
         (if (= output-format :garden)
           ;; garden
           (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
@@ -211,7 +229,7 @@
      :or {retrieval-method :comprehensive
           output-format :css}} :css
 
-    :keys [css-symb garden-fn preflight? watch? verbose? color?]
+    :keys [css-symb garden-fn preflight? watch? verbose? color? apply-classes]
     :or {css-symb 'girouette.core/css
          garden-fn 'girouette.tw.default-api/class-name->garden
          preflight? true
@@ -246,6 +264,9 @@
           "verbose? should be a boolean")
   (assert (boolean? color?)
           "color? should be a boolean")
+  (assert (or (nil? apply-classes)
+              (qualified-symbol? apply-classes))
+          "apply-classes should be a qualified symbol")
 
   (let [garden-fn (cond-> garden-fn
                     (#{:garden :css} output-format) requiring-resolve)
@@ -263,7 +284,8 @@
                     :preflight? preflight?
                     :watch? watch?
                     :verbose? verbose?
-                    :color? color?})
+                    :color? color?
+                    :apply-classes apply-classes})
     (when verbose?
       (println "⚙️ Settings:")
       (pp/pprint @config)
