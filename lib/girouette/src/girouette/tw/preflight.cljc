@@ -235,7 +235,7 @@
      :border-color "#e5e7eb"}]
 
    ;; Ensure horizontal rules are visible by default
-   [:hr {:border-top-with "1px"}]
+   [:hr {:border-top-width "1px"}]
 
    ;; Undo the `border-style: none` reset that Normalize applies to images so that
    ;; our `border-{width}` utilities have the expected effect.
