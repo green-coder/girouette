@@ -137,6 +137,9 @@
     "even:container"
     [".even\\:container" [(keyword "&:nth-child(even)") {:width "100%"}]]
 
+    "invalid:bg-#d66f"
+    [".invalid\\:bg-#d66f" [:&:invalid {:background-color "#dd6666ff"}]]
+
     "sm:focus:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:min-width "640px"}

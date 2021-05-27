@@ -160,8 +160,11 @@
   state-variant = 'hover' | 'focus' | 'disabled' | 'active' |
                   'group-hover' | 'group-focus' | 'group-disabled' | 'group-active' |
                   'focus-within' | 'focus-visible' |
-                  'visited' | 'checked' |
-                  'first' | 'last' | 'odd' | 'even'
+                  'any-link' | 'link' | 'visited' | 'target' |
+                  'blank' | 'required' | 'optional' | 'valid' | 'invalid' | 'placeholder-shown' | 'checked' |
+                  'read-only' | 'read-write' |
+                  'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
+                  'root' | 'empty'
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'
