@@ -7,10 +7,15 @@
 ;; It literally means "look ahead to see 'nop', then see 'no-way'".
 (def matches-nothing "&'nop' 'no-way'")
 
-(def state-variants {"first" "first-child"
-                     "last"  "last-child"
-                     "odd"   "nth-child(odd)"
-                     "even"  "nth-child(even)"})
+(defn state-variant->str [state-variant]
+  ({"first" "first-child"
+    "last"  "last-child"
+    "odd"   "nth-child(odd)"
+    "even"  "nth-child(even)"} state-variant state-variant))
+
+(def outer-state-variants
+  #{"group-hover" "group-focus"
+    "group-disabled" "group-active"})
 
 (defn dot [class]
   (str "." (str/escape class {\. "\\."
@@ -98,11 +103,10 @@
 
 (defn inner-state-variants-transform [rule props]
   (reduce (fn [rule state-variant]
-            [(keyword (str "&:" (get state-variants state-variant state-variant))) rule])
+            [(keyword (str "&:" (state-variant->str state-variant))) rule])
           rule
           (->> props :prefixes :state-variants reverse
-               (remove #{"group-hover" "group-focus"
-                         "group-disabled" "group-active"}))))
+               (remove outer-state-variants))))
 
 
 (defn class-name-transform [rule props]
@@ -118,8 +122,7 @@
               "group-active" [".group:active" rule]))
           rule
           (->> props :prefixes :state-variants reverse
-               (filter #{"group-hover" "group-focus"
-                         "group-disabled" "group-active"}))))
+               (filter outer-state-variants))))
 
 
 (defn media-queries-transform [rule props]
