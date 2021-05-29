@@ -11,6 +11,7 @@
                        :exec-fn process
                        :exec-args {:css {:output-file "public/style/girouette.css"}
                                    :garden-fn acme.frontend.my-grammar/class-name->garden
+                                   :apply-classes acme.frontend.my-css/composed-classes
                                    :watch? true}}
 
            ; clojure -M:outdated --upgrade

@@ -5,11 +5,11 @@
             [girouette.garden.util :refer [apply-class-rules]]))
 
 (deftest apply-class-rules-test
-  (are [class-name classes expected-garden]
+  (are [target-class-name gi-class-names expected-garden]
        (= expected-garden
-          (apply-class-rules (mapv class-name->garden classes)
-                                   (dot class-name)
-                                   (set (map dot classes))))
+          (apply-class-rules (dot target-class-name)
+                             (mapv class-name->garden gi-class-names)
+                             (mapv dot gi-class-names)))
 
        "my-class"
        ["p-3"
@@ -21,9 +21,8 @@
        '([".my-class" {:margin "0.75rem"
                        :padding "0.75rem"}]
          [".my-class" [:&:hover {:padding "1rem"}]]
-         #garden.types.CSSAtRule{:identifier :media
-                                 :value {:media-queries {:min-width "640px"}
-                                         :rules
-                                         ([".my-class" [:&:hover {:padding "0.5rem"}]]
-                                          [".my-class" {:padding "0.25rem"
-                                                        :margin "0.25rem"}])}})))
+         #garden.types.CSSAtRule {:identifier :media
+                                  :value {:media-queries {:min-width "640px"}
+                                          :rules [[".my-class" {:padding "0.25rem"
+                                                                :margin "0.25rem"}]
+                                                  [".my-class" [:&:hover {:padding "0.5rem"}]]]}})))

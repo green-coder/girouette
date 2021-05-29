@@ -85,7 +85,8 @@
     ast))
 
 (defn- string->classes [s]
-  (remove str/blank? (str/split s #" ")))
+  (->> (str/split s #"\s+")
+       (remove str/blank?)))
 
 (defn- kw->classes [kw]
   (->> (name kw)
@@ -103,9 +104,7 @@
                                           (fn [form]
                                             (walk/postwalk (fn [x]
                                                              (when (string? x)
-                                                               (let [names (->> (str/split x #" ")
-                                                                                (remove str/blank?))]
-                                                                 (swap! css-classes into names))))
+                                                               (swap! css-classes into (string->classes x))))
                                                            form)))])
         ns-info (ana-api/no-warn
                   (ana-api/parse-ns file))
@@ -147,13 +146,12 @@
 (def file-data (atom (sorted-map-by compare)))
 
 (defn- normalize-classes [x]
-  (map dot ((if (string? x)
-              string->classes
-              kw->classes)
-            x)))
+  (if (string? x)
+    (string->classes x)
+    (kw->classes x)))
 
 (defn- spit-output []
-  (let [{:keys [output-format output-file preflight? apply-classes]} @config]
+  (let [{:keys [output-format output-file preflight? garden-fn apply-classes]} @config]
     ;; NOTE output-file is a string, e.g. "public/style/girouette.css"
     ;; so we should check all parent directories exist
     (let [file-parent (-> (io/file output-file)
@@ -167,15 +165,16 @@
         (pp/pprint @file-data file-writer))
       (let [all-css-classes (into #{} (mapcat :css-classes) (vals @file-data))
             predef-garden (if preflight? preflight [])
-            all-garden-defs (into predef-garden (keep (:garden-fn @config)) (sort all-css-classes))
-            all-garden-defs (reduce (fn [garden [cls classes]]
-                                      (into garden
-                                            (util/apply-class-rules
-                                              garden
-                                              (first (normalize-classes cls))
-                                              (set (mapcat normalize-classes classes)))))
-                                    all-garden-defs
-                                    @(requiring-resolve apply-classes))]
+            class-compositions (when (some? apply-classes)
+                                 @(requiring-resolve apply-classes))
+            all-garden-defs (-> predef-garden
+                                (into (keep garden-fn) (sort all-css-classes))
+                                (into (map (fn [[target-class-name classes-to-compose]]
+                                             (let [classes-to-compose (mapcat normalize-classes classes-to-compose)]
+                                               (util/apply-class-rules (dot target-class-name)
+                                                                       (mapv garden-fn classes-to-compose)
+                                                                       (mapv dot classes-to-compose)))))
+                                      class-compositions))]
         (if (= output-format :garden)
           ;; garden
           (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
@@ -220,6 +219,7 @@
          (println (str relative-path ": \uD83D\uDCA5 parse error!")))))))
 
 
+;; This is the entry point of the processor tool.
 (defn process
   [{{:keys [source-paths file-filters]
      :or {source-paths (find-source-paths)
