@@ -109,9 +109,9 @@
                                                       :number {:unit "px"}}))]
                   (case axis
                     "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
-                         :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse))")}
+                         :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")}
                     "y" {:border-top-width    (str "calc(" width " * var(--gi-divide-y-reverse))")
-                         :border-bottom-width (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse))")}))))}
+                         :border-bottom-width (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")}))))}
 
 
    {:id :divide-color
