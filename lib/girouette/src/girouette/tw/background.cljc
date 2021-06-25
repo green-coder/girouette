@@ -35,7 +35,7 @@
                   (let [[r g b a] color]
                     (if (some? a)
                       {:background-color (color->css color)}
-                      {:background-color (color->css [r g b "var(--gi-bg-opacity, 1)"])})))))}
+                      {:background-color (color->css [r g b "var(--gi-bg-opacity,1)"])})))))}
 
 
    {:id :background-opacity
