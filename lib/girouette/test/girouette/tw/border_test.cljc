@@ -46,8 +46,7 @@
     [".border-transparent" {:border-color "transparent"}]
 
     "border-green-300"
-    [".border-green-300" {:--gi-border-opacity 1
-                          :border-color        "rgba(134,239,172,var(--gi-border-opacity))"}]
+    [".border-green-300" {:border-color        "rgba(134,239,172,var(--gi-border-opacity,1))"}]
 
     ;; Border Opacity
     "border-opacity-25"
@@ -77,8 +76,7 @@
 
     "divide-gray-100"
     [#garden.selectors.CSSSelector{:selector ".divide-gray-100 > * + *"}
-     {:--gi-divide-opacity 1
-      :border-color        "rgba(244,244,245,var(--gi-divide-opacity))"}]
+     {:border-color        "rgba(244,244,245,var(--gi-divide-opacity,1))"}]
 
     ;; Divide Opacity
     "divide-opacity-70"

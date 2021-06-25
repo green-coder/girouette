@@ -10,8 +10,7 @@
     [".bg-transparent" {:background-color "transparent"}]
 
     "bg-green-300"
-    [".bg-green-300" {:--gi-bg-opacity 1
-                      :background-color "rgba(134,239,172,var(--gi-bg-opacity))"}]
+    [".bg-green-300" {:background-color "rgba(134,239,172,var(--gi-bg-opacity,1))"}]
 
     "bg-repeat-round"
     [".bg-repeat-round" {:background-repeat "round"}]
