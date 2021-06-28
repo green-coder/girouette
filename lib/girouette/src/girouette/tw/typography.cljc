@@ -116,7 +116,7 @@
     :rules "
     font-variant-numeric = 'normal-nums' | 'ordinal' | 'slashed-zero' | 'lining-nums' |
                            'oldstyle-nums' | 'proportional-nums' | 'tabular-nums' |
-                           'diagonal-franctions' | 'stacked-fractions'
+                           'diagonal-fractions' | 'stacked-fractions'
     "
     :garden (fn [{[variant-numeric] :component-data}]
               {:font-variant-numeric variant-numeric})}
