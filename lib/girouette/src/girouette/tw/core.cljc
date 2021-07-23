@@ -1,6 +1,7 @@
 (ns girouette.tw.core
   (:require
     [clojure.string :as str]
+    [clojure.set :as set]
     [instaparse.core :as insta]
     [girouette.util :as util]
     [girouette.tw.common :as common]
@@ -54,15 +55,65 @@
                  reverse))))
 
 
+(defn- complement-before-rules-after-rules
+  "Ensures that each :before-rules relation has a :after-rules relation, and vice-versa."
+  [id->component]
+  (reduce (fn [id->component [id {:keys [before-rules after-rules]}]]
+            (let [;; Ensure the presence of all :after-rules from :before-rules
+                  id->component (reduce (fn [id->component before-id]
+                                          (update-in id->component [before-id :after-rules]
+                                                     (fnil conj #{}) id))
+                                        id->component
+                                        before-rules)
+                  ;; Ensure the presence of all :before-rules from :after-rules
+                  id->component (reduce (fn [id->component after-id]
+                                          (update-in id->component [after-id :before-rules]
+                                                     (fnil conj #{}) id))
+                                        id->component
+                                        after-rules)]
+              id->component))
+          id->component
+          id->component))
+
+
+(defn- assoc-ordering-level
+  "Sorts the components typologically and assign them an ordering level in the graph."
+  [id->component]
+  (loop [id->component id->component
+         visited-ids   #{}
+         level         0
+         candidates-ids (keys id->component)]
+    (if (empty? candidates-ids)
+      id->component
+      (let [root-ids (into #{}
+                           (filter (fn [id]
+                                     (empty? (set/difference (get-in id->component [id :after-rules])
+                                                             visited-ids))))
+                           candidates-ids)
+            id->component (reduce (fn [id->component id]
+                                    (assoc-in id->component [id :ordering-level] level))
+                                  id->component
+                                  root-ids)
+            visited-ids (into visited-ids root-ids)
+            level (inc level)
+            candidates-ids (into #{}
+                                 (mapcat (fn [id]
+                                           (get-in id->component [id :before-rules])))
+                                 root-ids)]
+        (recur id->component visited-ids level candidates-ids)))))
+
+
 (defn make-api
   "Creates an API based on a collection of Girouette components."
   [components {:keys [color-map font-family-map] :as options}]
   (let [components (util/into-one-vector components) ;; flatten the structure
         grammar (assemble-grammar components options)
         parser (insta/parser grammar)
-        component-by-id (into {}
-                              (map (juxt :id identity))
-                              components)
+        component-by-id (-> (into {}
+                                  (map (juxt :id identity))
+                                  components)
+                            complement-before-rules-after-rules
+                            assoc-ordering-level)
         predef-props {:read-color (partial color/read-color color-map)
                       :font-family-map font-family-map}
         class-name->garden (fn [class-name]
@@ -74,7 +125,10 @@
                                        pipeline (:pipeline component common/default-pipeline)
                                        transform (pipeline->transform pipeline)]
                                    (-> (garden-fn props)
-                                       (transform props))))))]
+                                       (transform props)
+                                       (with-meta {:girouette/props props
+                                                   :girouette/component component
+                                                   :girouette/component-by-id component-by-id}))))))]
     {:grammar            grammar
      :parser             parser
      :component-by-id    component-by-id

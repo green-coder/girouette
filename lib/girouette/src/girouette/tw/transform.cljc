@@ -36,7 +36,8 @@
                                                  "skewY(var(--gi-skew-y)) "
                                                  "scaleX(var(--gi-scale-x)) "
                                                  "scaleY(var(--gi-scale-y))")}
-                "transform-none" {:transform "none"}))}
+                "transform-none" {:transform "none"}))
+    :before-rules #{:translate :rotate :skew :scale}}
 
 
    {:id :transform-origin
@@ -104,7 +105,8 @@
     "
     :garden (fn [{data :component-data}]
               (let [{:keys [signus axis skew-value]} (into {} data)
-                    attribute (keyword (str "--gi-skew-" axis))
+                    attribute ({"x" :--gi-skew-x
+                                "y" :--gi-skew-y} axis)
                     value (value-unit->css skew-value {:signus signus
                                                        :zero-unit nil
                                                        :number {:unit "deg"}})]

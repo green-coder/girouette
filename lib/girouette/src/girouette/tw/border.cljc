@@ -73,7 +73,8 @@
                     (if (some? a)
                       {:border-color (color->css color)}
                       {:--gi-border-opacity 1
-                       :border-color (color->css [r g b "var(--gi-border-opacity)"])})))))}
+                       :border-color (color->css [r g b "var(--gi-border-opacity)"])})))))
+    :before-rules #{:border-opacity}}
 
 
    {:id :border-opacity
@@ -130,7 +131,8 @@
                     (if (some? a)
                       {:border-color (color->css color)}
                       {:--gi-divide-opacity 1
-                       :border-color (color->css [r g b "var(--gi-divide-opacity)"])})))))}
+                       :border-color (color->css [r g b "var(--gi-divide-opacity)"])})))))
+    :before-rules #{:divide-opacity}}
 
 
    {:id :divide-opacity

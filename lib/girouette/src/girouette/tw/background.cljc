@@ -36,7 +36,8 @@
                     (if (some? a)
                       {:background-color (color->css color)}
                       {:--gi-bg-opacity 1
-                       :background-color (color->css [r g b "var(--gi-bg-opacity)"])})))))}
+                       :background-color (color->css [r g b "var(--gi-bg-opacity)"])})))))
+    :before-rules #{:background-opacity}}
 
 
    {:id :background-opacity
@@ -114,7 +115,8 @@
                     transp-color (as-transparent color)]
                 {:--gi-gradient-from (color->css color)
                  :--gi-gradient-stops (str "var(--gi-gradient-from),"
-                                           "var(--gi-gradient-to," (color->css transp-color) ")")}))}
+                                           "var(--gi-gradient-to," (color->css transp-color) ")")}))
+    :before-rules #{:gradient-color-via}}
 
 
    {:id :gradient-color-to

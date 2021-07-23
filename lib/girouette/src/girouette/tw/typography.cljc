@@ -197,7 +197,8 @@
                      (if (some? a)
                        {:color (color->css color)}
                        {:--gi-placeholder-opacity 1
-                        :color (color->css [r g b "var(--gi-placeholder-opacity)"])}))))])}
+                        :color (color->css [r g b "var(--gi-placeholder-opacity)"])}))))])
+    :before-rules #{:placeholder-opacity}}
 
 
    {:id :placeholder-opacity
@@ -229,7 +230,8 @@
                     (if (some? a)
                       {:color (color->css color)}
                       {:--gi-text-opacity 1
-                       :color (color->css [r g b "var(--gi-text-opacity)"])})))))}
+                       :color (color->css [r g b "var(--gi-text-opacity)"])})))))
+    :before-rules #{:text-opacity}}
 
 
    {:id :text-opacity
