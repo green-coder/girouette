@@ -231,8 +231,9 @@
      :or {retrieval-method :comprehensive
           output-format :css}} :css
 
-    :keys [css-symb garden-fn preflight? watch? verbose? color? apply-classes]
-    :or {css-symb 'girouette.core/css
+    :keys [dry-run? css-symb garden-fn preflight? watch? verbose? color? apply-classes]
+    :or {dry-run? false
+         css-symb 'girouette.core/css
          garden-fn 'girouette.tw.default-api/class-name->garden
          preflight? true
          watch? false
@@ -254,6 +255,8 @@
               (string? output-file))
           "output-file should be a string")
 
+  (assert (boolean? dry-run?)
+          "dry-run? should be a boolean")
   (assert (qualified-symbol? css-symb)
           "css-symb should be a qualified symbol")
   (assert (qualified-symbol? garden-fn)
@@ -281,6 +284,7 @@
                     :retrieval-method retrieval-method
                     :output-format output-format
                     :output-file output-file
+                    :dry-run? dry-run?
                     :css-symb css-symb
                     :garden-fn garden-fn
                     :preflight? preflight?
@@ -288,29 +292,32 @@
                     :verbose? verbose?
                     :color? color?
                     :apply-classes apply-classes})
-    (when verbose?
+    (when (or verbose? dry-run?)
       (println "⚙️ Settings:")
       (pp/pprint @config)
       (println))
 
-    ;; Process all the files
-    (doseq [^File file (->> (map io/file source-paths)
-                            (mapcat file-seq)
-                            (filter input-file?))]
-      (on-file-changed file :create))
+    (if dry-run?
+      (println "Dry run - no file was generated.")
+      (do
+        ;; Process all the files
+        (doseq [^File file (->> (map io/file source-paths)
+                                (mapcat file-seq)
+                                (filter input-file?))]
+          (on-file-changed file :create))
 
-    ;; Emit the output
-    (spit-output)
-    (when verbose?
-      (println "\uD83C\uDF89 CSS stylesheet generated!"))
+        ;; Emit the output
+        (spit-output)
+        (when verbose?
+          (println "\uD83C\uDF89 CSS stylesheet generated!"))
 
-    ;; If requested, listen to the file changes.
-    (when watch?
-      (when verbose?
-        (println (str "\n\uD83D\uDC40 Watching files in " (str/join ", " source-paths) " ...")))
-      (hawk/watch! [{:paths source-paths
-                     :handler (fn [ctx {:keys [^File file kind]}]
-                                (when (input-file? file)
-                                  (on-file-changed file kind)
-                                  (spit-output))
-                                ctx)}]))))
+        ;; If requested, listen to the file changes.
+        (when watch?
+          (when verbose?
+            (println (str "\n\uD83D\uDC40 Watching files in " (str/join ", " source-paths) " ...")))
+          (hawk/watch! [{:paths source-paths
+                         :handler (fn [ctx {:keys [^File file kind]}]
+                                    (when (input-file? file)
+                                      (on-file-changed file kind)
+                                      (spit-output))
+                                    ctx)}]))))))

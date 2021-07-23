@@ -12,7 +12,8 @@
                        :exec-args {:css {:output-file "public/style/girouette.css"}
                                    :garden-fn acme.frontend.my-grammar/class-name->garden
                                    :apply-classes acme.frontend.my-css/composed-classes
-                                   :watch? true}}
+                                   :watch? true
+                                   #_#_ :dry-run? true}}
 
            ; clojure -M:outdated --upgrade
            :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "0.12.4"}}
