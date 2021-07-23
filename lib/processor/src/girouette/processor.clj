@@ -225,7 +225,7 @@
 (defn process
   [{{:keys [source-paths file-filters]
      :or {source-paths (find-source-paths)
-          file-filters [".cljs" ".cljc" ".clj"]}} :input
+          file-filters [".cljs" ".cljc"]}} :input
 
     {:keys [retrieval-method output-format output-file]
      :or {retrieval-method :comprehensive
