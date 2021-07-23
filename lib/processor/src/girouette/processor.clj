@@ -190,33 +190,33 @@
    (let [relative-path (relative-path file)
          css-classes-before (set (-> @file-data (get relative-path) :css-classes))]
      (try
-       (let [gathered-css-classes (gather-css-classes file)]
-         (when (#{:delete :modify} change-type)
-           (swap! file-data dissoc relative-path))
+       (case change-type
+         :delete
+         (swap! file-data dissoc relative-path)
 
-         (when (#{:create :modify} change-type)
-           (swap! file-data assoc relative-path gathered-css-classes))
+         (:create :modify)
+         (swap! file-data assoc relative-path (gather-css-classes file)))
 
-         (when (:verbose? @config)
-           (let [css-classes-after (set (-> @file-data (get relative-path) :css-classes))
-                 removed-classes (sort (set/difference css-classes-before css-classes-after))
-                 added-classes (sort (set/difference css-classes-after css-classes-before))
-                 match-grammar? (comp some? (:garden-fn @config))
-                 removed-matching-classes (filter match-grammar? removed-classes)
-                 removed-unknown-classes (remove match-grammar? removed-classes)
-                 added-unknown-classes (remove match-grammar? added-classes)
-                 added-matching-classes (filter match-grammar? added-classes)]
-             (when (or (seq removed-classes)
-                       (seq added-classes))
-               (println (str relative-path ": "
-                             (when (seq added-unknown-classes)
-                               (red-str "[\uD83D\uDE31 " (str/join " " added-unknown-classes) "] "))
-                             (when (seq removed-unknown-classes)
-                               (yellow-str "[\uD83D\uDE24 " (str/join " " removed-unknown-classes) "] "))
-                             (when (seq removed-matching-classes)
-                               (blue-str "[- " (str/join " " removed-matching-classes) "] "))
-                             (when (seq added-matching-classes)
-                               (green-str "[+ " (str/join " " added-matching-classes) "]"))))))))
+       (when (:verbose? @config)
+         (let [css-classes-after (set (-> @file-data (get relative-path) :css-classes))
+               removed-classes (sort (set/difference css-classes-before css-classes-after))
+               added-classes (sort (set/difference css-classes-after css-classes-before))
+               match-grammar? (comp some? (:garden-fn @config))
+               removed-matching-classes (filter match-grammar? removed-classes)
+               removed-unknown-classes (remove match-grammar? removed-classes)
+               added-unknown-classes (remove match-grammar? added-classes)
+               added-matching-classes (filter match-grammar? added-classes)]
+           (when (or (seq removed-classes)
+                     (seq added-classes))
+             (println (str relative-path ": "
+                           (when (seq added-unknown-classes)
+                             (red-str "[\uD83D\uDE31 " (str/join " " added-unknown-classes) "] "))
+                           (when (seq removed-unknown-classes)
+                             (yellow-str "[\uD83D\uDE24 " (str/join " " removed-unknown-classes) "] "))
+                           (when (seq removed-matching-classes)
+                             (blue-str "[- " (str/join " " removed-matching-classes) "] "))
+                           (when (seq added-matching-classes)
+                             (green-str "[+ " (str/join " " added-matching-classes) "]")))))))
        (catch Exception e
          (println (str relative-path ": \uD83D\uDCA5 parse error!")))))))
 
