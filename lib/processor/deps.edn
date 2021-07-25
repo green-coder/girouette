@@ -1,36 +1,31 @@
 {:paths ["src"]
 
- :deps {org.clojure/clojure {:mvn/version "1.10.2"}
-        org.clojure/clojurescript {:mvn/version "1.10.773"}
-        org.clojure/tools.deps.alpha {:mvn/version "0.9.884"}
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}
+        org.clojure/clojurescript {:mvn/version "1.10.879"}
+        org.clojure/tools.deps.alpha {:mvn/version "0.12.1003"}
         org.clojure/tools.analyzer {:mvn/version "1.0.0"}
         ;rewrite-clj/rewrite-clj {:mvn/version "0.6.1"}
         hawk/hawk {:mvn/version "0.2.11"}
 
         garden/garden {:mvn/version "1.3.10"}
-        ;girouette/girouette {:local/root "../girouette"}
-        girouette/girouette {:mvn/version "0.0.2"}}
+        girouette/girouette {:mvn/version "0.0.4"}}
 
  :aliases {:test {:extra-paths ["test"]
-                  :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.0.641"}
+                  :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.0.861"}
                                 lambdaisland/kaocha-cljs      {:mvn/version "0.0-71"}
                                 lambdaisland/kaocha-junit-xml {:mvn/version "0.0.76"}
                                 org.clojure/test.check        {:mvn/version "1.1.0"}}}
 
-           ; clojure -M:outdated --write
-           :outdated {:replace-deps {olical/depot {:mvn/version "2.1.0"}}
-                      :main-opts ["-m" "depot.outdated.main"]}
+           ; clojure -M:outdated --upgrade
+           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "0.16.0"}}
+                      :main-opts ["-m" "antq.core"]}
 
-           :reveal {:extra-deps {vlaaad/reveal {:mvn/version "1.3.194"}}
-                    :ns-default vlaaad.reveal
-                    :exec-fn repl}
-
-           :depstar {:replace-deps {seancorfield/depstar {:mvn/version "2.0.188"}}
+           :depstar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.267"}}
                      :exec-fn hf.depstar/jar
                      :exec-args {:sync-pom true
                                  :group-id "girouette"
                                  :artifact-id "processor"
-                                 :version "0.0.2"
+                                 :version "0.0.4"
                                  :jar "processor.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:
