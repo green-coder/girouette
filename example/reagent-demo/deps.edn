@@ -1,12 +1,12 @@
 {:paths ["src"]
 
- :deps {org.clojure/clojurescript {:mvn/version "1.10.844"}
-        thheller/shadow-cljs      {:mvn/version "2.12.4"}
-        reagent/reagent           {:mvn/version "1.0.0"}
-        girouette/girouette       {:mvn/version "0.0.3"}}
+ :deps {org.clojure/clojurescript {:mvn/version "1.10.879"}
+        thheller/shadow-cljs      {:mvn/version "2.15.2"}
+        reagent/reagent           {:mvn/version "1.1.0"}
+        girouette/girouette       {:mvn/version "0.0.4"}}
 
  :aliases {; clojure -X:girouette
-           :girouette {:extra-deps {girouette/processor {:mvn/version "0.0.2"}}
+           :girouette {:extra-deps {girouette/processor {:mvn/version "0.0.4"}}
                        :ns-default girouette.processor
                        :exec-fn process
                        :exec-args {:css {:output-file "public/style/girouette.css"}
@@ -16,5 +16,5 @@
                                    #_#_ :dry-run? true}}
 
            ; clojure -M:outdated --upgrade
-           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "0.12.4"}}
+           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "0.16.0"}}
                       :main-opts ["-m" "antq.core"]}}}
