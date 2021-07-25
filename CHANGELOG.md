@@ -2,6 +2,25 @@
 
 (empty)
 
+## V0.0.4
+
+### Added
+
+- SCSS's @apply equivalent (issue #35 and PR #64)
+- Partial ordering between different rules (commit e0e9ab34d2bdefb7b7289ab15e06a3e243dc230c)
+- The return value of `class-name->garden` now has some metadata:
+  - It's useful during the development of the Girouette components.
+  - The metadata also contains the information about how the garden rules should be ordered in a CSS file.
+- Added `:dry-run?` flag in the inputs of the processor.
+
+### Fixed
+
+- Fixed the state variant "first", "last", "odd" and "even" (PR #62)
+- Fixed a typo in Preflight (PR #63)
+- Fixed typo in :font-variant-numeric rule (PR #68)
+- Fixed typo in :divide-width rule
+- Fixed minor bugs in the processor (issues #60 and #61)
+
 ## v0.0.3
 
 ### Added
