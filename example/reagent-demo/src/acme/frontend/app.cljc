@@ -5,6 +5,9 @@
 (defn simple-example []
   [:main
 
+   [:div.bg-white.dark:bg-gray-800.p-10
+    [:h1.text-3xl.text-gray-600.dark:text-gray-100 "Dark Mode Test"]]
+
    ;; Demonstrates the use of arbitrary values in flex layouts
    [:h1.flex.space-x-2
     [:div.flex-1.p-4.text-center.rounded-lg.bg-red-200 "hello"]
