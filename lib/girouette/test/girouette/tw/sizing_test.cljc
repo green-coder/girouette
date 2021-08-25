@@ -4,7 +4,7 @@
 
 (deftest component-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+       (= expected-garden (class-name->garden class-name))
 
     "w-10"
     [".w-10" {:width "2.5rem"}]
@@ -55,4 +55,16 @@
     [".max-w-min" {:max-width "min-content"}]
 
     "max-w-max"
-    [".max-w-max" {:max-width "max-content"}]))
+    [".max-w-max" {:max-width "max-content"}]
+
+    "max-w-lg"
+    [".max-w-lg" {:max-width "32rem"}]
+
+    "max-w-prose"
+    [".max-w-prose" {:max-width "65ch"}]
+
+    "max-w-screen-sm"
+    [".max-w-screen-sm" {:max-width "640px"}]
+
+    "max-h-64"
+    [".max-h-64" {:max-height "16rem"}]))
