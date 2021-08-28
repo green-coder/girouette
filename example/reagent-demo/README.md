@@ -28,7 +28,7 @@ shadow-cljs watch frontend
 
 In parallel, launch Girouette's CSS processor in watch mode:
 ```shell
-clojure -X:girouette
+clojure -X:girouette-processor
 ```
 
 Browse your webapp by clicking on the link displayed by the compiler
