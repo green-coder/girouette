@@ -1,6 +1,8 @@
 ## Unreleased
 
-(empty)
+### Fixed
+
+- Added missing cases for the `max-width` rule. Thanks to `joe-loco` for the bug report.
 
 ## V0.0.4
 
