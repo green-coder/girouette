@@ -1,7 +1,9 @@
 (ns girouette.garden.util
   (:require [clojure.spec.alpha :as s]
             [clojure.walk :as walk]
-            [girouette.util :as util]))
+            [girouette.util :as util])
+  (:import (java.util Comparator)
+           (garden.types CSSAtRule)))
 
 (declare merge-rules)
 
@@ -54,3 +56,18 @@
             gi-garden-rules
             gi-class-names)
        merge-rules))
+
+;; Compares the Garden rules provides by Girouette,
+;; so they can be ordered correctly in a style file.
+(def rule-comparator
+  (reify Comparator
+    (compare [_ rule1 rule2]
+      (let [is-media-query1 (and (instance? CSSAtRule rule1)
+                                 (= (:identifier rule1 :media)))
+            is-media-query2 (and (instance? CSSAtRule rule2)
+                                 (= (:identifier rule2 :media)))]
+        (cond
+          (and (not is-media-query1) is-media-query2) -1
+          (and is-media-query1 (not is-media-query2)) 1
+          :else (compare (-> rule1 meta :girouette/component :ordering-level)
+                         (-> rule2 meta :girouette/component :ordering-level)))))))

@@ -168,9 +168,8 @@
             class-compositions (when (some? apply-classes)
                                  @(requiring-resolve apply-classes))
             all-garden-defs (-> predef-garden
-                                (into (->> (keep garden-fn (sort all-css-classes))
-                                           (sort-by (fn [garden-rule]
-                                                      (-> garden-rule meta :girouette/component :ordering-level)))))
+                                (into (->> (keep garden-fn all-css-classes)
+                                           (sort util/rule-comparator)))
                                 (into (map (fn [[target-class-name classes-to-compose]]
                                              (let [classes-to-compose (mapcat normalize-classes classes-to-compose)]
                                                (util/apply-class-rules (dot target-class-name)

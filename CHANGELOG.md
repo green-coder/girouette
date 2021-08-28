@@ -2,7 +2,8 @@
 
 ### Fixed
 
-- Added missing cases for the `max-width` rule. Thanks to `joe-loco` for the bug report.
+- (issue #72) Added missing cases for the `max-width` rule. Thanks to `joe-loco` for the bug report.
+- (issue #71) The media queries are now coming after the non-media queries in the style file.
 
 ## V0.0.4
 
