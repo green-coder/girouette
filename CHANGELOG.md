@@ -4,6 +4,7 @@
 
 - (issue #72) Added missing cases for the `max-width` rule. Thanks to `joe-loco` for the bug report.
 - (issue #71) The media queries are now coming after the non-media queries in the style file.
+- (PR #73) Fixed the line height on text-5xl ~ text-9xl. Thanks to `jeremS` for the PR.
 
 ## V0.0.4
 

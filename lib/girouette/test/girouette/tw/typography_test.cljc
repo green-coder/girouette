@@ -14,6 +14,10 @@
     [".text-sm" {:font-size (str 0.875 "rem")
                  :line-height (str 1.25 "rem")}]
 
+    "text-5xl"
+    [".text-5xl" {:font-size (str 3 "rem")
+                  :line-height (str 1)}]
+
     "font-size-10"
     [".font-size-10" {:font-size "2.5rem"}]
 

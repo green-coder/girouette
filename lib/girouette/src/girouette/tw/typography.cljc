@@ -43,21 +43,21 @@
                            '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl')
     "
     :garden (fn [{[font-size] :component-data}]
-              (let [[size height] ({"xs"   [0.75  1]
-                                    "sm"   [0.875 1.25]
-                                    "base" [1     1.5]
-                                    "lg"   [1.125 1.75]
-                                    "xl"   [1.25  1.75]
-                                    "2xl"  [1.5   2]
-                                    "3xl"  [1.875 2.25]
-                                    "4xl"  [2.25  2.5]
-                                    "5xl"  [3     1]
-                                    "6xl"  [3.75  1]
-                                    "7xl"  [4.5   1]
-                                    "8xl"  [6     1]
-                                    "9xl"  [8     1]} font-size)]
-                   {:font-size (str size "rem")
-                    :line-height (str height "rem")}))}
+             (let [[size height] ({"xs"   [0.75  "1rem"]
+                                   "sm"   [0.875 "1.25rem"]
+                                   "base" [1     "1.5rem"]
+                                   "lg"   [1.125 "1.75rem"]
+                                   "xl"   [1.25  "1.75rem"]
+                                   "2xl"  [1.5   "2rem"]
+                                   "3xl"  [1.875 "2.25rem"]
+                                   "4xl"  [2.25  "2.5rem"]
+                                   "5xl"  [3     "1"]
+                                   "6xl"  [3.75  "1"]
+                                   "7xl"  [4.5   "1"]
+                                   "8xl"  [6     "1"]
+                                   "9xl"  [8     "1"]} font-size)]
+                  {:font-size (str size "rem")
+                   :line-height height}))}
 
 
    ;; This is an extra, not from Tailwind.
