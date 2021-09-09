@@ -4,21 +4,21 @@
  :aliases {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.10.3"}
                               org.clojure/clojurescript {:mvn/version "1.10.879"}}}
            :test {:extra-paths ["test"]
-                  :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.0.861"}
+                  :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.0.887"}
                                 lambdaisland/kaocha-cljs      {:mvn/version "1.0.107"}
                                 lambdaisland/kaocha-junit-xml {:mvn/version "0.0.76"}
                                 org.clojure/test.check        {:mvn/version "1.1.0"}}}
 
            ; clojure -M:outdated --upgrade
-           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "0.16.3"}}
+           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "1.0.0"}}
                       :main-opts ["-m" "antq.core"]}
 
-           :depstar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.278"}}
+           :depstar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.297"}}
                      :exec-fn hf.depstar/jar
                      :exec-args {:sync-pom true
                                  :group-id "girouette"
                                  :artifact-id "girouette"
-                                 :version "0.0.4"
+                                 :version "0.0.5"
                                  :jar "girouette.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:

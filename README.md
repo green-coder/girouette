@@ -119,6 +119,13 @@ A few other alternatives are available.
 Independently and in parallel of Girouette's development, [WindiCSS](https://github.com/windicss/windicss)
 was developed with similar ideas. Please check it out, specially if you are developing directly in the JS environment.
 
+## Who is using Girouette
+
+- The [Ornament](https://github.com/lambdaisland/ornament) library, by [Lambda Island / Gaiwan](https://gaiwan.co/):
+  A very elegant way to craft and integrate CSS rules inside your Clojure(script) apps.
+
+(To add your project to this list, just edit this file and open a pull request)
+
 ## Contribute
 
 Contributions are very welcome, just make sure that the contributions are your own,

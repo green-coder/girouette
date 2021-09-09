@@ -1,12 +1,19 @@
 ## Unreleased
 
+## v0.0.5
+
+### Added
+
+- `girouette.garden.util/rule-comparator` can be used for ordering the garden rules which are output by `class-name->garden`.
+  Related to issue #71 and PR #66.
+
 ### Fixed
 
 - (issue #72) Added missing cases for the `max-width` rule. Thanks to `joe-loco` for the bug report.
-- (issue #71) The media queries are now coming after the non-media queries in the style file.
+- (issue #71) The media queries are now coming after the non-media queries in the style file. Thanks to `joe-loco` for the bug report.
 - (PR #73) Fixed the line height on text-5xl ~ text-9xl. Thanks to `jeremS` for the PR.
 
-## V0.0.4
+## v0.0.4
 
 ### Added
 

@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>girouette</groupId>
   <artifactId>processor</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
   <name>processor</name>
   <scm>
     <url>https://github.com/green-coder/girouette</url>
@@ -20,18 +20,23 @@
     </dependency>
     <dependency>
       <groupId>org.clojure</groupId>
+      <artifactId>tools.analyzer</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.clojure</groupId>
       <artifactId>clojurescript</artifactId>
       <version>1.10.879</version>
     </dependency>
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.deps.alpha</artifactId>
-      <version>0.12.1003</version>
+      <version>0.12.1036</version>
     </dependency>
     <dependency>
-      <groupId>org.clojure</groupId>
-      <artifactId>tools.analyzer</artifactId>
-      <version>1.0.0</version>
+      <groupId>girouette</groupId>
+      <artifactId>girouette</artifactId>
+      <version>0.0.5</version>
     </dependency>
     <dependency>
       <groupId>hawk</groupId>
@@ -42,11 +47,6 @@
       <groupId>garden</groupId>
       <artifactId>garden</artifactId>
       <version>1.3.10</version>
-    </dependency>
-    <dependency>
-      <groupId>girouette</groupId>
-      <artifactId>girouette</artifactId>
-      <version>0.0.4</version>
     </dependency>
   </dependencies>
   <build>
