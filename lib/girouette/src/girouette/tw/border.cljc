@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.border
   (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css div-100]]
+            [girouette.tw.common :refer [value-unit->css div-100 between-children-selector]]
             [girouette.tw.color :refer [color->css]]))
 
 (def components
@@ -104,9 +104,8 @@
                 (let [width (if (nil? value)
                               "1px"
                               (value-unit->css value {:zero-unit nil
-                                                      :number {:unit "px"}}))
-                      selector (gs/> gs/& (gs/+ :* :*))]
-                  [selector
+                                                      :number {:unit "px"}}))]
+                  [between-children-selector
                    (case axis
                      "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
                           :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")}
@@ -120,9 +119,8 @@
     "
     :garden (fn [{[color] :component-data
                   read-color :read-color}]
-              (let [color (read-color color)
-                    selector (gs/> gs/& (gs/+ :* :*))]
-                [selector
+              (let [color (read-color color)]
+                [between-children-selector
                  (if (string? color)
                    {:border-color color}
                    (let [[r g b a] color]
@@ -146,7 +144,7 @@
     divide-style = <'divide-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none')
     "
     :garden (fn [{[border-style] :component-data}]
-              [(gs/> gs/& (gs/+ :* :*))
+              [between-children-selector
                {:border-style border-style}])}
 
 

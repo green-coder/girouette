@@ -1,6 +1,7 @@
 (ns ^:no-doc girouette.tw.common
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
+            [garden.selectors]
             [garden.stylesheet :as gs]))
 
 ;; This Instaparse grammar matches nothing.
@@ -111,6 +112,15 @@
 
 (defn class-name-transform [rule props]
   [(dot (:class-name props)) rule])
+
+
+(def between-children-selector
+  "Selects every direct child of an element except the last.
+   Commonly used to visually style 'between' a list of elements.
+
+  For example:
+  .space-y-2 uses this selector to add space between elements"
+  #garden.selectors.CSSSelector{:selector "&>*+*"})
 
 
 (defn outer-state-variants-transform [rule props]

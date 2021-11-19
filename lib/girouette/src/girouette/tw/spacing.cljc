@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.spacing
   (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css div-4]]))
+            [girouette.tw.common :refer [value-unit->css div-4 between-children-selector]]))
 
 
 (def components
@@ -72,6 +72,5 @@
                     value-css (value-unit->css space-between-value {:signus signus
                                                                     :zero-unit nil
                                                                     :number {:unit "rem"
-                                                                             :value-fn div-4}})
-                    selector (gs/> gs/& (gs/+ :* :*))]
-                [selector {(keyword (str "margin-" direction)) value-css}]))}])
+                                                                             :value-fn div-4}})]
+                [between-children-selector {(keyword (str "margin-" direction)) value-css}]))}])

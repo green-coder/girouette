@@ -59,24 +59,24 @@
 
     ;; Divide Width
     "divide-x"
-    [".divide-x" [#garden.selectors.CSSSelector{:selector "& > * + *"}
+    [".divide-x" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {;;:--gi-divide-x-reverse 0 ;; Not implemented
       :border-right-width "calc(1px * var(--gi-divide-x-reverse))"
       :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"}]]
 
     "divide-y-2"
-    [".divide-y-2" [#garden.selectors.CSSSelector{:selector "& > * + *"}
+    [".divide-y-2" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {;;:--gi-divide-x-reverse 0 ;; Not implemented
       :border-top-width "calc(2px * var(--gi-divide-y-reverse))"
       :border-bottom-width  "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"}]]
 
     ;; Divide Color
     "divide-current"
-    [".divide-current" [#garden.selectors.CSSSelector{:selector "& > * + *"}
+    [".divide-current" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {:border-color "currentColor"}]]
 
     "divide-gray-100"
-    [".divide-gray-100" [#garden.selectors.CSSSelector{:selector "& > * + *"}
+    [".divide-gray-100" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {:--gi-divide-opacity 1
       :border-color        "rgba(244,244,245,var(--gi-divide-opacity))"}]]
 
@@ -86,7 +86,7 @@
 
     ;; Divide Style
     "divide-double"
-    [".divide-double" [#garden.selectors.CSSSelector{:selector "& > * + *"}
+    [".divide-double" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {:border-style "double"}]]
 
     ;; Ring Width
