@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.border
   (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css dot default-pipeline div-100]]
+            [girouette.tw.common :refer [value-unit->css div-100 between-children-selector]]
             [girouette.tw.color :refer [color->css]]))
 
 (def components
@@ -98,9 +98,6 @@
     divide-width = <'divide-'> axis (<'-'> divide-width-value)?
     divide-width-value = number | length | length-unit
     "
-    :pipeline (assoc default-pipeline
-                :class-name [(fn [rule props]
-                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
     :garden (fn [{:keys [component-data]}]
               (let [{axis  :axis
                      value :divide-width-value} (into {} component-data)]
@@ -108,30 +105,29 @@
                               "1px"
                               (value-unit->css value {:zero-unit nil
                                                       :number {:unit "px"}}))]
-                  (case axis
-                    "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
-                         :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")}
-                    "y" {:border-top-width    (str "calc(" width " * var(--gi-divide-y-reverse))")
-                         :border-bottom-width (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")}))))}
+                  [between-children-selector
+                   (case axis
+                     "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
+                          :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")}
+                     "y" {:border-top-width    (str "calc(" width " * var(--gi-divide-y-reverse))")
+                          :border-bottom-width (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")})])))}
 
 
    {:id :divide-color
     :rules "
     divide-color = <'divide-'> color
     "
-    :pipeline (assoc default-pipeline
-                :class-name [(fn [rule props]
-                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
     :garden (fn [{[color] :component-data
                   read-color :read-color}]
               (let [color (read-color color)]
-                (if (string? color)
-                  {:border-color color}
-                  (let [[r g b a] color]
-                    (if (some? a)
-                      {:border-color (color->css color)}
-                      {:--gi-divide-opacity 1
-                       :border-color (color->css [r g b "var(--gi-divide-opacity)"])})))))
+                [between-children-selector
+                 (if (string? color)
+                   {:border-color color}
+                   (let [[r g b a] color]
+                     (if (some? a)
+                       {:border-color (color->css color)}
+                       {:--gi-divide-opacity 1
+                        :border-color (color->css [r g b "var(--gi-divide-opacity)"])})))]))
     :before-rules #{:divide-opacity}}
 
 
@@ -147,11 +143,9 @@
     :rules "
     divide-style = <'divide-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none')
     "
-    :pipeline (assoc default-pipeline
-                :class-name [(fn [rule props]
-                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
     :garden (fn [{[border-style] :component-data}]
-              {:border-style border-style})}
+              [between-children-selector
+               {:border-style border-style}])}
 
 
    {:id :ring-width

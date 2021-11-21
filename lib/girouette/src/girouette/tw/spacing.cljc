@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.spacing
   (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css dot default-pipeline div-4]]))
+            [girouette.tw.common :refer [value-unit->css div-4 between-children-selector]]))
 
 
 (def components
@@ -63,9 +63,6 @@
     space-between-value = number | length | length-unit
     space-between-reverse = 'reverse'
     "
-    :pipeline (assoc default-pipeline
-                :class-name [(fn [rule props]
-                               [(gs/> (dot (:class-name props)) (gs/+ :* :*)) rule])])
     :garden (fn [{component-data :component-data}]
               (let [{:keys [signus axis space-between-value space-between-reverse]} (into {} component-data)
                     direction ({["x" false] "left"
@@ -76,4 +73,4 @@
                                                                     :zero-unit nil
                                                                     :number {:unit "rem"
                                                                              :value-fn div-4}})]
-                {(keyword (str "margin-" direction)) value-css}))}])
+                [between-children-selector {(keyword (str "margin-" direction)) value-css}]))}])

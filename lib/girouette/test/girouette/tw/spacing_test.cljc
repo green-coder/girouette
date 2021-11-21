@@ -50,13 +50,13 @@
                :margin-right "-0.5rem"}]
 
     "space-x-2"
-    [#garden.selectors.CSSSelector{:selector ".space-x-2 > * + *"} {:margin-left "0.5rem"}]
+    [".space-x-2" [#garden.selectors.CSSSelector{:selector "&>*+*"} {:margin-left "0.5rem"}]]
 
     "space-y-2"
-    [#garden.selectors.CSSSelector{:selector ".space-y-2 > * + *"} {:margin-top "0.5rem"}]
+    [".space-y-2" [#garden.selectors.CSSSelector{:selector "&>*+*"} {:margin-top "0.5rem"}]]
 
     "space-x-2-reverse"
-    [#garden.selectors.CSSSelector{:selector ".space-x-2-reverse > * + *"} {:margin-right "0.5rem"}]
+    [".space-x-2-reverse" [#garden.selectors.CSSSelector{:selector "&>*+*"} {:margin-right "0.5rem"}]]
 
     "space-y-2-reverse"
-    [#garden.selectors.CSSSelector{:selector ".space-y-2-reverse > * + *"} {:margin-bottom "0.5rem"}]))
+    [".space-y-2-reverse" [#garden.selectors.CSSSelector{:selector "&>*+*"} {:margin-bottom "0.5rem"}]]))
