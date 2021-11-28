@@ -1,5 +1,13 @@
 ## Unreleased
 
+## v0.0.6
+
+### Changed
+
+- (PR #74) Changed the garden data output for components like `space-x-2` to make it easier to be processed by libraries like Ornament.
+  The change won't affect most end users as the new garden data has the same effect, CSS-wise.
+  Big thank to `Vynlar` for this cross-project contribution.
+
 ## v0.0.5
 
 ### Added
