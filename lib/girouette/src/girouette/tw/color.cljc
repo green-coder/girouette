@@ -573,8 +573,10 @@
             r (read-hex-value (subs color-code 0 2))
             b (read-hex-value (subs color-code 2 4))
             g (read-hex-value (subs color-code 4 6))
-            a (when (some? param2)
-                (value-unit->css param2 {:value-fn (comp clamp-0-255 int div-100 mul-255)}))]
+            a (if (some? param2)
+                (value-unit->css param2 {:value-fn (comp clamp-0-255 int div-100 mul-255)})
+                (when (= 8 (count color-code))
+                  (read-hex-value (subs color-code 6 8))))]
           [r b g a]))))
 
 (defn as-transparent
