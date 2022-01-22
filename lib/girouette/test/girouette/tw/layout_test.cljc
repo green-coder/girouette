@@ -50,7 +50,7 @@
     [".overscroll-none" {:overscroll "none"}]
 
     "invisible"
-    [".invisible" {:visibility "invisible"}]
+    [".invisible" {:visibility "hidden"}]
 
     "-inset-3/8"
     [".-inset-3\\/8"

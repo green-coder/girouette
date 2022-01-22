@@ -134,7 +134,9 @@
     visibility = 'visible' | 'invisible'
     "
     :garden (fn [{[visibility] :component-data}]
-              {:visibility visibility})}
+              {:visibility (if (= visibility "invisible")
+                             "hidden"
+                             visibility)})}
 
 
    {:id :z-index
