@@ -12,7 +12,9 @@
   ({"first" "first-child"
     "last"  "last-child"
     "odd"   "nth-child(odd)"
-    "even"  "nth-child(even)"} state-variant state-variant))
+    "even"  "nth-child(even)"
+    "after" ":after"
+    "before" ":before"} state-variant state-variant))
 
 (def outer-state-variants
   #{"group-hover" "group-focus"
@@ -175,7 +177,7 @@
                   'blank' | 'required' | 'optional' | 'valid' | 'invalid' | 'placeholder-shown' | 'checked' |
                   'read-only' | 'read-write' |
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
-                  'root' | 'empty'
+                  'root' | 'empty' | 'before' | 'after'
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'
