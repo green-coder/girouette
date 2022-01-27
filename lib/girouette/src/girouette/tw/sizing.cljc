@@ -32,13 +32,14 @@
 
    {:id     :max-width
     :rules  "
-    max-width = <'max-w-'> (number | length | length-unit | fraction | percentage | full-100% |
-                            none | screen-100vw | min-content | max-content | max-width-fixed-size)
+    max-width = <'max-w-'> (max-width-fixed-size | max-width-generic-size)
     max-width-fixed-size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' |
                            'prose' | 'screen-sm' | 'screen-md' | 'screen-lg' | 'screen-xl' | 'screen-2xl'
+    max-width-generic-size = number | length | length-unit | fraction | percentage | full-100% |
+                             none | screen-100vw | min-content | max-content
     "
-    :garden (fn [{[value-data :as component-data] :component-data}]
-              (let [{:keys [max-width-fixed-size]} (into {} component-data)]
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [max-width-fixed-size max-width-generic-size]} (into {} component-data)]
                 {:max-width (if (some? max-width-fixed-size)
                               ({"xs"  "20rem"
                                 "sm"  "24rem"
@@ -57,7 +58,7 @@
                                 "screen-lg" "1024px"
                                 "screen-xl" "1280px"
                                 "screen-2xl" "1536px"} max-width-fixed-size)
-                              (value-unit->css value-data
+                              (value-unit->css max-width-generic-size
                                                {:zero-unit nil
                                                 :number    {:unit     "rem"
                                                             :value-fn div-4}
