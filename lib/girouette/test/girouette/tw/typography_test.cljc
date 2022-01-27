@@ -95,14 +95,14 @@
     [".text-green-300-50" {:color "#86efac7f"}]
 
     "text-#733"
-    [".text-#733" {:--gi-text-opacity 1
-                   :color "rgba(119,51,51,var(--gi-text-opacity))"}]
+    [".text-\\#733" {:--gi-text-opacity 1
+                     :color "rgba(119,51,51,var(--gi-text-opacity))"}]
 
     "text-#7338"
-    [".text-#7338" {:color "#77333388"}]
+    [".text-\\#7338" {:color "#77333388"}]
 
     "text-#703030ff"
-    [".text-#703030ff" {:color "#703030ff"}]
+    [".text-\\#703030ff" {:color "#703030ff"}]
 
     "text-rgb-733"
     [".text-rgb-733" {:--gi-text-opacity 1
