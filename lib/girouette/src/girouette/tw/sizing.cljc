@@ -37,32 +37,31 @@
     max-width-fixed-size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' |
                            'prose' | 'screen-sm' | 'screen-md' | 'screen-lg' | 'screen-xl' | 'screen-2xl'
     "
-    :garden (fn [{[value-data :as component-data] :component-data}]
-              (let [{:keys [max-width-fixed-size]} (into {} component-data)]
-                {:max-width (if (some? max-width-fixed-size)
-                              ({"xs"  "20rem"
-                                "sm"  "24rem"
-                                "md"  "28rem"
-                                "lg"  "32rem"
-                                "xl"  "36rem"
-                                "2xl" "42rem"
-                                "3xl" "48rem"
-                                "4xl" "56rem"
-                                "5xl" "64rem"
-                                "6xl" "72rem"
-                                "7xl" "80rem"
-                                "prose" "65ch"
-                                "screen-sm" "640px"
-                                "screen-md" "768px"
-                                "screen-lg" "1024px"
-                                "screen-xl" "1280px"
-                                "screen-2xl" "1536px"} max-width-fixed-size)
-                              (value-unit->css value-data
-                                               {:zero-unit nil
-                                                :number    {:unit     "rem"
-                                                            :value-fn div-4}
-                                                :fraction  {:unit     "%"
-                                                            :value-fn mul-100}}))}))}
+    :garden (fn [{[value-data] :component-data}]
+              {:max-width (if (= (first value-data) :max-width-fixed-size)
+                            ({"xs"  "20rem"
+                              "sm"  "24rem"
+                              "md"  "28rem"
+                              "lg"  "32rem"
+                              "xl"  "36rem"
+                              "2xl" "42rem"
+                              "3xl" "48rem"
+                              "4xl" "56rem"
+                              "5xl" "64rem"
+                              "6xl" "72rem"
+                              "7xl" "80rem"
+                              "prose" "65ch"
+                              "screen-sm" "640px"
+                              "screen-md" "768px"
+                              "screen-lg" "1024px"
+                              "screen-xl" "1280px"
+                              "screen-2xl" "1536px"} (second value-data))
+                            (value-unit->css value-data
+                                             {:zero-unit nil
+                                              :number    {:unit     "rem"
+                                                          :value-fn div-4}
+                                              :fraction  {:unit     "%"
+                                                          :value-fn mul-100}}))})}
 
 
    {:id :height

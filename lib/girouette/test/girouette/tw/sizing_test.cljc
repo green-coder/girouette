@@ -63,6 +63,9 @@
     "max-w-prose"
     [".max-w-prose" {:max-width "65ch"}]
 
+    "max-w-16rem"
+    [".max-w-16rem" {:max-width "16rem"}]
+
     "max-w-screen-sm"
     [".max-w-screen-sm" {:max-width "640px"}]
 
