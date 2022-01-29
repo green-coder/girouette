@@ -71,4 +71,13 @@
     user-select = <'select-'> ('none' | 'text' | 'all' | 'auto')
     "
     :garden (fn [{[type] :component-data}]
-              {:user-select type})}])
+              {:user-select type})}
+
+   {:id :will-change
+    :rules "
+    will-change = <'will-change-'> ( 'auto' | 'scroll' | 'contents' | 'transform' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:will-change (if (= value "scroll")
+                              "scroll-position"
+                              value)})}])

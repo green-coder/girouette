@@ -41,4 +41,10 @@
     [".scroll-auto" {:scroll-behavior "auto"}]
 
     "scroll-smooth"
-    [".scroll-smooth" {:scroll-behavior "smooth"}]))
+    [".scroll-smooth" {:scroll-behavior "smooth"}]
+
+    "will-change-auto"
+    [".will-change-auto" {:will-change "auto"}]
+
+    "will-change-scroll"
+    [".will-change-scroll" {:will-change "scroll-position"}]))
