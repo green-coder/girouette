@@ -75,6 +75,28 @@
                        :border-color (color->css [r g b "var(--gi-border-opacity)"])})))))
     :before-rules #{:border-opacity}}
 
+   {:id :border-side-color
+    :rules "
+    border-side-color = <'border-'> border-side-color-side <'-'> color
+    border-side-color-side = 't' | 'b' | 'l' | 'r'
+    "
+    :garden (fn [{:keys [component-data read-color]}]
+              (let [{:keys [border-side-color-side color]} (into {} component-data)
+                    color (read-color [:color color])
+                    border-key (keyword (str "border-"
+                                             (case border-side-color-side
+                                               "t" "top"
+                                               "b" "bottom"
+                                               "l" "left"
+                                               "r" "right")
+                                             "-color"))
+                    [r g b a] color]
+                (if (some? a)
+                  {border-key (color->css color)}
+                  {:--gi-border-opacity 1
+                   border-key (color->css [r g b "var(--gi-border-opacity)"])})))
+    :before-rules #{:border-opacity}}
+
 
    {:id :border-opacity
     :rules "

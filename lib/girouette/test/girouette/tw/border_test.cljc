@@ -49,6 +49,15 @@
     [".border-green-300" {:--gi-border-opacity 1
                           :border-color        "rgba(134,239,172,var(--gi-border-opacity))"}]
 
+    "border-t-green-300"
+    [".border-t-green-300"
+     {:--gi-border-opacity 1
+      :border-top-color "rgba(134,239,172,var(--gi-border-opacity))"}]
+
+    "border-b-rgba-c0ffee50"
+    [".border-b-rgba-c0ffee50" {:border-bottom-color "#c0ffee50"}]
+
+
     ;; Border Opacity
     "border-opacity-25"
     [".border-opacity-25" {:--gi-border-opacity 0.25}]
