@@ -21,6 +21,9 @@
     "items-baseline"
     [".items-baseline" {:align-items "baseline"}]
 
+    "self-baseline"
+    [".self-baseline" {:align-self "baseline"}]
+
     "self-center"
     [".self-center" {:align-self "center"}]
 

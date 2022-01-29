@@ -57,10 +57,11 @@
 
    {:id :align-self
     :rules "
-    align-self = <'self-'> ('auto' | 'start' | 'end' | 'center' | 'stretch')
+    align-self = <'self-'> ('auto' | 'start' | 'end' | 'center' | 'stretch' | 'baseline' )
     "
     :garden (fn [{[param] :component-data}]
               {:align-self ({"auto" "auto"
+                             "baseline" "baseline"
                              "start" "flex-start"
                              "end" "flex-end"
                              "center" "center"
