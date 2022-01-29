@@ -9,6 +9,9 @@
     "appearance-none"
     [".appearance-none" {:appearance "none"}]
 
+    "cursor-help"
+    [".cursor-help" {:cursor "help"}]
+
     "cursor-wait"
     [".cursor-wait" {:cursor "wait"}]
 

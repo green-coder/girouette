@@ -12,7 +12,7 @@
    {:id :cursor
     :rules "
     cursor = <'cursor-'> ('auto' | 'default' | 'pointer' | 'wait' |
-                          'text' | 'move' | 'not-allowed')
+                          'text' | 'move' | 'not-allowed' | 'help' )
     "
     :garden (fn [{[type] :component-data}]
               {:cursor type})}
