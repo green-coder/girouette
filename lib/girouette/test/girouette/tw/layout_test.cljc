@@ -18,6 +18,12 @@
     "aspect-23/57"
     [".aspect-23\\/57" {:aspect-ratio "23 / 57"}]
 
+    "break-before-auto"
+    [".break-before-auto" {:break-before "auto"}]
+
+    "break-before-page"
+    [".break-before-page" {:break-before "page"}]
+
     "columns-auto"
     [".columns-auto" {:columns "auto"}]
 

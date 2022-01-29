@@ -21,6 +21,14 @@
                                  (->> (map read-number aspect-ratio-numbers)
                                       (str/join " / ")))}))}
 
+   {:id :break-before
+    :rules "
+    break-before = <'break-before-'> ( 'auto' | 'avoid' | 'all' | 'avoid-page' |
+                                       'page' | 'left' | 'right' | 'column' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:break-before value})}
+
    {:id :columns
     :rules "
     columns = <'columns-'> ( columns-number | columns-size | columns-auto )
