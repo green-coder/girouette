@@ -35,4 +35,10 @@
     [".resize-x" {:resize "horizontal"}]
 
     "select-all"
-    [".select-all" {:user-select "all"}]))
+    [".select-all" {:user-select "all"}]
+
+    "scroll-auto"
+    [".scroll-auto" {:scroll-behavior "auto"}]
+
+    "scroll-smooth"
+    [".scroll-smooth" {:scroll-behavior "smooth"}]))

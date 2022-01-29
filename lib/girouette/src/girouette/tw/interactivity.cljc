@@ -59,6 +59,12 @@
                          "y" "vertical"
                          nil "both"} type)})}
 
+   {:id :scroll-behaviour
+    :rules "
+    scroll-behaviour = <'scroll-'> ( 'auto' | 'smooth' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:scroll-behavior value})}
 
    {:id :user-select
     :rules "
