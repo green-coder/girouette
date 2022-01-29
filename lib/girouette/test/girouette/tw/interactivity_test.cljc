@@ -6,6 +6,12 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "accent-current"
+    [".accent-current" {:accent-color "currentColor"}]
+
+    "accent-#abcdef11"
+    [".accent-\\#abcdef11" {:accent-color "#abcdef11"}]
+
     "appearance-none"
     [".appearance-none" {:appearance "none"}]
 

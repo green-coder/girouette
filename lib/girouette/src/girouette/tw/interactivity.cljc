@@ -1,7 +1,19 @@
-(ns ^:no-doc girouette.tw.interactivity)
+(ns ^:no-doc girouette.tw.interactivity
+  (:require
+   [girouette.tw.color :refer [color->css]]))
 
 (def components
-  [{:id :appearance
+  [{:id :accent-color
+    :rules "
+    accent-color = <'accent-'> ( 'inherit' | 'current' | color )
+    "
+    :garden (fn [{[color] :component-data read-color :read-color}]
+              {:accent-color (case color
+                               "inherit" "inherit"
+                               "current" "currentColor"
+                               (color->css (read-color color)))})}
+
+   {:id :appearance
     :rules "
     appearance = 'appearance-none'
     "
