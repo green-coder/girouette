@@ -21,6 +21,36 @@
                                  (->> (map read-number aspect-ratio-numbers)
                                       (str/join " / ")))}))}
 
+   {:id :columns
+    :rules "
+    columns = <'columns-'> ( columns-number | columns-size | columns-auto )
+    columns-auto = 'auto'
+    columns-number = number
+    columns-size =  '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' |
+                    '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
+    "
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [columns-number columns-size columns-auto]}
+                    (into {} component-data)]
+                {:columns (cond
+                            columns-auto "auto"
+                            columns-number (read-number columns-number)
+                            columns-size
+                            ({"3xs" "16rem"
+                              "2xs" "18rem"
+                              "xs"  "20rem"
+                              "sm"  "24rem"
+                              "md"  "28rem"
+                              "lg"  "32rem"
+                              "xl"  "36rem"
+                              "2xl" "42rem"
+                              "3xl" "48rem"
+                              "4xl" "56rem"
+                              "5xl" "64rem"
+                              "6xl" "72rem"
+                              "7xl" "80rem"} columns-size))}))}
+
+
    {:id :container
     :rules "
     container = <'container'>

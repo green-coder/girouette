@@ -18,6 +18,15 @@
     "aspect-23/57"
     [".aspect-23\\/57" {:aspect-ratio "23 / 57"}]
 
+    "columns-auto"
+    [".columns-auto" {:columns "auto"}]
+
+    "columns-4"
+    [".columns-4" {:columns 4}]
+
+    "columns-2xl"
+    [".columns-2xl" {:columns "42rem"}]
+
     "container"
     [".container" {:width "100%"}]
 
