@@ -51,6 +51,12 @@
     :garden (fn [{[direction] :component-data}]
               {:clear direction})}
 
+   {:id :isolation
+    :rules "
+    isolation = 'isolate' | <'isolation-'> 'auto'
+    "
+    :garden (fn [{[isolation] :component-data}]
+              {:isolation isolation})}
 
    {:id :object-fit
     :rules "

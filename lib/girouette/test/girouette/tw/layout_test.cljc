@@ -37,6 +37,12 @@
     "inline-table"
     [".inline-table" {:display "inline-table"}]
 
+    "isolate"
+    [".isolate" {:isolation "isolate"}]
+
+    "isolation-auto"
+    [".isolation-auto" {:isolation "auto"}]
+
     "list-item"
     [".list-item" {:display "list-item"}]
 
