@@ -16,7 +16,8 @@
 
 (defn outer-state-variants
   [variant]
-  (and (coll? variant) (= :group-state-variant (first variant))))
+  (and (coll? variant)
+       (#{:group-state-variant :peer-state-variant} (first variant))))
 
 (defn dot [class]
   (str "." (str/escape class {\. "\\."
@@ -126,8 +127,17 @@
 
 (defn outer-state-variants-transform [rule props]
   (reduce (fn [rule state-variant]
-            [(str ".group:" (state-variant->str (second state-variant)))
-             rule])
+            (case (first state-variant)
+              :group-state-variant
+              [(str ".group:" (state-variant->str (second state-variant)))
+               rule]
+
+              :peer-state-variant
+              (into [(:selector
+                      (garden.selectors/-
+                        (str ".peer:" (state-variant->str (second state-variant)))
+                        (first rule)))]
+                    (rest rule))))
           rule
           (->> props :prefixes :state-variants reverse
                (filter outer-state-variants))))
@@ -173,7 +183,8 @@
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
                   'root' | 'empty'
   group-state-variant = <'group-'> state-variant-value
-  state-variant = group-state-variant | state-variant-value
+  peer-state-variant = <'peer-'> state-variant-value
+  state-variant = group-state-variant | peer-state-variant | state-variant-value
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'

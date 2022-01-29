@@ -108,6 +108,13 @@
     "group-odd:container"
     [".group:nth-child(odd)" [".group-odd\\:container" {:width "100%"}]]
 
+    "peer-active:container"
+    [".peer:active ~ .peer-active\\:container" {:width "100%"}]
+
+    "peer-odd:container"
+    [".peer:nth-child(odd) ~ .peer-odd\\:container"
+     {:width "100%"}]
+
     "dark:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:prefers-color-scheme "dark"}
