@@ -121,7 +121,6 @@
     :garden (fn [{[variant-numeric] :component-data}]
               {:font-variant-numeric variant-numeric})}
 
-
    {:id :letter-spacing
     :rules "
     letter-spacing = <'tracking-'> ('tighter' | 'tight' | 'normal' |
@@ -232,6 +231,19 @@
                       {:--gi-text-opacity 1
                        :color (color->css [r g b "var(--gi-text-opacity)"])})))))
     :before-rules #{:text-opacity}}
+
+
+   {:id :text-indent
+    :rules "
+    text-indent = <'indent-'> ( number | length | fraction )
+    "
+    :garden (fn [{[value-data] :component-data}]
+              {:text-indent (value-unit->css value-data
+                                             {:zero-unit "px"
+                                              :number {:unit "rem"
+                                                       :value-fn div-4}
+                                              :fraction {:unit "%"
+                                                         :value-fn mul-100}})})}
 
 
    {:id :text-opacity

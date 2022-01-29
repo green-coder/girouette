@@ -37,6 +37,15 @@
     "font-thin"
     [".font-thin" {:font-weight 100}]
 
+    "indent-0"
+    [".indent-0" {:text-indent "0px"}]
+
+    "indent-1"
+    [".indent-1" {:text-indent "0.25rem"}]
+
+    "indent-2em"
+    [".indent-2em" {:text-indent "2em"}]
+
     "tracking-wide"
     [".tracking-wide" {:letter-spacing (str 0.025 "em")}]
 
