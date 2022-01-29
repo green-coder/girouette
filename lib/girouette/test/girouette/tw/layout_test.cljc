@@ -34,6 +34,9 @@
     "hidden"
     [".hidden" {:display "none"}]
 
+    "inline-table"
+    [".inline-table" {:display "inline-table"}]
+
     "object-left-top"
     [".object-left-top" {:object-position "left top"}]
 
