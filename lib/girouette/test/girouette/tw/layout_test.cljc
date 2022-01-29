@@ -37,6 +37,9 @@
     "inline-table"
     [".inline-table" {:display "inline-table"}]
 
+    "list-item"
+    [".list-item" {:display "list-item"}]
+
     "object-left-top"
     [".object-left-top" {:object-position "left top"}]
 
