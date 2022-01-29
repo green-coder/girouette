@@ -1,6 +1,5 @@
 (ns ^:no-doc girouette.tw.layout
   (:require [clojure.string :as str]
-            [girouette.util :as util]
             [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100]]))
 
 (def components
@@ -134,9 +133,8 @@
     visibility = 'visible' | 'invisible'
     "
     :garden (fn [{[visibility] :component-data}]
-              {:visibility (if (= visibility "invisible")
-                             "hidden"
-                             visibility)})}
+              {:visibility ({"visible"   "visible"
+                             "invisible" "hidden"} visibility)})}
 
 
    {:id :z-index

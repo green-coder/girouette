@@ -1,6 +1,5 @@
 (ns ^:no-doc girouette.tw.spacing
-  (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css div-4 between-children-selector]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-4 between-children-selector]]))
 
 
 (def components

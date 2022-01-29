@@ -1,6 +1,5 @@
 (ns ^:no-doc girouette.tw.border
-  (:require [garden.selectors :as gs]
-            [girouette.tw.common :refer [value-unit->css div-100 between-children-selector]]
+  (:require [girouette.tw.common :refer [value-unit->css div-100 between-children-selector]]
             [girouette.tw.color :refer [color->css]]))
 
 (def components
