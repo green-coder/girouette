@@ -108,7 +108,7 @@
 
    {:id :border-style
     :rules "
-    border-style = <'border-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none')
+    border-style = <'border-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none' | 'hidden')
     "
     :garden (fn [{[border-style] :component-data}]
               {:border-style border-style})}

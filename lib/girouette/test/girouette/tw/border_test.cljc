@@ -66,6 +66,9 @@
     "border-dotted"
     [".border-dotted" {:border-style "dotted"}]
 
+    "border-hidden"
+    [".border-hidden" {:border-style "hidden"}]
+
     ;; Divide Width
     "divide-x"
     [".divide-x" [#garden.selectors.CSSSelector{:selector "&>*+*"}
