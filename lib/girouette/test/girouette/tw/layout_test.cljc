@@ -6,6 +6,18 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "aspect-auto"
+    [".aspect-auto" {:aspect-ratio "auto"}]
+
+    "aspect-square"
+    [".aspect-square" {:aspect-ratio "1 / 1"}]
+
+    "aspect-video"
+    [".aspect-video" {:aspect-ratio "16 / 9"}]
+
+    "aspect-23/57"
+    [".aspect-23\\/57" {:aspect-ratio "23 / 57"}]
+
     "container"
     [".container" {:width "100%"}]
 

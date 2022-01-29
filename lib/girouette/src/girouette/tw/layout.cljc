@@ -1,9 +1,27 @@
 (ns ^:no-doc girouette.tw.layout
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100]]))
+            [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100 read-number]]))
 
 (def components
-  [{:id :container
+  [{:id :aspect-ratio
+    :rules "
+    aspect-ratio = <'aspect-'> ( aspect-ratio-fixed | aspect-ratio-numbers )
+    aspect-ratio-fixed = 'auto' | 'square' | 'video'
+    aspect-ratio-numbers = number <'/'> number
+    "
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [aspect-ratio-fixed aspect-ratio-numbers]}
+                    (into {} (map (fn [[k v1 v2]] (if v2 [k [v1 v2]] [k v1])))
+                          component-data)]
+                {:aspect-ratio (if (some? aspect-ratio-fixed)
+                                 (case aspect-ratio-fixed
+                                   "auto" "auto"
+                                   "square" "1 / 1"
+                                   "video" "16 / 9")
+                                 (->> (map read-number aspect-ratio-numbers)
+                                      (str/join " / ")))}))}
+
+   {:id :container
     :rules "
     container = <'container'>
     "
