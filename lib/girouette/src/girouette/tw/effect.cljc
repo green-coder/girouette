@@ -27,6 +27,31 @@
                                   "var(--gi-ring-shadow,0 0 #0000),"
                                   "var(--gi-shadow)")}))}
 
+   {:id :background-blend-mode
+    :rules "
+    <background-blend-mode-value> =
+                         'normal' | 'multiply' | 'screen' | 'overlay' |
+                         'darken' | 'lighten'  | 'color-dodge' |
+                         'color-burn' | 'hard-light' | 'soft-light' |
+                         'difference' | 'exclusion' | 'hue' | 'saturation' |
+                         'color' | 'luminosity'
+    background-blend-mode = <'bg-blend-'> background-blend-mode-value
+    "
+    :garden (fn [{[blend-mode] :component-data}]
+              {:background-blend-mode blend-mode})}
+
+   {:id :mix-blend-mode
+    :rules "
+    <mix-blend-mode-value> =
+                         'normal' | 'multiply' | 'screen' | 'overlay' |
+                         'darken' | 'lighten'  | 'color-dodge' |
+                         'color-burn' | 'hard-light' | 'soft-light' |
+                         'difference' | 'exclusion' | 'hue' | 'saturation' |
+                         'color' | 'luminosity'
+    mix-blend-mode = <'mix-blend-'> mix-blend-mode-value
+    "
+    :garden (fn [{[blend-mode] :component-data}]
+              {:mix-blend-mode blend-mode})}
 
    {:id :opacity
     :rules "
