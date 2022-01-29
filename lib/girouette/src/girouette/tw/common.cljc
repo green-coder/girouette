@@ -14,9 +14,9 @@
     "odd"   "nth-child(odd)"
     "even"  "nth-child(even)"} state-variant state-variant))
 
-(def outer-state-variants
-  #{"group-hover" "group-focus"
-    "group-disabled" "group-active"})
+(defn outer-state-variants
+  [variant]
+  (and (coll? variant) (= :group-state-variant (first variant))))
 
 (defn dot [class]
   (str "." (str/escape class {\. "\\."
@@ -126,11 +126,8 @@
 
 (defn outer-state-variants-transform [rule props]
   (reduce (fn [rule state-variant]
-            (case state-variant
-              "group-hover" [".group:hover" rule]
-              "group-focus" [".group:focus" rule]
-              "group-disabled" [".group:disabled" rule]
-              "group-active" [".group:active" rule]))
+            [(str ".group:" (state-variant->str (second state-variant)))
+             rule])
           rule
           (->> props :prefixes :state-variants reverse
                (filter outer-state-variants))))
@@ -168,14 +165,15 @@
   media-query-color-scheme = 'light' | 'dark'
   media-query-reduced-motion = 'motion-safe' | 'motion-reduce'
 
-  state-variant = 'hover' | 'focus' | 'disabled' | 'active' |
-                  'group-hover' | 'group-focus' | 'group-disabled' | 'group-active' |
+  <state-variant-value> = 'hover' | 'focus' | 'disabled' | 'active' |
                   'focus-within' | 'focus-visible' |
                   'any-link' | 'link' | 'visited' | 'target' |
                   'blank' | 'required' | 'optional' | 'valid' | 'invalid' | 'placeholder-shown' | 'checked' |
                   'read-only' | 'read-write' |
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
                   'root' | 'empty'
+  group-state-variant = <'group-'> state-variant-value
+  state-variant = group-state-variant | state-variant-value
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'

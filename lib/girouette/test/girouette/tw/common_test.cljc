@@ -102,6 +102,12 @@
     "group-hover:container"
     [".group:hover" [".group-hover\\:container" {:width "100%"}]]
 
+    "group-invalid:container"
+    [".group:invalid" [".group-invalid\\:container" {:width "100%"}]]
+
+    "group-odd:container"
+    [".group:nth-child(odd)" [".group-odd\\:container" {:width "100%"}]]
+
     "dark:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:prefers-color-scheme "dark"}
