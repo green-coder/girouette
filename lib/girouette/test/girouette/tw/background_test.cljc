@@ -37,6 +37,15 @@
     "bg-gradient-to-tr"
     [".bg-gradient-to-tr" {:background-image "linear-gradient(to top right,var(--gi-gradient-stops))"}]
 
+    "bg-origin-border"
+    [".bg-origin-border" {:background-origin "border-box"}]
+
+    "bg-origin-padding"
+    [".bg-origin-padding" {:background-origin "padding-box"}]
+
+    "bg-origin-content"
+    [".bg-origin-content" {:background-origin "content-box"}]
+
     "from-blue-500"
     [".from-blue-500" {:--gi-gradient-from "#3b82f6"
                        :--gi-gradient-stops "var(--gi-gradient-from),var(--gi-gradient-to,#3b82f600)"}]
