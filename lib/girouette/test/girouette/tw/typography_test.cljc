@@ -31,6 +31,9 @@
     [".antialiased" {:-webkit-font-smoothing "antialiased"
                      :-moz-osx-font-smoothing "grayscale"}]
 
+    "align-sub"
+    [".align-sub" {:vertical-align "sub"}]
+
     "italic"
     [".italic" {:font-style "italic"}]
 

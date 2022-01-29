@@ -290,7 +290,7 @@
 
    {:id :vertical-alignment
     :rules "
-    vertical-alignment = <'align-'> ('baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom')
+    vertical-alignment = <'align-'> ('baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super')
     "
     :garden (fn [{[align] :component-data}]
               {:vertical-align align})}
