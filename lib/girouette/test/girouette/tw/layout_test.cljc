@@ -22,6 +22,12 @@
     "box-content"
     [".box-content" {:box-sizing "content-box"}]
 
+    "box-decoration-clone"
+    [".box-decoration-clone" {:box-decoration-break "clone"}]
+
+    "box-decoration-slice"
+    [".box-decoration-slice" {:box-decoration-break "slice"}]
+
     "flex"
     [".flex" {:display "flex"}]
 

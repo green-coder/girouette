@@ -12,6 +12,12 @@
                 {:max-width (breakpoint->pixels media-query-min-width)}
                 {:width "100%"}))}
 
+   {:id :box-decoration-break
+    :rules "
+    box-decoration-break = <'box-decoration-'> ( 'clone' | 'slice' )
+    "
+    :garden (fn [{[decoration-break] :component-data}]
+              {:box-decoration-break decoration-break})}
 
    {:id :box-sizing
     :rules "
