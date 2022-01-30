@@ -18,6 +18,12 @@
     "flex-grow"
     [".flex-grow" {:flex-grow 1}]
 
+    "grow"
+    [".grow" {:flex-grow 1}]
+
+    "grow-0"
+    [".grow-0" {:flex-grow 0}]
+
     "flex-grow-3"
     [".flex-grow-3" {:flex-grow 3}]
 
@@ -29,6 +35,9 @@
 
     "flex-shrink-3"
     [".flex-shrink-3" {:flex-shrink 3}]
+
+    "shrink-3"
+    [".shrink-3" {:flex-shrink 3}]
 
     "flex-basis"
     [".flex-basis" {:flex-basis 1}]
