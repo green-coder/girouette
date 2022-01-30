@@ -272,6 +272,31 @@
                                         value
                                         (color->css (read-color value)))})}
 
+   {:id :text-decoration-style
+    :rules "
+    text-decoration-style = <'decoration-'> ( 'solid' | 'double' | 'dotted' |
+                                              'dashed' | 'wavy' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:text-decoration-style value})}
+
+   {:id :text-decoration-thickness
+    :rules "
+    text-decoration-thickness = <'decoration-'> ( text-decoration-thickness-from | text-decoration-thickness-value )
+    text-decoration-thickness-from = 'from-font'
+    text-decoration-thickness-value = auto | number | length | fraction | percentage
+    "
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [text-decoration-thickness-from
+                            text-decoration-thickness-value]}
+                    (into {} component-data)]
+                {:text-decoration-thickness
+                 (if text-decoration-thickness-from
+                   "from-font"
+                   (value-unit->css text-decoration-thickness-value
+                                    {:number {:unit "px"}
+                                     :fraction {:unit "%"
+                                                :value-fn mul-100}}))}))}
 
    {:id :text-transform
     :rules "
@@ -296,6 +321,16 @@
                 "text-ellipsis" {:text-overflow "ellipsis"}
                 "text-clip" {:text-overflow "clip"}))}
 
+   {:id :text-underline-offset
+    :rules "
+    text-underline-offset = <'underline-'> (auto | number | length | fraction | percentage)
+    "
+    :garden (fn [{[value] :component-data}]
+              {:text-underline-offset
+               (value-unit->css value
+                                {:number {:unit "px"}
+                                 :fraction {:unit "%"
+                                            :value-fn mul-100}})})}
 
    {:id :vertical-alignment
     :rules "
