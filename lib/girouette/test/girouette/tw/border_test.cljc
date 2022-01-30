@@ -38,6 +38,10 @@
     "border-b-2em"
     [".border-b-2em" {:border-bottom-width "2em"}]
 
+    "border-y-2em"
+    [".border-y-2em" {:border-top-width "2em"
+                      :border-bottom-width "2em"}]
+
     "border-3px"
     [".border-3px" {:border-width "3px"}]
 
@@ -52,6 +56,12 @@
     "border-t-green-300"
     [".border-t-green-300"
      {:--gi-border-opacity 1
+      :border-top-color "rgba(134,239,172,var(--gi-border-opacity))"}]
+
+    "border-y-green-300"
+    [".border-y-green-300"
+     {:--gi-border-opacity 1
+      :border-bottom-color "rgba(134,239,172,var(--gi-border-opacity))"
       :border-top-color "rgba(134,239,172,var(--gi-border-opacity))"}]
 
     "border-b-rgba-c0ffee50"
