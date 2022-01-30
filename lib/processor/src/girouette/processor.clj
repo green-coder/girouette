@@ -70,7 +70,8 @@
 (defn- string-hook [hook-fn]
   (fn [env ast opts]
     (when (and (= (:op ast) :const)
-               (= (:tag ast) 'string))
+               (= (:tag ast) 'string)
+               (not (char? (:val ast))))
       (hook-fn (-> ast :val)))
     ast))
 
