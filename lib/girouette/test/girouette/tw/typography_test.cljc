@@ -7,6 +7,15 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "decoration-orange-100"
+    [".decoration-orange-100" {:text-decoration-color "#ffedd5"}]
+
+    "decoration-inherit"
+    [".decoration-inherit" {:text-decoration-color "inherit"}]
+
+    "decoration-#abcdef"
+    [".decoration-\\#abcdef" {:text-decoration-color "#abcdef"}]
+
     "font-sans"
     [".font-sans" {:font-family "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""}]
 

@@ -263,6 +263,15 @@
                                   "line-through" "line-through"
                                   "no-underline" "none"} decoration)})}
 
+   {:id :text-decoration-color
+    :rules "
+    text-decoration-color = <'decoration-'> ( 'inherit' | color )
+    "
+    :garden (fn [{[value] :component-data read-color :read-color}]
+              {:text-decoration-color (if (= value "inherit")
+                                        value
+                                        (color->css (read-color value)))})}
+
 
    {:id :text-transform
     :rules "
