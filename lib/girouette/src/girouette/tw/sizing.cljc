@@ -5,7 +5,7 @@
   [{:id :width
     :rules "
     width = <'w-'> (number | length | length-unit | fraction | percentage | full-100% |
-                    auto | screen-100vw | min-content | max-content)
+                    auto | screen-100vw | min-content | max-content | fit-content)
     "
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
@@ -19,7 +19,7 @@
    {:id :min-width
     :rules "
     min-width = <'min-w-'> (number | length | length-unit | fraction | percentage | full-100% |
-                            auto | screen-100vw | min-content | max-content)
+                            auto | screen-100vw | min-content | max-content | fit-content)
     "
     :garden (fn [{[value-data] :component-data}]
               {:min-width (value-unit->css value-data
@@ -36,7 +36,7 @@
     max-width-fixed-size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' |
                            'prose' | 'screen-sm' | 'screen-md' | 'screen-lg' | 'screen-xl' | 'screen-2xl'
     max-width-generic-size = number | length | length-unit | fraction | percentage | full-100% |
-                             none | screen-100vw | min-content | max-content
+                             none | screen-100vw | min-content | max-content | fit-content
     "
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [max-width-fixed-size max-width-generic-size]} (into {} component-data)]
@@ -69,7 +69,7 @@
    {:id :height
     :rules "
     height = <'h-'> (number | length | length-unit | fraction | percentage | full-100% |
-                     auto | screen-100vh | min-content | max-content)
+                     auto | screen-100vh | min-content | max-content | fit-content)
     "
     :garden (fn [{[value-data] :component-data}]
               {:height (value-unit->css value-data
@@ -83,7 +83,7 @@
    {:id :min-height
     :rules "
     min-height = <'min-h-'> (number | length | length-unit | fraction | percentage | full-100% |
-                             auto | screen-100vh | min-content | max-content)
+                             auto | screen-100vh | min-content | max-content | fit-content)
     "
     :garden (fn [{[value-data] :component-data}]
               {:min-height (value-unit->css value-data
@@ -97,7 +97,7 @@
    {:id :max-height
     :rules "
     max-height = <'max-h-'> (number | length | length-unit | fraction | percentage | full-100% |
-                             none | screen-100vh | min-content | max-content)
+                             none | screen-100vh | min-content | max-content | fit-content)
     "
     :garden (fn [{[value-data] :component-data}]
               {:max-height (value-unit->css value-data

@@ -87,6 +87,7 @@
      :full "full"
      :min-content "min-content"
      :max-content "max-content"
+     :fit-content "fit-content"
      (let [[data-type arg1 arg2] data
            [value unit] (case data-type
                           :integer [(read-number arg1) nil]
@@ -208,6 +209,7 @@
   screen-100vh = 'screen'
   min-content = 'min'
   max-content = 'max'
+  fit-content = 'fit'
   auto = 'auto'
   none = 'none'
   full = 'full'
