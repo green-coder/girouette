@@ -66,6 +66,15 @@
     :garden (fn [{[value] :component-data}]
               {:scroll-behavior value})}
 
+   {:id :touch-action
+    :rules "
+    touch-action = <'touch-'> ( 'auto' | 'none' | 'pan-x' | 'pan-y' |
+                                'pan-left' | 'pan-right' | 'pan-up' | 'pan-down' |
+                                'pinch-zoom' | 'manipulation' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:touch-action value})}
+
    {:id :user-select
     :rules "
     user-select = <'select-'> ('none' | 'text' | 'all' | 'auto')

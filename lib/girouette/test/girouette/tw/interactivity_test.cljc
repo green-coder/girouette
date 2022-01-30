@@ -43,6 +43,12 @@
     "scroll-smooth"
     [".scroll-smooth" {:scroll-behavior "smooth"}]
 
+    "touch-auto"
+    [".touch-auto" {:touch-action "auto"}]
+
+    "touch-manipulation"
+    [".touch-manipulation" {:touch-action "manipulation"}]
+
     "will-change-auto"
     [".will-change-auto" {:will-change "auto"}]
 
