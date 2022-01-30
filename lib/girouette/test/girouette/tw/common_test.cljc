@@ -144,6 +144,11 @@
      [(keyword "&::file-selector-button")
       [:&:hover {:width "100%"}]]]
 
+    "open:bg-white"
+    [".open\\:bg-white"
+     [(keyword "&[open]") {:background-color "rgba(255,255,255,var(--gi-bg-opacity))"
+                           :--gi-bg-opacity 1}]]
+
     "hover:file:container"
     [".hover\\:file\\:container"
      [:&:hover

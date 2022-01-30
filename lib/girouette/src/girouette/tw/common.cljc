@@ -9,11 +9,18 @@
 (def matches-nothing "&'nop' 'no-way'")
 
 (defn state-variant->str [state-variant]
-  ({"first" "first-child"
-    "last"  "last-child"
-    "odd"   "nth-child(odd)"
-    "even"  "nth-child(even)"
-    "file"  ":file-selector-button"} state-variant state-variant))
+  (cond
+    (string? state-variant)
+    (str ":"
+         ({"first" "first-child"
+           "last"  "last-child"
+           "odd"   "nth-child(odd)"
+           "even"  "nth-child(even)"
+           "file"  ":file-selector-button"} state-variant state-variant))
+
+    (and (coll? state-variant)
+         (= :attribute-state-variant (first state-variant)))
+    (str "[" (second state-variant) "]")))
 
 (defn outer-state-variants
   [variant]
@@ -107,7 +114,7 @@
 
 (defn inner-state-variants-transform [rule props]
   (reduce (fn [rule state-variant]
-            [(keyword (str "&:" (state-variant->str state-variant))) rule])
+            [(keyword (str "&" (state-variant->str state-variant))) rule])
           rule
           (->> props :prefixes :state-variants reverse
                (remove outer-state-variants))))
@@ -130,13 +137,13 @@
   (reduce (fn [rule state-variant]
             (case (first state-variant)
               :group-state-variant
-              [(str ".group:" (state-variant->str (second state-variant)))
+              [(str ".group" (state-variant->str (second state-variant)))
                rule]
 
               :peer-state-variant
               (into [(:selector
                       (garden.selectors/-
-                        (str ".peer:" (state-variant->str (second state-variant)))
+                        (str ".peer" (state-variant->str (second state-variant)))
                         (first rule)))]
                     (rest rule))))
           rule
@@ -176,6 +183,7 @@
   media-query-color-scheme = 'light' | 'dark'
   media-query-reduced-motion = 'motion-safe' | 'motion-reduce'
 
+  attribute-state-variant = 'open'
   <state-variant-value> = 'hover' | 'focus' | 'disabled' | 'active' |
                   'focus-within' | 'focus-visible' |
                   'any-link' | 'link' | 'visited' | 'target' |
@@ -183,7 +191,8 @@
                   'read-only' | 'read-write' |
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
                   'file' |
-                  'root' | 'empty'
+                  'root' | 'empty' |
+                  attribute-state-variant
   group-state-variant = <'group-'> state-variant-value
   peer-state-variant = <'peer-'> state-variant-value
   state-variant = group-state-variant | peer-state-variant | state-variant-value
