@@ -142,7 +142,7 @@
    {:id :overflow
     :rules "
     overflow = <'overflow-'> (axis <'-'>)? overflow-mode
-    overflow-mode = 'auto' | 'hidden' | 'visible' | 'scroll'
+    overflow-mode = 'auto' | 'hidden' | 'visible' | 'scroll' | 'clip'
     "
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [axis overflow-mode]} (into {} component-data)

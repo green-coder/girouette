@@ -96,6 +96,9 @@
     [".text-black" {:--gi-text-opacity 1
                     :color "rgba(0,0,0,var(--gi-text-opacity))"}]
 
+    "text-clip"
+    [".text-clip" {:text-overflow "clip"}]
+
     "text-current"
     [".text-current" {:color "currentColor"}]
 

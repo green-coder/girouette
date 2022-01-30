@@ -277,15 +277,15 @@
 
    {:id :text-overflow
     :rules "
-    text-overflow = 'truncate' | 'overflow-ellipsis' | 'overflow-clip'
+    text-overflow = 'truncate' | 'text-ellipsis' | 'text-clip'
     "
     :garden (fn [{[overflow] :component-data}]
               (case overflow
                 "truncate" {:overflow "hidden"
                             :text-overflow "ellipsis"
                             :white-space "nowrap"}
-                "overflow-ellipsis" {:text-overflow "ellipsis"}
-                "overflow-clip" {:text-overflow "clip"}))}
+                "text-ellipsis" {:text-overflow "ellipsis"}
+                "text-clip" {:text-overflow "clip"}))}
 
 
    {:id :vertical-alignment

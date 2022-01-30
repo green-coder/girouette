@@ -85,6 +85,12 @@
     "overflow-x-auto"
     [".overflow-x-auto" {:overflow-x "auto"}]
 
+    "overflow-x-clip"
+    [".overflow-x-clip" {:overflow-x "clip"}]
+
+    "overflow-clip"
+    [".overflow-clip" {:overflow "clip"}]
+
     "overflow-hidden"
     [".overflow-hidden" {:overflow "hidden"}]
 
