@@ -201,16 +201,48 @@
                {:border-style border-style}])}
 
 
-   {:id :outline
+   {:id :outline-style
     :rules "
-    outline = <'outline-'> ('none' | 'white' | 'black')
+    outline-style = <'outline'> ( <'-'> outline-style-value )?
+    <outline-style-value> = 'none' | 'dashed' | 'dotted' | 'double' | 'hidden'
     "
     :garden (fn [{[type] :component-data}]
-              {:outline ({"none" "2px solid transparent"
-                          "white" "2px dotted white"
-                          "black" "2px dotted black"} type)
-               :outline-offset "2px"})}
+              (cond
+                (nil? type)
+                {:outline-style "solid"}
 
+                (= type "none")
+                {:outline "2px solid transparent"
+                 :outline-offset "2px"}
+
+                :else
+                {:outline-style type}))}
+
+
+   {:id :outline-color
+    :rules "
+    outline-color = <'outline-'> color
+    "
+    :garden (fn [{[value] :component-data read-color :read-color}]
+              {:outline-color (color->css (read-color value))})}
+
+
+   {:id :outline-offset
+    :rules "
+    outline-offset = <'outline-offset-'> ( number | length )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:outline-offset (value-unit->css value {:zero-unit "px"
+                                                       :number {:unit "px"}})})}
+
+
+   {:id :outline-width
+    :rules "
+    outline-width = <'outline-'> ( number | length )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:outline-width (value-unit->css value {:zero-unit "px"
+                                                      :number {:unit "px"}})})}
 
    {:id :ring-width
     :rules "

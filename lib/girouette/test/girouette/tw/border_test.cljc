@@ -111,6 +111,26 @@
     [".divide-double" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {:border-style "double"}]]
 
+    ;; Outline
+    "outline-none"
+    [".outline-none" {:outline "2px solid transparent"
+                      :outline-offset "2px"}]
+
+    "outline"
+    [".outline" {:outline-style "solid"}]
+
+    "outline-gray-100"
+    [".outline-gray-100" {:outline-color "#f4f4f5"}]
+
+    "outline-3"
+    [".outline-3" {:outline-width "3px"}]
+
+    "outline-1rem"
+    [".outline-1rem" {:outline-width "1rem"}]
+
+    "outline-offset-2"
+    [".outline-offset-2" {:outline-offset "2px"}]
+
     ;; Ring Width
     ;; TODO: Test for `*	box-shadow: 0 0 #0000;`
     "ring"
