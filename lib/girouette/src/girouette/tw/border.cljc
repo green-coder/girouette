@@ -201,6 +201,17 @@
                {:border-style border-style}])}
 
 
+   {:id :outline
+    :rules "
+    outline = <'outline-'> ('none' | 'white' | 'black')
+    "
+    :garden (fn [{[type] :component-data}]
+              {:outline ({"none" "2px solid transparent"
+                          "white" "2px dotted white"
+                          "black" "2px dotted black"} type)
+               :outline-offset "2px"})}
+
+
    {:id :ring-width
     :rules "
     ring-width = <'ring'> (<'-'> ('inset' | number | length | length-unit))?
