@@ -12,7 +12,8 @@
   ({"first" "first-child"
     "last"  "last-child"
     "odd"   "nth-child(odd)"
-    "even"  "nth-child(even)"} state-variant state-variant))
+    "even"  "nth-child(even)"
+    "file"  ":file-selector-button"} state-variant state-variant))
 
 (defn outer-state-variants
   [variant]
@@ -181,6 +182,7 @@
                   'blank' | 'required' | 'optional' | 'valid' | 'invalid' | 'placeholder-shown' | 'checked' |
                   'read-only' | 'read-write' |
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
+                  'file' |
                   'root' | 'empty'
   group-state-variant = <'group-'> state-variant-value
   peer-state-variant = <'peer-'> state-variant-value

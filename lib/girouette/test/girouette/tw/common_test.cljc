@@ -135,6 +135,20 @@
                             :value {:media-queries {:prefers-reduced-motion "reduced"}
                                     :rules ([".motion-reduce\\:container" {:width "100%"}])}}
 
+    "file:container"
+    [".file\\:container"
+     [(keyword "&::file-selector-button") {:width "100%"}]]
+
+    "file:hover:container"
+    [".file\\:hover\\:container"
+     [(keyword "&::file-selector-button")
+      [:&:hover {:width "100%"}]]]
+
+    "hover:file:container"
+    [".hover\\:file\\:container"
+     [:&:hover
+      [(keyword "&::file-selector-button") {:width "100%"}]]]
+
     "focus:container"
     [".focus\\:container" [:&:focus {:width "100%"}]]
 
