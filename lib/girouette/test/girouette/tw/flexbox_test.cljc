@@ -6,6 +6,15 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "basis-3"
+    [".basis-3" {:flex-basis "0.75rem"}]
+
+    "basis-18px"
+    [".basis-18px" {:flex-basis "18px"}]
+
+    "basis-3/5"
+    [".basis-3\\/5" {:flex-basis "60%"}]
+
     "flex-grow"
     [".flex-grow" {:flex-grow 1}]
 

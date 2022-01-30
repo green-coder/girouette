@@ -28,7 +28,7 @@
 
    {:id :flex-basis
     :rules "
-    flex-basis = <'flex-basis'> (<'-'> flex-basis-value)?
+    flex-basis = <'flex-'>? <'basis'> (<'-'> flex-basis-value)?
     flex-basis-value = number | length | length-unit | fraction | percentage | full-100% | auto
     "
     :garden (fn [{data :component-data}]
