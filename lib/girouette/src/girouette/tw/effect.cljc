@@ -140,6 +140,19 @@
                                      ")")
                :filter filter-rule})}
 
+   {:id :invert
+    :rules "
+    invert = <'invert'> (<'-'> number )?
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-invert (str "invert("
+                            (if (nil? value)
+                              "100%"
+                              (value-unit->css value {:number {:unit "%"}}))
+                            ")")
+               :filter filter-rule})}
+
+
    {:id :mix-blend-mode
     :rules "
     <mix-blend-mode-value> =

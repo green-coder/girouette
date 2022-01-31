@@ -72,6 +72,14 @@
     [".hue-rotate-30" {:--gi-hue-rotate "hue-rotate(30deg)"
                        :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
+    "invert"
+    [".invert" {:--gi-invert "invert(100%)"
+                :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
+
+    "invert-0"
+    [".invert-0" {:--gi-invert "invert(0%)"
+                  :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
+
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]
     "mix-blend-multiply"
