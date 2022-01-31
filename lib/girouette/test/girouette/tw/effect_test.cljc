@@ -6,6 +6,18 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "blur-none"
+    [".blur-none" {:filter "blur(0)"}]
+
+    "blur"
+    [".blur" {:filter "blur(8px)"}]
+
+    "blur-lg"
+    [".blur-lg" {:filter "blur(16px)"}]
+
+    "blur-1rem"
+    [".blur-1rem" {:filter "blur(1rem)"}]
+
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]
     "mix-blend-multiply"

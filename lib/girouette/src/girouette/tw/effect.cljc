@@ -16,6 +16,29 @@
               {:background-blend-mode blend-mode})}
 
 
+   {:id :blur
+    :rules "
+    blur = <'blur'> (<'-'> ( blur-value-fix | blur-value-number ))?
+    blur-value-fix = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none'
+    blur-value-number = length
+    "
+    :garden (fn [{value :component-data}]
+              (let [blur (if (empty? value)
+                           "8px"
+                           (let [{:keys [blur-value-number blur-value-fix]}
+                                 (into {} value)]
+                             (if blur-value-number
+                               (value-unit->css blur-value-number {})
+                               ({"sm" "4px"
+                                 "md" "12px"
+                                 "lg" "16px"
+                                 "xl" "24px"
+                                 "2xl" "40px"
+                                 "3xl" "64px"
+                                 "none" "0"} blur-value-fix))))]
+                {:filter (str "blur(" blur ")")}))}
+
+
    {:id :box-shadow
     :rules "
     box-shadow = <'shadow'> (<'-'> box-shadow-value)?
