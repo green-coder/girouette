@@ -44,6 +44,15 @@
     [".drop-shadow-lg"
      {:filter "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))"}]
 
+    "grayscale"
+    [".grayscale" {:filter "grayscale(100%)"}]
+
+    "grayscale-0"
+    [".grayscale-0" {:filter "grayscale(0)"}]
+
+    "grayscale-1/2"
+    [".grayscale-1\\/2" {:filter "grayscale(50%)"}]
+
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]
     "mix-blend-multiply"

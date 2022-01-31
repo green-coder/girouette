@@ -1,5 +1,5 @@
 (ns ^:no-doc girouette.tw.effect
-  (:require [girouette.tw.common :refer [value-unit->css div-100]]))
+  (:require [girouette.tw.common :refer [value-unit->css div-100 mul-100]]))
 
 (def components
   [{:id :background-blend-mode
@@ -102,6 +102,22 @@
                         "2xl" "drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))"
                         "none" "drop-shadow(0 0 #0000)")]
                 {:filter v}))}
+
+
+   {:id :grayscale
+    :rules "
+    grayscale = <'grayscale'> (<'-'> (number | fraction))?
+    "
+    :garden (fn [{[value] :component-data}]
+              (if (nil? value)
+                {:filter "grayscale(100%)"}
+                {:filter (str "grayscale("
+                              (value-unit->css value
+                                               {:number {:unit "%"
+                                                         :zero-unit nil}
+                                                :fraction {:unit "%"
+                                                           :value-fn mul-100}})
+                              ")")}))}
 
 
    {:id :mix-blend-mode
