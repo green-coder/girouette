@@ -76,6 +76,17 @@
                                   "var(--gi-shadow)")}))}
 
 
+   {:id :contrast
+    :rules "
+    contrast = <'contrast-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:filter (str "contrast(" (value-unit->css
+                                          value
+                                          {:value-fn div-100})
+                            ")")})}
+
+
    {:id :mix-blend-mode
     :rules "
     <mix-blend-mode-value> =

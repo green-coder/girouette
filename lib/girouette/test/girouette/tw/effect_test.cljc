@@ -27,6 +27,15 @@
     "brightness-150"
     [".brightness-150" {:filter "brightness(1.5)"}]
 
+    "contrast-0"
+    [".contrast-0" {:filter "contrast(0)"}]
+
+    "contrast-75"
+    [".contrast-75" {:filter "contrast(0.75)"}]
+
+    "contrast-150"
+    [".contrast-150" {:filter "contrast(1.5)"}]
+
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]
     "mix-blend-multiply"
