@@ -7,54 +7,70 @@
     (= expected-garden (class-name->garden class-name))
 
     "blur-none"
-    [".blur-none" {:filter "blur(0)"}]
+    [".blur-none" {:--gi-blur "blur(0)"
+                   :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "blur"
-    [".blur" {:filter "blur(8px)"}]
+    [".blur" {:--gi-blur "blur(8px)"
+              :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "blur-lg"
-    [".blur-lg" {:filter "blur(16px)"}]
+    [".blur-lg" {:--gi-blur "blur(16px)"
+                 :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "blur-1rem"
-    [".blur-1rem" {:filter "blur(1rem)"}]
+    [".blur-1rem" {:--gi-blur "blur(1rem)"
+                   :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "brightness-0"
-    [".brightness-0" {:filter "brightness(0)"}]
+    [".brightness-0" {:--gi-brightness "brightness(0)"
+                      :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "brightness-75"
-    [".brightness-75" {:filter "brightness(0.75)"}]
+    [".brightness-75" {:--gi-brightness "brightness(0.75)"
+                       :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "brightness-150"
-    [".brightness-150" {:filter "brightness(1.5)"}]
+    [".brightness-150" {:--gi-brightness "brightness(1.5)"
+                        :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "contrast-0"
-    [".contrast-0" {:filter "contrast(0)"}]
+    [".contrast-0" {:--gi-contrast "contrast(0)"
+                    :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "contrast-75"
-    [".contrast-75" {:filter "contrast(0.75)"}]
+    [".contrast-75" {:--gi-contrast "contrast(0.75)"
+                     :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "contrast-150"
-    [".contrast-150" {:filter "contrast(1.5)"}]
+    [".contrast-150" {:--gi-contrast "contrast(1.5)"
+                      :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "drop-shadow"
     [".drop-shadow"
-     {:filter "drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))"}]
+     {:--gi-drop-shadow "drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))"
+      :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "drop-shadow-lg"
     [".drop-shadow-lg"
-     {:filter "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))"}]
+     {:--gi-drop-shadow "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))"
+      :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "grayscale"
-    [".grayscale" {:filter "grayscale(100%)"}]
+    [".grayscale" {:--gi-grayscale "grayscale(100%)"
+                   :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "grayscale-0"
-    [".grayscale-0" {:filter "grayscale(0)"}]
+    [".grayscale-0" {:--gi-grayscale "grayscale(0)"
+                     :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "grayscale-1/2"
-    [".grayscale-1\\/2" {:filter "grayscale(50%)"}]
+    [".grayscale-1\\/2" {:--gi-grayscale "grayscale(50%)"
+                         :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "hue-rotate-30"
-    [".hue-rotate-30" {:filter "hue-rotate(30deg)"}]
+    [".hue-rotate-30" {:--gi-hue-rotate "hue-rotate(30deg)"
+                       :filter "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"}]
 
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]

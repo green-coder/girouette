@@ -1,6 +1,10 @@
 (ns ^:no-doc girouette.tw.effect
   (:require [girouette.tw.common :refer [value-unit->css div-100 mul-100]]))
 
+(def ^:private filter-rule
+  "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"
+  )
+
 (def components
   [{:id :background-blend-mode
     :rules "
@@ -36,7 +40,8 @@
                                  "2xl" "40px"
                                  "3xl" "64px"
                                  "none" "0"} blur-value-fix))))]
-                {:filter (str "blur(" blur ")")}))}
+                {:--gi-blur (str "blur(" blur ")")
+                 :filter filter-rule}))}
 
 
    {:id :brightness
@@ -44,10 +49,11 @@
     brightness = <'brightness-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:filter (str "brightness(" (value-unit->css
-                                            value
-                                            {:value-fn div-100})
-                            ")")})}
+              {:--gi-brightness (str "brightness(" (value-unit->css
+                                                     value
+                                                     {:value-fn div-100})
+                                     ")")
+               :filter filter-rule})}
 
 
    {:id :box-shadow
@@ -81,10 +87,11 @@
     contrast = <'contrast-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:filter (str "contrast(" (value-unit->css
-                                          value
-                                          {:value-fn div-100})
-                            ")")})}
+              {:--gi-contrast (str "contrast(" (value-unit->css
+                                               value
+                                               {:value-fn div-100})
+                                 ")")
+               :filter filter-rule})}
 
 
    {:id :drop-shadow
@@ -101,7 +108,8 @@
                         "xl" "drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08))"
                         "2xl" "drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))"
                         "none" "drop-shadow(0 0 #0000)")]
-                {:filter v}))}
+                {:--gi-drop-shadow v
+                 :filter filter-rule}))}
 
 
    {:id :grayscale
@@ -109,15 +117,17 @@
     grayscale = <'grayscale'> (<'-'> (number | fraction))?
     "
     :garden (fn [{[value] :component-data}]
-              (if (nil? value)
-                {:filter "grayscale(100%)"}
-                {:filter (str "grayscale("
-                              (value-unit->css value
-                                               {:number {:unit "%"
-                                                         :zero-unit nil}
-                                                :fraction {:unit "%"
-                                                           :value-fn mul-100}})
-                              ")")}))}
+              {:filter filter-rule
+               :--gi-grayscale
+               (str "grayscale("
+                    (if (nil? value)
+                      "100%"
+                      (value-unit->css value
+                                       {:number {:unit "%"
+                                                 :zero-unit nil}
+                                        :fraction {:unit "%"
+                                                   :value-fn mul-100}}))
+                    ")")})}
 
 
    {:id :hue-rotate
@@ -125,9 +135,10 @@
     hue-rotate = <'hue-rotate-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:filter (str "hue-rotate("
-                            (value-unit->css value {:number {:unit "deg"}})
-                            ")")})}
+              {:--gi-hue-rotate (str "hue-rotate("
+                                     (value-unit->css value {:number {:unit "deg"}})
+                                     ")")
+               :filter filter-rule})}
 
    {:id :mix-blend-mode
     :rules "
