@@ -32,15 +32,9 @@
        (#{:group-state-variant :peer-state-variant} (first variant))))
 
 (defn dot [class]
-  (str "." (str/escape class {\. "\\."
-                              \: "\\:"
-                              \/ "\\/"
-                              \% "\\%"
-                              \& "\\&"
-                              \~ "\\~"
-                              \< "\\<"
-                              \> "\\>"
-                              \# "\\#"})))
+  (str "." (str/replace class #"[^-a-zA-Z0-9_]"
+                        ;; "\\\\$0" doesn't work in cljs, it seems?
+                        (fn [c] (str "\\" c)))))
 
 
 (def breakpoint->pixels
