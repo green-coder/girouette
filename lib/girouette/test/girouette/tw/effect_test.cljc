@@ -53,6 +53,9 @@
     "grayscale-1/2"
     [".grayscale-1\\/2" {:filter "grayscale(50%)"}]
 
+    "hue-rotate-30"
+    [".hue-rotate-30" {:filter "hue-rotate(30deg)"}]
+
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]
     "mix-blend-multiply"

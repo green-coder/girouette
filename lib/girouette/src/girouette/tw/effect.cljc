@@ -120,6 +120,15 @@
                               ")")}))}
 
 
+   {:id :hue-rotate
+    :rules "
+    hue-rotate = <'hue-rotate-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:filter (str "hue-rotate("
+                            (value-unit->css value {:number {:unit "deg"}})
+                            ")")})}
+
    {:id :mix-blend-mode
     :rules "
     <mix-blend-mode-value> =
