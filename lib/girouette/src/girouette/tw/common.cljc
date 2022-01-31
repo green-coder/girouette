@@ -15,12 +15,16 @@
          ({"first" "first-child"
            "last"  "last-child"
            "odd"   "nth-child(odd)"
-           "even"  "nth-child(even)"
-           "file"  ":file-selector-button"} state-variant state-variant))
+           "even"  "nth-child(even)"} state-variant state-variant))
 
     (and (coll? state-variant)
          (= :attribute-state-variant (first state-variant)))
     (str "[" (second state-variant) "]")))
+
+
+(defn target-variant->str [target-variant]
+  (str "::" ({"file" "file-selector-button"} target-variant target-variant)))
+
 
 (defn outer-state-variants
   [variant]
@@ -114,8 +118,15 @@
 
 
 (defn inner-state-variants-transform [rule props]
-  (reduce (fn [rule state-variant]
-            [(keyword (str "&" (state-variant->str state-variant))) rule])
+  (reduce (fn [rule [variant-type variant-value]]
+            [(keyword (str "&"
+                           (case variant-type
+                             :target-variant
+                             (target-variant->str variant-value)
+
+                             (:plain-state-variant :attribute-state-variant)
+                             (state-variant->str variant-value))))
+             rule])
           rule
           (->> props :prefixes :state-variants reverse
                (remove outer-state-variants))))
@@ -191,12 +202,13 @@
                   'blank' | 'required' | 'optional' | 'valid' | 'invalid' | 'placeholder-shown' | 'checked' |
                   'read-only' | 'read-write' |
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
-                  'file' |
                   'root' | 'empty' |
                   attribute-state-variant
   group-state-variant = <'group-'> state-variant-value
   peer-state-variant = <'peer-'> state-variant-value
-  state-variant = group-state-variant | peer-state-variant | state-variant-value
+  target-variant = 'file'
+  plain-state-variant = state-variant-value
+  state-variant = group-state-variant | peer-state-variant | target-variant | plain-state-variant
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'
