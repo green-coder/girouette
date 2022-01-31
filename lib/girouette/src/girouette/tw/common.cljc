@@ -169,10 +169,12 @@
         color-scheme (-> prefixes :media-query-color-scheme)
         reduced-motion (-> prefixes :media-query-reduced-motion {"motion-safe" "no-preference"
                                                                  "motion-reduce" "reduced"})
+        orientation (-> prefixes :media-query-orientation)
         media-query (cond-> {}
                       min-width (assoc :min-width min-width)
                       color-scheme (assoc :prefers-color-scheme color-scheme)
-                      reduced-motion (assoc :prefers-reduced-motion reduced-motion))]
+                      reduced-motion (assoc :prefers-reduced-motion reduced-motion)
+                      orientation (assoc :orientation orientation))]
     (if (seq media-query)
       (gs/at-media media-query rule)
       rule)))
@@ -190,10 +192,12 @@
 
   <media-query> = media-query-min-width |
                   media-query-color-scheme |
-                  media-query-reduced-motion
+                  media-query-reduced-motion |
+                  media-query-orientation
   media-query-min-width = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   media-query-color-scheme = 'light' | 'dark'
   media-query-reduced-motion = 'motion-safe' | 'motion-reduce'
+  media-query-orientation = 'landscape' | 'portrait'
 
   attribute-state-variant = 'open'
   <state-variant-value> = 'hover' | 'focus' | 'disabled' | 'active' |

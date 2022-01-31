@@ -135,6 +135,11 @@
                             :value {:media-queries {:prefers-reduced-motion "reduced"}
                                     :rules ([".motion-reduce\\:container" {:width "100%"}])}}
 
+    "landscape:container"
+    #garden.types.CSSAtRule{:identifier :media
+                            :value {:media-queries {:orientation "landscape"}
+                                    :rules ([".landscape\\:container" {:width "100%"}])}}
+
     "file:container"
     [".file\\:container"
      [(keyword "&::file-selector-button") {:width "100%"}]]

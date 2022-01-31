@@ -31,12 +31,14 @@
         {[media-query-min-width] :media-query-min-width
          [media-query-color-scheme] :media-query-color-scheme
          [media-query-reduced-motion] :media-query-reduced-motion
+         [media-query-orientation] :media-query-orientation
          state-variants :state-variant} (util/group-by first second prefixes)]
     (assoc predef-props
       :class-name class-name
       :prefixes {:media-query-min-width media-query-min-width
                  :media-query-color-scheme media-query-color-scheme
                  :media-query-reduced-motion media-query-reduced-motion
+                 :media-query-orientation media-query-orientation
                  :state-variants state-variants}
       :component-id component-id
       :component-data (vec component-data))))
