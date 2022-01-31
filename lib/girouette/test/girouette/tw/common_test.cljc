@@ -180,4 +180,12 @@
     "sm:first:focus:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:min-width "640px"}
-                                    :rules ([".sm\\:first\\:focus\\:container" [:&:first-child [:&:focus {:max-width "640px"}]]])}}))
+                                    :rules ([".sm\\:first\\:focus\\:container" [:&:first-child [:&:focus {:max-width "640px"}]]])}}
+
+    "placeholder:text-red-500"
+    [".placeholder\\:text-red-500" [(keyword "&::placeholder")
+                                    {:color "rgba(239,68,68,var(--gi-text-opacity))"
+                                     :--gi-text-opacity 1}]]
+
+    "before:ml-1"
+    [".before\\:ml-1" [(keyword "&::before") {:margin-left "0.25rem"}]]))

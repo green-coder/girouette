@@ -206,7 +206,7 @@
                   attribute-state-variant
   group-state-variant = <'group-'> state-variant-value
   peer-state-variant = <'peer-'> state-variant-value
-  target-variant = 'file'
+  target-variant = 'file' | 'before' | 'after' | 'placeholder'
   plain-state-variant = state-variant-value
   state-variant = group-state-variant | peer-state-variant | target-variant | plain-state-variant
 
