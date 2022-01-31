@@ -87,6 +87,23 @@
                             ")")})}
 
 
+   {:id :drop-shadow
+    :rules "
+    drop-shadow = <'drop-shadow'> (<'-'> drop-shadow-value)?
+    <drop-shadow-value> = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none'
+    "
+    :garden (fn [{[value] :component-data}]
+              (let [v (case value
+                        nil "drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))"
+                        "sm" "drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))"
+                        "md" "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))"
+                        "lg" "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))"
+                        "xl" "drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08))"
+                        "2xl" "drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))"
+                        "none" "drop-shadow(0 0 #0000)")]
+                {:filter v}))}
+
+
    {:id :mix-blend-mode
     :rules "
     <mix-blend-mode-value> =
