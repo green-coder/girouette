@@ -171,4 +171,26 @@
     opacity = <'opacity-'> number
     "
     :garden (fn [{[value] :component-data}]
-              {:opacity (value-unit->css value {:value-fn div-100})})}])
+              {:opacity (value-unit->css value {:value-fn div-100})})}
+
+
+   {:id :saturate
+    :rules "
+    saturate = <'saturate-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-saturate (str "saturate("
+                                   (value-unit->css value {:value-fn div-100})
+                                   ")")
+               :filter filter-rule})}
+
+   {:id :sepia
+    :rules "
+    sepia = <'sepia'> (<'-'> number)?
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-sepia (str "sepia("
+                                (value-unit->css value {:number {:unit "%"}})
+                                ")")
+               :filter filter-rule})
+    }])
