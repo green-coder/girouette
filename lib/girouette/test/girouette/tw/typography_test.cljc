@@ -7,6 +7,21 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "content-['foo']"
+    [".content-\\[\\'foo\\'\\]" {:content "\"foo\""}]
+
+    "content-['foo\\'s']"
+    [".content-\\[\\'foo\\\\\\'s\\'\\]" {:content "\"foo's\""}]
+
+    "content-['foo_bar']"
+    [".content-\\[\\'foo_bar\\'\\]" {:content "\"foo bar\""}]
+
+    "content-['foo\\_bar']"
+    [".content-\\[\\'foo\\\\_bar\\'\\]" {:content "\"foo_bar\""}]
+
+    "content-[attr(foo)]"
+    [".content-\\[attr\\(foo\\)\\]" {:content "attr(foo)"}]
+
     "decoration-orange-100"
     [".decoration-orange-100" {:text-decoration-color "#ffedd5"}]
 

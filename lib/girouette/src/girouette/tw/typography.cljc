@@ -28,7 +28,20 @@
 
 
 (def components
-  [{:id :font-family
+  [{:id :content
+    :rules "
+    content = <'content-'> <'['> #'[^\\] ]*' <']'>
+    "
+    :garden (fn [{[value] :component-data}]
+              {:content (-> value
+                            ;; negative-lookbehind isn't supported in javascript
+                            (str/replace #"(^|[^\\])'" "$1\"")
+                            (str/replace #"\\'" "'")
+                            (str/replace #"(^|[^\\])_" "$1 ")
+                            (str/replace #"\\_" "_"))})}
+
+
+   {:id :font-family
     :rules "
     font-family = <'font-'> font-family-name
     "
