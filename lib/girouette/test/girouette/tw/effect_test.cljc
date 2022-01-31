@@ -18,6 +18,15 @@
     "blur-1rem"
     [".blur-1rem" {:filter "blur(1rem)"}]
 
+    "brightness-0"
+    [".brightness-0" {:filter "brightness(0)"}]
+
+    "brightness-75"
+    [".brightness-75" {:filter "brightness(0.75)"}]
+
+    "brightness-150"
+    [".brightness-150" {:filter "brightness(1.5)"}]
+
     "mix-blend-normal"
     [".mix-blend-normal" {:mix-blend-mode "normal"}]
     "mix-blend-multiply"

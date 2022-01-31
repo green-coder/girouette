@@ -39,6 +39,17 @@
                 {:filter (str "blur(" blur ")")}))}
 
 
+   {:id :brightness
+    :rules "
+    brightness = <'brightness-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:filter (str "brightness(" (value-unit->css
+                                            value
+                                            {:value-fn div-100})
+                            ")")})}
+
+
    {:id :box-shadow
     :rules "
     box-shadow = <'shadow'> (<'-'> box-shadow-value)?
