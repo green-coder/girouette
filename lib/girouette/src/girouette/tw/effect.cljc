@@ -2,7 +2,21 @@
   (:require [girouette.tw.common :refer [value-unit->css div-100]]))
 
 (def components
-  [{:id :box-shadow
+  [{:id :background-blend-mode
+    :rules "
+    <background-blend-mode-value> =
+                         'normal' | 'multiply' | 'screen' | 'overlay' |
+                         'darken' | 'lighten'  | 'color-dodge' |
+                         'color-burn' | 'hard-light' | 'soft-light' |
+                         'difference' | 'exclusion' | 'hue' | 'saturation' |
+                         'color' | 'luminosity'
+    background-blend-mode = <'bg-blend-'> background-blend-mode-value
+    "
+    :garden (fn [{[blend-mode] :component-data}]
+              {:background-blend-mode blend-mode})}
+
+
+   {:id :box-shadow
     :rules "
     box-shadow = <'shadow'> (<'-'> box-shadow-value)?
     box-shadow-value = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inner' | 'none'
@@ -27,18 +41,6 @@
                                   "var(--gi-ring-shadow,0 0 #0000),"
                                   "var(--gi-shadow)")}))}
 
-   {:id :background-blend-mode
-    :rules "
-    <background-blend-mode-value> =
-                         'normal' | 'multiply' | 'screen' | 'overlay' |
-                         'darken' | 'lighten'  | 'color-dodge' |
-                         'color-burn' | 'hard-light' | 'soft-light' |
-                         'difference' | 'exclusion' | 'hue' | 'saturation' |
-                         'color' | 'luminosity'
-    background-blend-mode = <'bg-blend-'> background-blend-mode-value
-    "
-    :garden (fn [{[blend-mode] :component-data}]
-              {:background-blend-mode blend-mode})}
 
    {:id :mix-blend-mode
     :rules "
