@@ -246,4 +246,15 @@
 ")
 
 (def components
-  [])
+  [{:id :arbitrary-property
+    :rules "
+    arbitrary-property = <'['> #'[^\\] ]*' <']'>
+    "
+    :garden (fn [{[value] :component-data}]
+              (let [[prop val] (-> value
+                                   ;; negative-lookbehind isn't supported in javascript
+                                   (str/replace #"(^|[^\\])_" "$1 ")
+                                   (str/replace #"\\_" "_")
+                                   (str/split #":" 2))]
+                {(keyword prop) val}))}
+   ])

@@ -194,3 +194,11 @@
 
     "before:ml-1"
     [".before\\:ml-1" [(keyword "&::before") {:margin-left "0.25rem"}]]))
+
+(deftest arbtrary-test
+  (are [class-name expected-garden]
+    (= expected-garden (class-name->garden class-name))
+
+    "hover:[mask-type:alpha]"
+    [".hover\\:\\[mask-type\\:alpha\\]"
+     [:&:hover {:mask-type "alpha"}]]))
