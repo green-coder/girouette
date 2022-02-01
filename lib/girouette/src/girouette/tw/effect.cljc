@@ -2,11 +2,137 @@
   (:require [girouette.tw.common :refer [value-unit->css div-100 mul-100]]))
 
 (def ^:private filter-rule
-  "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )"
-  )
+  "var(--gi-blur, ) var(--gi-brightness, ) var(--gi-contrast, ) var(--gi-grayscale, ) var(--gi-hue-rotate, ) var(--gi-invert, ) var(--gi-saturate, ) var(--gi-sepia, ) var(--gi-drop-shadow, )")
+
+(def ^:private backdrop-filter-rule
+  "var(--gi-backdrop-blur) var(--gi-backdrop-brightness) var(--gi-backdrop-contrast) var(--gi-backdrop-grayscale) var(--gi-backdrop-hue-rotate) var(--gi-backdrop-invert) var(--gi-backdrop-opacity) var(--gi-backdrop-saturate) var(--gi-backdrop-sepia)")
 
 (def components
-  [{:id :background-blend-mode
+  [{:id :backdrop-blur
+    :rules "
+    backdrop-blur = <'backdrop-blur'> (<'-'> ( backdrop-blur-value-fix |
+                                               backdrop-blur-value-number ))?
+    backdrop-blur-value-fix = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none'
+    backdrop-blur-value-number = length
+    "
+    :garden (fn [{value :component-data}]
+              (let [blur (if (empty? value)
+                           "8px"
+                           (let [{:keys [backdrop-blur-value-number
+                                         backdrop-blur-value-fix]}
+                                 (into {} value)]
+                             (if backdrop-blur-value-number
+                               (value-unit->css backdrop-blur-value-number {})
+                               ({"sm" "4px"
+                                 "md" "12px"
+                                 "lg" "16px"
+                                 "xl" "24px"
+                                 "2xl" "40px"
+                                 "3xl" "64px"
+                                 "none" "0"} backdrop-blur-value-fix))))]
+                {:--gi-backdrop-blur (str "blur(" blur ")")
+                 :backdrop-filter backdrop-filter-rule}))}
+
+
+   {:id :backdrop-brightness
+    :rules "
+    backdrop-brightness = <'backdrop-brightness-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-brightness (str "brightness(" (value-unit->css
+                                                              value
+                                                              {:value-fn div-100})
+                                              ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+
+   {:id :backdrop-contrast
+    :rules "
+    backdrop-contrast = <'backdrop-contrast-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-contrast (str "contrast(" (value-unit->css
+                                                          value
+                                                          {:value-fn div-100})
+                                            ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+
+   {:id :backdrop-grayscale
+    :rules "
+    backdrop-grayscale = <'backdrop-grayscale'> (<'-'> (number | fraction))?
+    "
+    :garden (fn [{[value] :component-data}]
+              {:backdrop-filter backdrop-filter-rule
+               :--gi-backdrop-grayscale
+               (str "grayscale("
+                    (if (nil? value)
+                      "100%"
+                      (value-unit->css value
+                                       {:number {:unit "%"
+                                                 :zero-unit nil}
+                                        :fraction {:unit "%"
+                                                   :value-fn mul-100}}))
+                    ")")})}
+
+   {:id :backdrop-hue-rotate
+    :rules "
+    backdrop-hue-rotate = <'backdrop-hue-rotate-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-hue-rotate (str "hue-rotate("
+                                              (value-unit->css value
+                                                               {:number {:unit "deg"}})
+                                              ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+   {:id :backdrop-invert
+    :rules "
+    backdrop-invert = <'backdrop-invert'> (<'-'> number )?
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-invert (str "invert("
+                                          (if (nil? value)
+                                            "100%"
+                                            (value-unit->css value {:number {:unit "%"}}))
+                                          ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+
+   {:id :backdrop-opacity
+    :rules "
+    backdrop-opacity = <'backdrop-opacity-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-opacity (str "opacity("
+                                           (value-unit->css value {:value-fn div-100})
+                                           ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+
+   {:id :backdrop-saturate
+    :rules "
+    backdrop-saturate = <'backdrop-saturate-'> number
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-saturate (str "saturate("
+                                            (value-unit->css value {:value-fn div-100})
+                                            ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+
+   {:id :backdrop-sepia
+    :rules "
+    backdrop-sepia = <'backdrop-sepia'> (<'-'> number)?
+    "
+    :garden (fn [{[value] :component-data}]
+              {:--gi-backdrop-sepia (str "sepia("
+                                         (value-unit->css value {:number {:unit "%"}})
+                                         ")")
+               :backdrop-filter backdrop-filter-rule})}
+
+
+   {:id :background-blend-mode
     :rules "
     <background-blend-mode-value> =
                          'normal' | 'multiply' | 'screen' | 'overlay' |
@@ -88,9 +214,9 @@
     "
     :garden (fn [{[value] :component-data}]
               {:--gi-contrast (str "contrast(" (value-unit->css
-                                               value
-                                               {:value-fn div-100})
-                                 ")")
+                                                 value
+                                                 {:value-fn div-100})
+                                   ")")
                :filter filter-rule})}
 
 
@@ -146,10 +272,10 @@
     "
     :garden (fn [{[value] :component-data}]
               {:--gi-invert (str "invert("
-                            (if (nil? value)
-                              "100%"
-                              (value-unit->css value {:number {:unit "%"}}))
-                            ")")
+                                 (if (nil? value)
+                                   "100%"
+                                   (value-unit->css value {:number {:unit "%"}}))
+                                 ")")
                :filter filter-rule})}
 
 
@@ -192,5 +318,5 @@
               {:--gi-sepia (str "sepia("
                                 (value-unit->css value {:number {:unit "%"}})
                                 ")")
-               :filter filter-rule})
-    }])
+               :filter filter-rule})}
+   ])
