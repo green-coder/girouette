@@ -1,7 +1,8 @@
 (ns ^:no-doc girouette.tw.common
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
-            [garden.selectors]
+            #?(:clj [garden.selectors]
+               :cljs [garden.selectors :refer [CSSSelector]])
             [garden.stylesheet :as gs]))
 
 ;; This Instaparse grammar matches nothing.
