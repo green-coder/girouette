@@ -287,7 +287,7 @@
   <color-opacity> = number
 
   special-color = 'transparent' | 'current'
-  predefined-color-opacity = predefined-color (<'-'> color-opacity)?
+  predefined-color-opacity = predefined-color (<'-' | '/'> color-opacity)?
 
   <predefined-color> = " color-names "
 ")))

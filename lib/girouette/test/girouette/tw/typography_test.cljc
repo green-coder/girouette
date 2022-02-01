@@ -131,6 +131,10 @@
     [".placeholder-green-300-50" [placeholder-pseudo-element
                                   {:color "#86efac7f"}]]
 
+    "placeholder-green-300/50"
+    [".placeholder-green-300\\/50" [placeholder-pseudo-element
+                                    {:color "#86efac7f"}]]
+
     "placeholder-opacity-20"
     [".placeholder-opacity-20" {:--gi-placeholder-opacity 0.2}]
 
