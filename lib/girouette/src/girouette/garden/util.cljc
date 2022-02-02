@@ -1,8 +1,10 @@
 (ns girouette.garden.util
   (:require [clojure.spec.alpha :as s]
             [clojure.walk :as walk]
+            #?(:clj [garden.types]
+               :cljs [garden.types :refer [CSSAtRule]])
             [girouette.util :as util])
-  #?(:clj (:import (java.util Comparator))))
+  #?(:clj (:import (garden.types CSSAtRule))))
 
 (declare merge-rules)
 
@@ -56,19 +58,14 @@
             gi-class-names)
        merge-rules))
 
-;; Compares the Garden rules provides by Girouette,
-;; so they can be ordered correctly in a style file.
-(def rule-comparator
-  (let [compare-rules (fn [rule1 rule2]
-                        (let [is-media-query1 (and (instance? garden.types.CSSAtRule rule1)
-                                                   (= (:identifier rule1 :media)))
-                              is-media-query2 (and (instance? garden.types.CSSAtRule rule2)
-                                                   (= (:identifier rule2 :media)))]
-                          (cond
-                            (and (not is-media-query1) is-media-query2) -1
-                            (and is-media-query1 (not is-media-query2)) 1
-                            :else (compare (-> rule1 meta :girouette/component :ordering-level)
-                                           (-> rule2 meta :girouette/component :ordering-level)))))]
-    #?(:clj (reify Comparator
-              (compare [_ rule1 rule2] (compare-rules rule1 rule2)))
-       :cljs compare-rules)))
+(defn rule-comparator
+  "Compares the Garden rules provided by Girouette,
+   so they can be ordered correctly in a style file."
+  [rule1 rule2]
+  (let [is-media-query1 (and (instance? CSSAtRule rule1)
+                             (= (:identifier rule1) :media))
+        is-media-query2 (and (instance? CSSAtRule rule2)
+                             (= (:identifier rule2) :media))]
+    (compare [is-media-query1 (-> rule1 meta :girouette/component :ordering-level)]
+             [is-media-query2 (-> rule2 meta :girouette/component :ordering-level)])))
+
