@@ -8,7 +8,7 @@
            hawk/hawk                    {:mvn/version "0.2.11"}
 
            garden/garden                {:mvn/version "1.3.10"}
-           girouette/girouette          {:mvn/version "0.0.6"}
+           girouette/girouette          {:mvn/version "0.0.7"}
            #_#_girouette/girouette          {:local/root "../../lib/girouette"}}
 
  :aliases {:test     {:extra-paths ["test"]
@@ -26,7 +26,7 @@
                       :exec-args    {:sync-pom    true
                                      :group-id    "girouette"
                                      :artifact-id "processor"
-                                     :version     "0.0.5"
+                                     :version     "0.0.7"
                                      :jar         "processor.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:

@@ -1,5 +1,17 @@
 ## Unreleased
 
+## v0.0.7
+
+### Fixed
+
+Thanks to `jamesnvc` for the following fixes:
+- (PR #76) Escape octothorpe character in class name.
+- (PR #77) Fix `.invisible` class.
+- (PR #80) Fix the rule `:max-width`.
+- Fix bug in the processor tool when parsing CLJS files containing character literals.
+
+- Fixed and simplified the function `girouette.util/rule-comparator`.
+
 ## v0.0.6
 
 ### Changed
