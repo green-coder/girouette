@@ -25,7 +25,14 @@
     [:div.flex-1.bg-cat-black]
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-black.bg-cat-white "Miaw!!!"]
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-white.bg-cat-orange "Miaw!!!"]
-    [:div.flex-1.p-4.text-center.text-4xl.text-cat-orange.bg-cat-black "Miaw!!!"]]])
+    [:div.flex-1.p-4.text-center.text-4xl.text-cat-orange.bg-cat-black "Miaw!!!"]]
+
+   [:div.max-w-7xl.mx-auto.mt-5.bg-gray-100.p-6
+    [:div.overflow-hidden.rounded-md.shadow.border-gray-200.bg-white
+     [:ul.divide-y.divide-gray-200
+      [:li.p-3 "divide-y"]
+      [:li.p-3 "test list item"]
+      [:li.p-3 "another test list item"]]]]])
 
 (defn render []
   (rdom/render [simple-example] (js/document.getElementById "app")))

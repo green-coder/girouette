@@ -60,15 +60,15 @@
     ;; Divide Width
     "divide-x"
     [".divide-x" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {;;:--gi-divide-x-reverse 0 ;; Not implemented
-      :border-right-width "calc(1px * var(--gi-divide-x-reverse))"
-      :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"}]]
+     {:--gi-divide-x-reverse 0
+      :border-right-width "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"
+      :border-left-width  "calc(1px * var(--gi-divide-x-reverse))"}]]
 
     "divide-y-2"
     [".divide-y-2" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {;;:--gi-divide-x-reverse 0 ;; Not implemented
-      :border-top-width "calc(2px * var(--gi-divide-y-reverse))"
-      :border-bottom-width  "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"}]]
+     {:--gi-divide-x-reverse 0
+      :border-top-width    "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"
+      :border-bottom-width "calc(2px * var(--gi-divide-y-reverse))"}]]
 
     ;; Divide Color
     "divide-current"
