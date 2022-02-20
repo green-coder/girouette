@@ -27,6 +27,9 @@
     "self-center"
     [".self-center" {:align-self "center"}]
 
+    "self-baseline"
+    [".self-baseline" {:align-self "baseline"}]
+
     "place-content-between"
     [".place-content-between" {:place-content "space-between"}]
 

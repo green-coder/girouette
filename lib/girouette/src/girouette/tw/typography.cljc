@@ -23,25 +23,12 @@
                                  (str/join " | "))
                             matches-nothing)]
     (str "
-  <font-family-name> = " font-family-names "
-")))
+    <font-family-name> = " font-family-names "
+    ")))
 
 
 (def components
-  [{:id :content
-    :rules "
-    content = <'content-'> <'['> #'[^\\] ]*' <']'>
-    "
-    :garden (fn [{[value] :component-data}]
-              {:content (-> value
-                            ;; negative-lookbehind isn't supported in javascript
-                            (str/replace #"(^|[^\\])'" "$1\"")
-                            (str/replace #"\\'" "'")
-                            (str/replace #"(^|[^\\])_" "$1 ")
-                            (str/replace #"\\_" "_"))})}
-
-
-   {:id :font-family
+  [{:id :font-family
     :rules "
     font-family = <'font-'> font-family-name
     "
@@ -133,6 +120,7 @@
     "
     :garden (fn [{[variant-numeric] :component-data}]
               {:font-variant-numeric variant-numeric})}
+
 
    {:id :letter-spacing
     :rules "
@@ -246,19 +234,6 @@
     :before-rules #{:text-opacity}}
 
 
-   {:id :text-indent
-    :rules "
-    text-indent = <'indent-'> ( number | length | fraction )
-    "
-    :garden (fn [{[value-data] :component-data}]
-              {:text-indent (value-unit->css value-data
-                                             {:zero-unit "px"
-                                              :number {:unit "rem"
-                                                       :value-fn div-4}
-                                              :fraction {:unit "%"
-                                                         :value-fn mul-100}})})}
-
-
    {:id :text-opacity
     :rules "
     text-opacity = <'text-opacity-'> number
@@ -276,40 +251,54 @@
                                   "line-through" "line-through"
                                   "no-underline" "none"} decoration)})}
 
+
    {:id :text-decoration-color
     :rules "
-    text-decoration-color = <'decoration-'> ( 'inherit' | color )
+    text-decoration-color = <'decoration-'> ('inherit' | color)
     "
     :garden (fn [{[value] :component-data read-color :read-color}]
-              {:text-decoration-color (if (= value "inherit")
-                                        value
+              {:text-decoration-color (case value
+                                        "inherit" "inherit"
                                         (color->css (read-color value)))})}
+
 
    {:id :text-decoration-style
     :rules "
-    text-decoration-style = <'decoration-'> ( 'solid' | 'double' | 'dotted' |
-                                              'dashed' | 'wavy' )
+    text-decoration-style = <'decoration-'> ('solid' | 'double' | 'dotted' | 'dashed' | 'wavy')
     "
     :garden (fn [{[value] :component-data}]
               {:text-decoration-style value})}
 
+
    {:id :text-decoration-thickness
     :rules "
-    text-decoration-thickness = <'decoration-'> ( text-decoration-thickness-from | text-decoration-thickness-value )
+    text-decoration-thickness = <'decoration-'> (text-decoration-thickness-from | text-decoration-thickness-value)
     text-decoration-thickness-from = 'from-font'
-    text-decoration-thickness-value = auto | number | length | fraction | percentage
+    text-decoration-thickness-value = auto | number | length | length-unit | fraction | percentage
     "
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [text-decoration-thickness-from
-                            text-decoration-thickness-value]}
-                    (into {} component-data)]
+                            text-decoration-thickness-value]} (into {} component-data)]
                 {:text-decoration-thickness
-                 (if text-decoration-thickness-from
+                 (if (some? text-decoration-thickness-from)
                    "from-font"
                    (value-unit->css text-decoration-thickness-value
                                     {:number {:unit "px"}
                                      :fraction {:unit "%"
                                                 :value-fn mul-100}}))}))}
+
+
+   {:id :text-underline-offset
+    :rules "
+    text-underline-offset = <'underline-'> (auto | number | length | length-unit | fraction | percentage)
+    "
+    :garden (fn [{[value] :component-data}]
+              {:text-underline-offset
+               (value-unit->css value
+                                {:number {:unit "px"}
+                                 :fraction {:unit "%"
+                                            :value-fn mul-100}})})}
+
 
    {:id :text-transform
     :rules "
@@ -334,20 +323,24 @@
                 "text-ellipsis" {:text-overflow "ellipsis"}
                 "text-clip" {:text-overflow "clip"}))}
 
-   {:id :text-underline-offset
+
+   {:id :text-indent
     :rules "
-    text-underline-offset = <'underline-'> (auto | number | length | fraction | percentage)
+    text-indent = <'indent-'> (number | length | length-unit | fraction)
     "
-    :garden (fn [{[value] :component-data}]
-              {:text-underline-offset
-               (value-unit->css value
-                                {:number {:unit "px"}
-                                 :fraction {:unit "%"
-                                            :value-fn mul-100}})})}
+    :garden (fn [{[value-data] :component-data}]
+              {:text-indent (value-unit->css value-data
+                                             {:zero-unit "px"
+                                              :number {:unit "rem"
+                                                       :value-fn div-4}
+                                              :fraction {:unit "%"
+                                                         :value-fn mul-100}})})}
+
 
    {:id :vertical-alignment
     :rules "
-    vertical-alignment = <'align-'> ('baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super')
+    vertical-alignment = <'align-'> ('baseline' | 'top' | 'middle' | 'bottom' |
+                                     'text-top' | 'text-bottom' | 'sub' | 'super')
     "
     :garden (fn [{[align] :component-data}]
               {:vertical-align align})}
@@ -370,4 +363,17 @@
                 "normal" {:overflow-wrap "normal"
                           :word-break "normal"}
                 "words" {:overflow-wrap "break-word"}
-                "all" {:word-break "break-all"}))}])
+                "all" {:word-break "break-all"}))}
+
+
+   {:id :content
+    :rules "
+    content = <'content-'> <'['> #'[^\\] ]*' <']'>
+    "
+    :garden (fn [{[value] :component-data}]
+              {:content (-> value
+                            ;; negative-lookbehind isn't supported in javascript
+                            (str/replace #"(^|[^\\])'" "$1\"")
+                            (str/replace #"\\'" "'")
+                            (str/replace #"(^|[^\\])_" "$1 ")
+                            (str/replace #"\\_" "_"))})}])

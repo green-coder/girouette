@@ -67,7 +67,6 @@
     "border-b-rgba-c0ffee50"
     [".border-b-rgba-c0ffee50" {:border-bottom-color "#c0ffee50"}]
 
-
     ;; Border Opacity
     "border-opacity-25"
     [".border-opacity-25" {:--gi-border-opacity 0.25}]
@@ -82,25 +81,25 @@
     ;; Divide Width
     "divide-x"
     [".divide-x" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {;;:--gi-divide-x-reverse 0 ;; Not implemented
-      :border-right-width "calc(1px * var(--gi-divide-x-reverse))"
-      :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"}]]
+                  {;;:--gi-divide-x-reverse 0 ;; Not implemented
+                   :border-right-width "calc(1px * var(--gi-divide-x-reverse))"
+                   :border-left-width  "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"}]]
 
     "divide-y-2"
     [".divide-y-2" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {;;:--gi-divide-x-reverse 0 ;; Not implemented
-      :border-top-width "calc(2px * var(--gi-divide-y-reverse))"
-      :border-bottom-width  "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"}]]
+                    {;;:--gi-divide-x-reverse 0 ;; Not implemented
+                     :border-top-width "calc(2px * var(--gi-divide-y-reverse))"
+                     :border-bottom-width  "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"}]]
 
     ;; Divide Color
     "divide-current"
     [".divide-current" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {:border-color "currentColor"}]]
+                        {:border-color "currentColor"}]]
 
     "divide-gray-100"
     [".divide-gray-100" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {:--gi-divide-opacity 1
-      :border-color        "rgba(244,244,245,var(--gi-divide-opacity))"}]]
+                         {:--gi-divide-opacity 1
+                          :border-color        "rgba(244,244,245,var(--gi-divide-opacity))"}]]
 
     ;; Divide Opacity
     "divide-opacity-70"
@@ -109,18 +108,11 @@
     ;; Divide Style
     "divide-double"
     [".divide-double" [#garden.selectors.CSSSelector{:selector "&>*+*"}
-     {:border-style "double"}]]
+                       {:border-style "double"}]]
 
-    ;; Outline
-    "outline-none"
-    [".outline-none" {:outline "2px solid transparent"
-                      :outline-offset "2px"}]
-
-    "outline"
-    [".outline" {:outline-style "solid"}]
-
-    "outline-gray-100"
-    [".outline-gray-100" {:outline-color "#f4f4f5"}]
+    ;; Outline width
+    "outline-0"
+    [".outline-0" {:outline-width "0px"}]
 
     "outline-3"
     [".outline-3" {:outline-width "3px"}]
@@ -128,8 +120,36 @@
     "outline-1rem"
     [".outline-1rem" {:outline-width "1rem"}]
 
+    "outline-rem"
+    [".outline-rem" {:outline-width "1rem"}]
+
+    ;; Outline color
+    "outline-inherit"
+    [".outline-inherit" {:outline-color "inherit"}]
+
+    "outline-gray-100"
+    [".outline-gray-100" {:outline-color "#f4f4f5"}]
+
+    ;; Outline style
+    "outline-none"
+    [".outline-none" {:outline "2px solid transparent"
+                      :outline-offset "2px"}]
+
+    "outline"
+    [".outline" {:outline-style "solid"}]
+
+    ;; Outline offset
+    "outline-offset-0"
+    [".outline-offset-0" {:outline-offset "0px"}]
+
     "outline-offset-2"
     [".outline-offset-2" {:outline-offset "2px"}]
+
+    "outline-offset-2rem"
+    [".outline-offset-2rem" {:outline-offset "2rem"}]
+
+    "outline-offset-cm"
+    [".outline-offset-cm" {:outline-offset "1cm"}]
 
     ;; Ring Width
     ;; TODO: Test for `*	box-shadow: 0 0 #0000;`

@@ -54,6 +54,14 @@
               {:--gi-bg-opacity (value-unit->css value {:value-fn div-100})})}
 
 
+   {:id :background-origin
+    :rules "
+    background-origin = <'bg-origin-'> ('border' | 'padding' | 'content')
+    "
+    :garden (fn [{[value] :component-data}]
+              {:background-origin (str value "-box")})}
+
+
    {:id :background-position
     :rules "
     background-position = <'bg-'> ('top' | 'center' | 'bottom' |

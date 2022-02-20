@@ -6,6 +6,7 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    ;; Aspect Ratio
     "aspect-auto"
     [".aspect-auto" {:aspect-ratio "auto"}]
 
@@ -18,21 +19,7 @@
     "aspect-23/57"
     [".aspect-23\\/57" {:aspect-ratio "23 / 57"}]
 
-    "break-before-auto"
-    [".break-before-auto" {:break-before "auto"}]
-
-    "break-before-page"
-    [".break-before-page" {:break-before "page"}]
-
-    "columns-auto"
-    [".columns-auto" {:columns "auto"}]
-
-    "columns-4"
-    [".columns-4" {:columns 4}]
-
-    "columns-2xl"
-    [".columns-2xl" {:columns "42rem"}]
-
+    ;; Container
     "container"
     [".container" {:width "100%"}]
 
@@ -46,15 +33,49 @@
                              :value {:media-queries {:min-width "768px"}
                                      :rules ([".md\\:container" {:max-width "768px"}])}}
 
-    "box-content"
-    [".box-content" {:box-sizing "content-box"}]
+    ;; Columns
+    "columns-4"
+    [".columns-4" {:columns "4"}]
 
+    "columns-auto"
+    [".columns-auto" {:columns "auto"}]
+
+    "columns-2xl"
+    [".columns-2xl" {:columns "42rem"}]
+
+    "columns-2-auto"
+    [".columns-2-auto" {:columns "2 auto"}]
+
+    "columns-2-300px"
+    [".columns-2-300px" {:columns "2 300px"}]
+
+    "columns-auto-auto"
+    [".columns-auto-auto" {:columns "auto auto"}]
+
+    ;; Break after
+    "break-after-auto"
+    [".break-after-auto" {:break-after "auto"}]
+
+    ;; Break before
+    "break-before-page"
+    [".break-before-page" {:break-before "page"}]
+
+    ;; Break inside
+    "break-inside-avoid-column"
+    [".break-inside-avoid-column" {:break-inside "avoid-column"}]
+
+    ;; Box decoration break
     "box-decoration-clone"
     [".box-decoration-clone" {:box-decoration-break "clone"}]
 
     "box-decoration-slice"
     [".box-decoration-slice" {:box-decoration-break "slice"}]
 
+    ;; Box sizing
+    "box-content"
+    [".box-content" {:box-sizing "content-box"}]
+
+    ;; Display
     "flex"
     [".flex" {:display "flex"}]
 
@@ -64,23 +85,38 @@
                                           :rules ([".sm\\:flex"
                                                    {:display "flex"}])}}
 
-    "hidden"
-    [".hidden" {:display "none"}]
-
     "inline-table"
     [".inline-table" {:display "inline-table"}]
 
+    "list-item"
+    [".list-item" {:display "list-item"}]
+
+    "hidden"
+    [".hidden" {:display "none"}]
+
+    ;; Floats
+
+    ;; Clear
+
+    ;; Isolation
     "isolate"
     [".isolate" {:isolation "isolate"}]
 
     "isolation-auto"
     [".isolation-auto" {:isolation "auto"}]
 
-    "list-item"
-    [".list-item" {:display "list-item"}]
+    ;; Object fit
 
+    ;; Object position
     "object-left-top"
     [".object-left-top" {:object-position "left top"}]
+
+    ;; Overflow
+    "overflow-hidden"
+    [".overflow-hidden" {:overflow "hidden"}]
+
+    "overflow-clip"
+    [".overflow-clip" {:overflow "clip"}]
 
     "overflow-x-auto"
     [".overflow-x-auto" {:overflow-x "auto"}]
@@ -88,21 +124,16 @@
     "overflow-x-clip"
     [".overflow-x-clip" {:overflow-x "clip"}]
 
-    "overflow-clip"
-    [".overflow-clip" {:overflow "clip"}]
-
-    "overflow-hidden"
-    [".overflow-hidden" {:overflow "hidden"}]
-
+    ;; Overscroll behavior
     "overscroll-x-auto"
     [".overscroll-x-auto" {:overscroll-x "auto"}]
 
     "overscroll-none"
     [".overscroll-none" {:overscroll "none"}]
 
-    "invisible"
-    [".invisible" {:visibility "hidden"}]
+    ;; Position
 
+    ;; (Positioning) Top / Right / Bottom / Left
     "-inset-3/8"
     [".-inset-3\\/8"
      {:bottom "-37.5%"
@@ -144,6 +175,11 @@
     "top-full"
     [".top-full" {:top "100%"}]
 
+    ;; Visibility
+    "invisible"
+    [".invisible" {:visibility "hidden"}]
+
+    ;; Z-index
     "z-0"
     [".z-0" {:z-index 0}]
 

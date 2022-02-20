@@ -1,17 +1,17 @@
 (ns ^:no-doc girouette.tw.interactivity
   (:require
    [girouette.tw.color :refer [color->css]]
-   [girouette.tw.common :refer [value-unit->css div-4]]))
+   [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :accent-color
     :rules "
-    accent-color = <'accent-'> ( 'inherit' | 'current' | color )
+    accent-color = <'accent-'> ('inherit' | 'auto' | color)
     "
     :garden (fn [{[color] :component-data read-color :read-color}]
               {:accent-color (case color
                                "inherit" "inherit"
-                               "current" "currentColor"
+                               "auto" "auto"
                                (color->css (read-color color)))})}
 
    {:id :appearance
@@ -25,7 +25,15 @@
    {:id :cursor
     :rules "
     cursor = <'cursor-'> ('auto' | 'default' | 'pointer' | 'wait' |
-                          'text' | 'move' | 'not-allowed' | 'help' )
+                          'text' | 'move' | 'help' | 'not-allowed' |
+                          'none' | 'context-menu' | 'progress' | 'cell' |
+                          'crosshair' | 'vertical-text' | 'alias' | 'copy' |
+                          'no-drop' | 'grab' | 'grabbing' | 'all-scroll' |
+                          'col-resize' | 'row-resize' |
+                          'n-resize' | 'e-resize' | 's-resize' | 'w-resize' |
+                          'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' |
+                          'nesw-resize' | 'nwse-resize' |
+                          'zoom-in' | 'zoom-out')
     "
     :garden (fn [{[type] :component-data}]
               {:cursor type})}
@@ -49,49 +57,14 @@
                          "y" "vertical"
                          nil "both"} type)})}
 
-   {:id :scroll-behaviour
+
+   {:id :scroll-behavior
     :rules "
-    scroll-behaviour = <'scroll-'> ( 'auto' | 'smooth' )
+    scroll-behavior = <'scroll-'> ('auto' | 'smooth')
     "
     :garden (fn [{[value] :component-data}]
               {:scroll-behavior value})}
 
-   {:id :scroll-snap-align
-    :rules "
-    scroll-snap-align = <'snap-'> ( 'start' | 'end' | 'center' | 'align-none' )
-    "
-    :garden (fn [{[value] :component-data}]
-              {:scroll-snap-align (if (= value "align-none")
-                                    "none"
-                                    value)})}
-
-   {:id :scroll-snap-stop
-    :rules "
-    scroll-snap-stop = <'snap-'> ( 'normal' | 'always' )
-    "
-    :garden (fn [{[value] :component-data}]
-              {:scroll-snap-stop value})}
-
-   {:id :scroll-snap-type
-    :rules "
-    scroll-snap-type = <'snap-'> ( scroll-snap-type-dir | scroll-snap-type-type )
-    scroll-snap-type-dir = 'none' | 'x' | 'y' | 'both'
-    scroll-snap-type-type = 'mandatory' | 'proxmity'
-    "
-    :garden (fn [{:keys [component-data]}]
-              (let [{:keys [scroll-snap-type-dir scroll-snap-type-type]}
-                    (into {} component-data)]
-                (cond
-                  scroll-snap-type-type
-                 {:--gi-scroll-snap-strictness scroll-snap-type-type}
-
-                 (= scroll-snap-type-dir "none")
-                 {:scroll-snap-type "none"}
-
-                 :else
-                 {:scroll-snap-type
-                  (str scroll-snap-type-dir
-                       " var(--gi-scroll-snap-strictness,proximity)")})))}
 
    {:id :scroll-margin
     :rules "
@@ -99,8 +72,7 @@
     scroll-margin-value = number | length | length-unit
     "
     :garden (fn [{:keys [component-data]}]
-              (let [{:keys [signus direction axis scroll-margin-value]}
-                    (into {} component-data)
+              (let [{:keys [signus direction axis scroll-margin-value]} (into {} component-data)
                     directions (case direction
                                  "t" ["top"]
                                  "r" ["right"]
@@ -110,22 +82,26 @@
                                    "x" ["left" "right"]
                                    "y" ["top" "bottom"]
                                    nil))
+                    props (if (nil? directions)
+                            [:scroll-margin]
+                            (mapv (fn [dir]
+                                    (keyword (str "scroll-margin-" dir)))
+                                  directions))
                     value-css (value-unit->css scroll-margin-value
                                                {:signus signus
                                                 :zero-unit "px"
                                                 :number {:unit "rem"
                                                          :value-fn div-4}})]
-                (if (nil? directions)
-                  {:scroll-margin value-css}
-                  (into {}
-                        (map (fn [dir] [(keyword (str "scroll-margin-" dir))
-                                        value-css]))
-                        directions))))}
+                (into {}
+                      (map (fn [prop]
+                             [prop value-css]))
+                      props)))}
+
 
    {:id :scroll-padding
     :rules "
     scroll-padding = signus? <'scroll-p'> (direction | axis)? <'-'> scroll-padding-value
-    scroll-padding-value = number | length | length-unit
+    scroll-padding-value = number | length | length-unit | fraction | percentage
     "
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [signus direction axis scroll-padding-value]}
@@ -139,39 +115,84 @@
                                    "x" ["left" "right"]
                                    "y" ["top" "bottom"]
                                    nil))
+                    props (if (nil? directions)
+                            [:scroll-padding]
+                            (mapv (fn [dir]
+                                    (keyword (str "scroll-padding-" dir)))
+                                  directions))
                     value-css (value-unit->css scroll-padding-value
                                                {:signus signus
                                                 :zero-unit "px"
                                                 :number {:unit "rem"
-                                                         :value-fn div-4}})]
-                (if (nil? directions)
-                  {:scroll-padding value-css}
-                  (into {}
-                        (map (fn [dir] [(keyword (str "scroll-padding-" dir))
-                                        value-css]))
-                        directions))))}
+                                                         :value-fn div-4}
+                                                :fraction {:unit "%"
+                                                           :value-fn mul-100}})]
+                (into {}
+                      (map (fn [prop]
+                             [prop value-css]))
+                      props)))}
+
+
+   {:id :scroll-snap-align
+    :rules "
+    scroll-snap-align = <'snap-'> ('start' | 'end' | 'center' | (<'align-'> 'none'))
+    "
+    :garden (fn [{[value] :component-data}]
+              {:scroll-snap-align value})}
+
+
+   {:id :scroll-snap-stop
+    :rules "
+    scroll-snap-stop = <'snap-'> ('normal' | 'always')
+    "
+    :garden (fn [{[value] :component-data}]
+              {:scroll-snap-stop value})}
+
+
+   {:id :scroll-snap-type
+    :rules "
+    scroll-snap-type = <'snap-'> (scroll-snap-type-dir | scroll-snap-type-strictness)
+    scroll-snap-type-dir = 'none' | 'x' | 'y' | 'both'
+    scroll-snap-type-strictness = 'mandatory' | 'proximity'
+    "
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [scroll-snap-type-dir scroll-snap-type-strictness]} (into {} component-data)]
+                (cond
+                  (some? scroll-snap-type-strictness)
+                  {:--gi-scroll-snap-strictness scroll-snap-type-strictness}
+
+                  (= scroll-snap-type-dir "none")
+                  {:scroll-snap-type "none"}
+
+                  :else
+                  {:scroll-snap-type (str scroll-snap-type-dir " var(--gi-scroll-snap-strictness)")})))}
+
 
    {:id :touch-action
     :rules "
-    touch-action = <'touch-'> ( 'auto' | 'none' | 'pan-x' | 'pan-y' |
-                                'pan-left' | 'pan-right' | 'pan-up' | 'pan-down' |
-                                'pinch-zoom' | 'manipulation' )
+    touch-action = <'touch-'> ('auto' | 'none' |
+                               'pan-x' | 'pan-y' |
+                               'pan-up' | 'pan-right' | 'pan-down' |'pan-left' |
+                               'pinch-zoom' | 'manipulation')
     "
     :garden (fn [{[value] :component-data}]
               {:touch-action value})}
+
 
    {:id :user-select
     :rules "
     user-select = <'select-'> ('none' | 'text' | 'all' | 'auto')
     "
-    :garden (fn [{[type] :component-data}]
-              {:user-select type})}
+    :garden (fn [{[selection-type] :component-data}]
+              {:user-select selection-type})}
+
 
    {:id :will-change
     :rules "
-    will-change = <'will-change-'> ( 'auto' | 'scroll' | 'contents' | 'transform' )
+    will-change = <'will-change-'> ('auto' | 'scroll' | 'contents' | 'transform')
     "
     :garden (fn [{[value] :component-data}]
-              {:will-change (if (= value "scroll")
-                              "scroll-position"
-                              value)})}])
+              {:will-change ({"auto"      "auto"
+                              "scroll"    "scroll-position"
+                              "contents"  "contents"
+                              "transform" "transform"} value)})}])

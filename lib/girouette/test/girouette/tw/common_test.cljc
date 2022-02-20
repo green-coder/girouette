@@ -1,9 +1,16 @@
 (ns girouette.tw.common-test
   (:require
     [clojure.test :refer [deftest testing is are]]
-    [girouette.tw.common :refer [read-number number->double-or-int value-unit->css
+    [girouette.tw.common :refer [dot read-number number->double-or-int value-unit->css
                                  div-100 div-4 mul-100]]
     [girouette.tw.default-api :refer [class-name->garden]]))
+
+(deftest dot-test
+  (are [input expected-output]
+    (= expected-output (dot input))
+
+    "abc-_-de%f" ".abc-_-de\\%f"
+    "taiwan-#1" ".taiwan-\\#1"))
 
 
 (deftest read-number-test
@@ -149,6 +156,11 @@
      [(keyword "&::file-selector-button")
       [:&:hover {:width "100%"}]]]
 
+    "hover:file:container"
+    [".hover\\:file\\:container"
+     [:&:hover
+      [(keyword "&::file-selector-button") {:width "100%"}]]]
+
     "open:bg-white"
     [".open\\:bg-white"
      [(keyword "&[open]") {:background-color "rgba(255,255,255,var(--gi-bg-opacity))"
@@ -195,7 +207,7 @@
     "before:ml-1"
     [".before\\:ml-1" [(keyword "&::before") {:margin-left "0.25rem"}]]))
 
-(deftest arbtrary-test
+(deftest arbitrary-test
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 

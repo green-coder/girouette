@@ -1,15 +1,14 @@
 (ns ^:no-doc girouette.tw.common
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
-            #?(:clj [garden.selectors]
-               :cljs [garden.selectors :refer [CSSSelector]])
+            [garden.selectors]
             [garden.stylesheet :as gs]))
 
 ;; This Instaparse grammar matches nothing.
 ;; It literally means "look ahead to see 'nop', then see 'no-way'".
 (def matches-nothing "&'nop' 'no-way'")
 
-(defn state-variant->str [state-variant]
+(defn- state-variant->str [state-variant]
   (cond
     (string? state-variant)
     (str ":"
@@ -23,18 +22,17 @@
     (str "[" (second state-variant) "]")))
 
 
-(defn target-variant->str [target-variant]
+(defn- target-variant->str [target-variant]
   (str "::" ({"file" "file-selector-button"} target-variant target-variant)))
 
 
-(defn outer-state-variants
+(defn- outer-state-variants
   [variant]
   (and (coll? variant)
        (#{:group-state-variant :peer-state-variant} (first variant))))
 
-(defn dot [class]
-  (str "." (str/replace class #"[^-a-zA-Z0-9_]"
-                        ;; "\\\\$0" doesn't work in cljs, it seems?
+(defn dot [class-name]
+  (str "." (str/replace class-name #"[^-a-zA-Z0-9_]"
                         (fn [c] (str "\\" c)))))
 
 
@@ -51,6 +49,7 @@
 (defn mul-100 [x] (* x 100))
 (defn mul-255 [x] (* x 255))
 (defn clamp-0-255 [x] (-> x (max 0) (min 255)))
+(defn ratio-str [[x y]] (str x " / " y))
 
 
 (defn read-number
@@ -65,7 +64,7 @@
 
 
 (defn number->double-or-int
-  "Convert numeric value to a double, or a int if the value can be converted without a loss.
+  "Convert numeric value to a double, or an int if the value can be converted without a loss.
    Useful for getting rid of ratio numbers like 5/2."
   [value]
   (if (= (double (int value))
@@ -97,6 +96,7 @@
                           :time [(read-number arg1) arg2]
                           :percentage [(read-number arg1) "%"]
                           :fraction [(/ (read-number arg1) (read-number arg2)) nil]
+                          :ratio [[(read-number arg1) (read-number arg2)] nil]
                           :full-100% [100 "%"]
                           :screen-100vw [100 "vw"]
                           :screen-100vh [100 "vh"])
@@ -104,11 +104,13 @@
            value (value-fn value)
            unit (get-in options [data-type :unit] (:unit options unit))
            zero-unit (get-in options [data-type :zero-unit] (:zero-unit options unit))
-           [value unit] (if (zero? value)
+           [value unit] (if (and (number? value)
+                                 (zero? value))
                           [0 zero-unit]
                           [value unit])
            value (cond-> value (= signus "-") (* -1))]
-       (cond-> (number->double-or-int value)
+       (cond-> value
+         (number? value) number->double-or-int
          (some? unit) (str unit))))))
 
 
@@ -205,15 +207,16 @@
                   attribute-state-variant
   group-state-variant = <'group-'> state-variant-value
   peer-state-variant = <'peer-'> state-variant-value
-  target-variant = 'file' | 'before' | 'after' | 'placeholder'
   plain-state-variant = state-variant-value
-  state-variant = group-state-variant | peer-state-variant | target-variant | plain-state-variant
+  target-variant = 'file' | 'before' | 'after' | 'placeholder'
+  state-variant = group-state-variant | peer-state-variant | plain-state-variant | target-variant
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'
   axis = 'x' | 'y'
 
   fraction = integer <'/'> integer
+  ratio = integer <'/'> integer
 
   full-100% = 'full'
   screen-100vw = 'screen'
@@ -257,5 +260,4 @@
                                    (str/replace #"(^|[^\\])_" "$1 ")
                                    (str/replace #"\\_" "_")
                                    (str/split #":" 2))]
-                {(keyword prop) val}))}
-   ])
+                {(keyword prop) val}))}])

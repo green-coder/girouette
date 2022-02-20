@@ -41,11 +41,11 @@
 
    {:id :border-width
     :rules "
-    border-width = <'border'> (<'-'> ( axis | direction ))? (<'-'> border-width-value)?
+    border-width = <'border'> (<'-'> (axis | direction))? (<'-'> border-width-value)?
     border-width-value = number | length | length-unit
     "
     :garden (fn [{:keys [component-data]}]
-              (let [{:keys [border-width-value axis direction]} (into {} component-data)
+              (let [{:keys [axis direction border-width-value]} (into {} component-data)
                     css-props (case direction
                                 "t" [:border-top-width]
                                 "r" [:border-right-width]
@@ -67,66 +67,35 @@
 
    {:id :border-color
     :rules "
-    border-color = <'border-'> color
+    border-color = <'border'> (<'-'> (axis | direction))? <'-'> color
     "
     ;; Copy-pasted from background; could be extracted into util?
-    :garden (fn [{[color] :component-data
-                  read-color :read-color}]
-              (let [color (read-color color)]
-                (if (string? color)
-                  {:border-color color}
-                  (let [[r g b a] color]
-                    (if (some? a)
-                      {:border-color (color->css color)}
-                      {:--gi-border-opacity 1
-                       :border-color (color->css [r g b "var(--gi-border-opacity)"])})))))
-    :before-rules #{:border-opacity}}
-
-   {:id :border-side-color
-    :rules "
-    border-side-color = <'border-'> border-side-color-side <'-'> color
-    border-side-color-side = 't' | 'b' | 'l' | 'r'
-    "
     :garden (fn [{:keys [component-data read-color]}]
-              (let [{:keys [border-side-color-side color]} (into {} component-data)
+              (let [{:keys [axis direction color]} (into {} component-data)
                     color (read-color [:color color])
-                    border-key (keyword (str "border-"
-                                             (case border-side-color-side
-                                               "t" "top"
-                                               "b" "bottom"
-                                               "l" "left"
-                                               "r" "right")
-                                             "-color"))
-                    [r g b a] color]
-                (if (some? a)
-                  {border-key (color->css color)}
-                  {:--gi-border-opacity 1
-                   border-key (color->css [r g b "var(--gi-border-opacity)"])})))
-    :before-rules #{:border-opacity}}
-
-   {:id :border-axis-color
-    :rules "
-    border-axis-color = <'border-'> axis <'-'> color
-    "
-    :garden (fn [{:keys [component-data read-color]}]
-              (let [{:keys [axis color]} (into {} component-data)
-                    color (read-color [:color color])
-                    border-sides (case axis
-                                   "x" ["left" "right"]
-                                   "y" ["top" "bottom"])
-                    border-keys (map (fn [side]
-                                       (keyword (str "border-" side "-color")))
-                                     border-sides)
-                    [r g b a] color]
-                (if (some? a)
-                  (into {}
-                        (map (fn [k] [k (color->css color)]))
-                        border-keys)
-                  (into {:--gi-border-opacity 1}
-                        (map (fn [k]
-                               [k
-                                (color->css [r g b "var(--gi-border-opacity)"])]))
-                        border-keys))))
+                    sides (case direction
+                            "t" ["top"]
+                            "r" ["right"]
+                            "b" ["bottom"]
+                            "l" ["left"]
+                            (case axis
+                              "x" ["right" "left"]
+                              "y" ["top" "bottom"]
+                              nil))
+                    [result css-color] (if (string? color)
+                                         [{} color]
+                                         (let [[r g b a] color]
+                                           (if (some? a)
+                                             [{} (color->css color)]
+                                             [{:--gi-border-opacity 1} (color->css [r g b "var(--gi-border-opacity)"])])))
+                    props (if (nil? sides)
+                            [:border-color]
+                            (mapv (fn [side]
+                                    (keyword (str "border-" side "-color")))
+                                  sides))]
+                (into result
+                      (map (fn [prop] [prop css-color]))
+                      props)))
     :before-rules #{:border-opacity}}
 
 
@@ -140,7 +109,7 @@
 
    {:id :border-style
     :rules "
-    border-style = <'border-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none' | 'hidden')
+    border-style = <'border-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'hidden' | 'none')
     "
     :garden (fn [{[border-style] :component-data}]
               {:border-style border-style})}
@@ -201,48 +170,48 @@
                {:border-style border-style}])}
 
 
-   {:id :outline-style
+   {:id :outline-width
     :rules "
-    outline-style = <'outline'> ( <'-'> outline-style-value )?
-    <outline-style-value> = 'none' | 'dashed' | 'dotted' | 'double' | 'hidden'
+    outline-width = <'outline-'> (number | length | length-unit)
     "
-    :garden (fn [{[type] :component-data}]
-              (cond
-                (nil? type)
-                {:outline-style "solid"}
-
-                (= type "none")
-                {:outline "2px solid transparent"
-                 :outline-offset "2px"}
-
-                :else
-                {:outline-style type}))}
+    :garden (fn [{[value] :component-data}]
+              {:outline-width (value-unit->css value {:number {:unit "px"}})})}
 
 
    {:id :outline-color
     :rules "
-    outline-color = <'outline-'> color
+    outline-color = <'outline-'> ('inherit' | color)
     "
     :garden (fn [{[value] :component-data read-color :read-color}]
-              {:outline-color (color->css (read-color value))})}
+              {:outline-color (case value
+                                "inherit" "inherit"
+                                (color->css (read-color value)))})}
+
+
+   {:id :outline-style
+    :rules "
+    outline-style = <'outline'> (<'-'> ('none' | 'dashed' | 'dotted' | 'double' | 'hidden'))?
+    "
+    :garden (fn [{[style] :component-data}]
+              (cond
+                (= style "none")
+                {:outline "2px solid transparent"
+                 :outline-offset "2px"}
+
+                (nil? style)
+                {:outline-style "solid"}
+
+                :else
+                {:outline-style style}))}
 
 
    {:id :outline-offset
     :rules "
-    outline-offset = <'outline-offset-'> ( number | length )
+    outline-offset = <'outline-offset-'> (number | length | length-unit)
     "
     :garden (fn [{[value] :component-data}]
-              {:outline-offset (value-unit->css value {:zero-unit "px"
-                                                       :number {:unit "px"}})})}
+              {:outline-offset (value-unit->css value {:number {:unit "px"}})})}
 
-
-   {:id :outline-width
-    :rules "
-    outline-width = <'outline-'> ( number | length )
-    "
-    :garden (fn [{[value] :component-data}]
-              {:outline-width (value-unit->css value {:zero-unit "px"
-                                                      :number {:unit "px"}})})}
 
    {:id :ring-width
     :rules "

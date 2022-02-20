@@ -6,20 +6,8 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
-    "basis-3"
-    [".basis-3" {:flex-basis "0.75rem"}]
-
-    "basis-18px"
-    [".basis-18px" {:flex-basis "18px"}]
-
-    "basis-3/5"
-    [".basis-3\\/5" {:flex-basis "60%"}]
-
     "flex-grow"
     [".flex-grow" {:flex-grow 1}]
-
-    "grow"
-    [".grow" {:flex-grow 1}]
 
     "grow-0"
     [".grow-0" {:flex-grow 0}]
@@ -36,11 +24,11 @@
     "flex-shrink-3"
     [".flex-shrink-3" {:flex-shrink 3}]
 
-    "shrink-3"
-    [".shrink-3" {:flex-shrink 3}]
-
     "flex-basis"
     [".flex-basis" {:flex-basis 1}]
+
+    "flex-basis-0"
+    [".flex-basis-0" {:flex-basis "0px"}]
 
     "flex-basis-3"
     [".flex-basis-3" {:flex-basis "0.75rem"}]
@@ -48,8 +36,14 @@
     "flex-basis-px"
     [".flex-basis-px" {:flex-basis "1px"}]
 
+    "flex-basis-18px"
+    [".flex-basis-18px" {:flex-basis "18px"}]
+
     "flex-basis-auto"
     [".flex-basis-auto" {:flex-basis "auto"}]
+
+    "flex-basis-full"
+    [".flex-basis-full" {:flex-basis "100%"}]
 
     "flex-0"
     [".flex-0" {:flex "0 0 0%"}]

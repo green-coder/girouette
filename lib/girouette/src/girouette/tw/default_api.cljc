@@ -13,6 +13,7 @@
     [girouette.tw.background :as background]
     [girouette.tw.border :as border]
     [girouette.tw.effect :as effect]
+    [girouette.tw.filter :as filter]
     [girouette.tw.table :as table]
     [girouette.tw.animation :as animation]
     [girouette.tw.transform :as transform]
@@ -32,6 +33,7 @@
    background/components
    border/components
    effect/components
+   filter/components
    table/components
    animation/components
    transform/components

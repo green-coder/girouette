@@ -35,7 +35,7 @@
               {:flex-basis (let [{:keys [flex-basis-value]} (into {} data)]
                              (if (nil? flex-basis-value)
                                1
-                               (value-unit->css flex-basis-value {:zero-unit nil
+                               (value-unit->css flex-basis-value {:zero-unit "px"
                                                                   :number {:unit "rem"
                                                                            :value-fn div-4}
                                                                   :fraction {:unit "%"
