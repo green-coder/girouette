@@ -1,9 +1,65 @@
 (ns ^:no-doc girouette.tw.layout
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100]]))
+            [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100 read-number]]))
 
 (def components
-  [{:id :container
+  [{:id :aspect-ratio
+    :rules "
+    aspect-ratio = <'aspect-'> ( aspect-ratio-fixed | aspect-ratio-numbers )
+    aspect-ratio-fixed = 'auto' | 'square' | 'video'
+    aspect-ratio-numbers = number <'/'> number
+    "
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [aspect-ratio-fixed aspect-ratio-numbers]}
+                    (into {} (map (fn [[k v1 v2]] (if v2 [k [v1 v2]] [k v1])))
+                          component-data)]
+                {:aspect-ratio (if (some? aspect-ratio-fixed)
+                                 (case aspect-ratio-fixed
+                                   "auto" "auto"
+                                   "square" "1 / 1"
+                                   "video" "16 / 9")
+                                 (->> (map read-number aspect-ratio-numbers)
+                                      (str/join " / ")))}))}
+
+   {:id :break-before
+    :rules "
+    break-before = <'break-before-'> ( 'auto' | 'avoid' | 'all' | 'avoid-page' |
+                                       'page' | 'left' | 'right' | 'column' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:break-before value})}
+
+   {:id :columns
+    :rules "
+    columns = <'columns-'> ( columns-number | columns-size | columns-auto )
+    columns-auto = 'auto'
+    columns-number = number
+    columns-size =  '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' |
+                    '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
+    "
+    :garden (fn [{:keys [component-data]}]
+              (let [{:keys [columns-number columns-size columns-auto]}
+                    (into {} component-data)]
+                {:columns (cond
+                            columns-auto "auto"
+                            columns-number (read-number columns-number)
+                            columns-size
+                            ({"3xs" "16rem"
+                              "2xs" "18rem"
+                              "xs"  "20rem"
+                              "sm"  "24rem"
+                              "md"  "28rem"
+                              "lg"  "32rem"
+                              "xl"  "36rem"
+                              "2xl" "42rem"
+                              "3xl" "48rem"
+                              "4xl" "56rem"
+                              "5xl" "64rem"
+                              "6xl" "72rem"
+                              "7xl" "80rem"} columns-size))}))}
+
+
+   {:id :container
     :rules "
     container = <'container'>
     "
@@ -12,6 +68,12 @@
                 {:max-width (breakpoint->pixels media-query-min-width)}
                 {:width "100%"}))}
 
+   {:id :box-decoration-break
+    :rules "
+    box-decoration-break = <'box-decoration-'> ( 'clone' | 'slice' )
+    "
+    :garden (fn [{[decoration-break] :component-data}]
+              {:box-decoration-break decoration-break})}
 
    {:id :box-sizing
     :rules "
@@ -27,8 +89,8 @@
     :rules "
     display = 'block' | 'inline-block' | 'inline' | 'flex' | 'inline-flex' |
         'table' | 'table-caption' | 'table-cell' | 'table-column' | 'table-column-group' |
-        'table-footer-group' | 'table-header-group' | 'table-row-group' | 'table-row' |
-        'flow-root' | 'grid' |'inline-grid' | 'contents' | 'hidden'
+        'table-footer-group' | 'table-header-group' | 'table-row-group' | 'table-row' | 'inline-table' |
+        'flow-root' | 'grid' |'inline-grid' | 'contents' | 'list-item' | 'hidden'
     "
     :garden (fn [{[display-mode] :component-data}]
               {:display (if (= "hidden" display-mode)
@@ -51,6 +113,12 @@
     :garden (fn [{[direction] :component-data}]
               {:clear direction})}
 
+   {:id :isolation
+    :rules "
+    isolation = 'isolate' | <'isolation-'> 'auto'
+    "
+    :garden (fn [{[isolation] :component-data}]
+              {:isolation isolation})}
 
    {:id :object-fit
     :rules "
@@ -74,7 +142,7 @@
    {:id :overflow
     :rules "
     overflow = <'overflow-'> (axis <'-'>)? overflow-mode
-    overflow-mode = 'auto' | 'hidden' | 'visible' | 'scroll'
+    overflow-mode = 'auto' | 'hidden' | 'visible' | 'scroll' | 'clip'
     "
     :garden (fn [{:keys [component-data]}]
               (let [{:keys [axis overflow-mode]} (into {} component-data)

@@ -7,6 +7,48 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "content-['foo']"
+    [".content-\\[\\'foo\\'\\]" {:content "\"foo\""}]
+
+    "content-['foo\\'s']"
+    [".content-\\[\\'foo\\\\\\'s\\'\\]" {:content "\"foo's\""}]
+
+    "content-['foo_bar']"
+    [".content-\\[\\'foo_bar\\'\\]" {:content "\"foo bar\""}]
+
+    "content-['foo\\_bar']"
+    [".content-\\[\\'foo\\\\_bar\\'\\]" {:content "\"foo_bar\""}]
+
+    "content-[attr(foo)]"
+    [".content-\\[attr\\(foo\\)\\]" {:content "attr(foo)"}]
+
+    "decoration-orange-100"
+    [".decoration-orange-100" {:text-decoration-color "#ffedd5"}]
+
+    "decoration-inherit"
+    [".decoration-inherit" {:text-decoration-color "inherit"}]
+
+    "decoration-#abcdef"
+    [".decoration-\\#abcdef" {:text-decoration-color "#abcdef"}]
+
+    "decoration-wavy"
+    [".decoration-wavy" {:text-decoration-style "wavy"}]
+
+    "decoration-auto"
+    [".decoration-auto" {:text-decoration-thickness "auto"}]
+
+    "decoration-from-font"
+    [".decoration-from-font" {:text-decoration-thickness "from-font"}]
+
+    "decoration-3"
+    [".decoration-3" {:text-decoration-thickness "3px"}]
+
+    "decoration-1rem"
+    [".decoration-1rem" {:text-decoration-thickness "1rem"}]
+
+    "decoration-1/5"
+    [".decoration-1\\/5" {:text-decoration-thickness "20%"}]
+
     "font-sans"
     [".font-sans" {:font-family "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""}]
 
@@ -31,11 +73,23 @@
     [".antialiased" {:-webkit-font-smoothing "antialiased"
                      :-moz-osx-font-smoothing "grayscale"}]
 
+    "align-sub"
+    [".align-sub" {:vertical-align "sub"}]
+
     "italic"
     [".italic" {:font-style "italic"}]
 
     "font-thin"
     [".font-thin" {:font-weight 100}]
+
+    "indent-0"
+    [".indent-0" {:text-indent "0px"}]
+
+    "indent-1"
+    [".indent-1" {:text-indent "0.25rem"}]
+
+    "indent-2em"
+    [".indent-2em" {:text-indent "2em"}]
 
     "tracking-wide"
     [".tracking-wide" {:letter-spacing (str 0.025 "em")}]
@@ -77,12 +131,19 @@
     [".placeholder-green-300-50" [placeholder-pseudo-element
                                   {:color "#86efac7f"}]]
 
+    "placeholder-green-300/50"
+    [".placeholder-green-300\\/50" [placeholder-pseudo-element
+                                    {:color "#86efac7f"}]]
+
     "placeholder-opacity-20"
     [".placeholder-opacity-20" {:--gi-placeholder-opacity 0.2}]
 
     "text-black"
     [".text-black" {:--gi-text-opacity 1
                     :color "rgba(0,0,0,var(--gi-text-opacity))"}]
+
+    "text-clip"
+    [".text-clip" {:text-overflow "clip"}]
 
     "text-current"
     [".text-current" {:color "currentColor"}]
@@ -128,4 +189,16 @@
     [".text-opacity-5" {:--gi-text-opacity 0.05}]
 
     "text-opacity-100"
-    [".text-opacity-100" {:--gi-text-opacity 1}]))
+    [".text-opacity-100" {:--gi-text-opacity 1}]
+
+    "underline-auto"
+    [".underline-auto" {:text-underline-offset "auto"}]
+
+    "underline-3"
+    [".underline-3" {:text-underline-offset "3px"}]
+
+    "underline-1rem"
+    [".underline-1rem" {:text-underline-offset "1rem"}]
+
+    "underline-1/5"
+    [".underline-1\\/5" {:text-underline-offset "20%"}]))

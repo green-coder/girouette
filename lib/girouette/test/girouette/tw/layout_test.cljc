@@ -6,6 +6,33 @@
   (are [class-name expected-garden]
     (= expected-garden (class-name->garden class-name))
 
+    "aspect-auto"
+    [".aspect-auto" {:aspect-ratio "auto"}]
+
+    "aspect-square"
+    [".aspect-square" {:aspect-ratio "1 / 1"}]
+
+    "aspect-video"
+    [".aspect-video" {:aspect-ratio "16 / 9"}]
+
+    "aspect-23/57"
+    [".aspect-23\\/57" {:aspect-ratio "23 / 57"}]
+
+    "break-before-auto"
+    [".break-before-auto" {:break-before "auto"}]
+
+    "break-before-page"
+    [".break-before-page" {:break-before "page"}]
+
+    "columns-auto"
+    [".columns-auto" {:columns "auto"}]
+
+    "columns-4"
+    [".columns-4" {:columns 4}]
+
+    "columns-2xl"
+    [".columns-2xl" {:columns "42rem"}]
+
     "container"
     [".container" {:width "100%"}]
 
@@ -22,6 +49,12 @@
     "box-content"
     [".box-content" {:box-sizing "content-box"}]
 
+    "box-decoration-clone"
+    [".box-decoration-clone" {:box-decoration-break "clone"}]
+
+    "box-decoration-slice"
+    [".box-decoration-slice" {:box-decoration-break "slice"}]
+
     "flex"
     [".flex" {:display "flex"}]
 
@@ -34,11 +67,29 @@
     "hidden"
     [".hidden" {:display "none"}]
 
+    "inline-table"
+    [".inline-table" {:display "inline-table"}]
+
+    "isolate"
+    [".isolate" {:isolation "isolate"}]
+
+    "isolation-auto"
+    [".isolation-auto" {:isolation "auto"}]
+
+    "list-item"
+    [".list-item" {:display "list-item"}]
+
     "object-left-top"
     [".object-left-top" {:object-position "left top"}]
 
     "overflow-x-auto"
     [".overflow-x-auto" {:overflow-x "auto"}]
+
+    "overflow-x-clip"
+    [".overflow-x-clip" {:overflow-x "clip"}]
+
+    "overflow-clip"
+    [".overflow-clip" {:overflow "clip"}]
 
     "overflow-hidden"
     [".overflow-hidden" {:overflow "hidden"}]

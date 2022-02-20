@@ -10,25 +10,32 @@
 (def matches-nothing "&'nop' 'no-way'")
 
 (defn state-variant->str [state-variant]
-  ({"first" "first-child"
-    "last"  "last-child"
-    "odd"   "nth-child(odd)"
-    "even"  "nth-child(even)"} state-variant state-variant))
+  (cond
+    (string? state-variant)
+    (str ":"
+         ({"first" "first-child"
+           "last"  "last-child"
+           "odd"   "nth-child(odd)"
+           "even"  "nth-child(even)"} state-variant state-variant))
 
-(def outer-state-variants
-  #{"group-hover" "group-focus"
-    "group-disabled" "group-active"})
+    (and (coll? state-variant)
+         (= :attribute-state-variant (first state-variant)))
+    (str "[" (second state-variant) "]")))
+
+
+(defn target-variant->str [target-variant]
+  (str "::" ({"file" "file-selector-button"} target-variant target-variant)))
+
+
+(defn outer-state-variants
+  [variant]
+  (and (coll? variant)
+       (#{:group-state-variant :peer-state-variant} (first variant))))
 
 (defn dot [class]
-  (str "." (str/escape class {\. "\\."
-                              \: "\\:"
-                              \/ "\\/"
-                              \% "\\%"
-                              \& "\\&"
-                              \~ "\\~"
-                              \< "\\<"
-                              \> "\\>"
-                              \# "\\#"})))
+  (str "." (str/replace class #"[^-a-zA-Z0-9_]"
+                        ;; "\\\\$0" doesn't work in cljs, it seems?
+                        (fn [c] (str "\\" c)))))
 
 
 (def breakpoint->pixels
@@ -79,6 +86,7 @@
      :full "full"
      :min-content "min-content"
      :max-content "max-content"
+     :fit-content "fit-content"
      (let [[data-type arg1 arg2] data
            [value unit] (case data-type
                           :integer [(read-number arg1) nil]
@@ -105,8 +113,15 @@
 
 
 (defn inner-state-variants-transform [rule props]
-  (reduce (fn [rule state-variant]
-            [(keyword (str "&:" (state-variant->str state-variant))) rule])
+  (reduce (fn [rule [variant-type variant-value]]
+            [(keyword (str "&"
+                           (case variant-type
+                             :target-variant
+                             (target-variant->str variant-value)
+
+                             (:plain-state-variant :attribute-state-variant)
+                             (state-variant->str variant-value))))
+             rule])
           rule
           (->> props :prefixes :state-variants reverse
                (remove outer-state-variants))))
@@ -127,11 +142,17 @@
 
 (defn outer-state-variants-transform [rule props]
   (reduce (fn [rule state-variant]
-            (case state-variant
-              "group-hover" [".group:hover" rule]
-              "group-focus" [".group:focus" rule]
-              "group-disabled" [".group:disabled" rule]
-              "group-active" [".group:active" rule]))
+            (case (first state-variant)
+              :group-state-variant
+              [(str ".group" (state-variant->str (second state-variant)))
+               rule]
+
+              :peer-state-variant
+              (into [(:selector
+                      (garden.selectors/-
+                        (str ".peer" (state-variant->str (second state-variant)))
+                        (first rule)))]
+                    (rest rule))))
           rule
           (->> props :prefixes :state-variants reverse
                (filter outer-state-variants))))
@@ -143,10 +164,12 @@
         color-scheme (-> prefixes :media-query-color-scheme)
         reduced-motion (-> prefixes :media-query-reduced-motion {"motion-safe" "no-preference"
                                                                  "motion-reduce" "reduced"})
+        orientation (-> prefixes :media-query-orientation)
         media-query (cond-> {}
                       min-width (assoc :min-width min-width)
                       color-scheme (assoc :prefers-color-scheme color-scheme)
-                      reduced-motion (assoc :prefers-reduced-motion reduced-motion))]
+                      reduced-motion (assoc :prefers-reduced-motion reduced-motion)
+                      orientation (assoc :orientation orientation))]
     (if (seq media-query)
       (gs/at-media media-query rule)
       rule)))
@@ -164,19 +187,27 @@
 
   <media-query> = media-query-min-width |
                   media-query-color-scheme |
-                  media-query-reduced-motion
+                  media-query-reduced-motion |
+                  media-query-orientation
   media-query-min-width = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   media-query-color-scheme = 'light' | 'dark'
   media-query-reduced-motion = 'motion-safe' | 'motion-reduce'
+  media-query-orientation = 'landscape' | 'portrait'
 
-  state-variant = 'hover' | 'focus' | 'disabled' | 'active' |
-                  'group-hover' | 'group-focus' | 'group-disabled' | 'group-active' |
+  attribute-state-variant = 'open'
+  <state-variant-value> = 'hover' | 'focus' | 'disabled' | 'active' |
                   'focus-within' | 'focus-visible' |
                   'any-link' | 'link' | 'visited' | 'target' |
                   'blank' | 'required' | 'optional' | 'valid' | 'invalid' | 'placeholder-shown' | 'checked' |
                   'read-only' | 'read-write' |
                   'first' | 'last' | 'odd' | 'even' | 'first-of-type' | 'last-of-type' |
-                  'root' | 'empty'
+                  'root' | 'empty' |
+                  attribute-state-variant
+  group-state-variant = <'group-'> state-variant-value
+  peer-state-variant = <'peer-'> state-variant-value
+  target-variant = 'file' | 'before' | 'after' | 'placeholder'
+  plain-state-variant = state-variant-value
+  state-variant = group-state-variant | peer-state-variant | target-variant | plain-state-variant
 
   signus = '-' | '+'
   direction = 't' | 'r' | 'b' | 'l'
@@ -189,6 +220,7 @@
   screen-100vh = 'screen'
   min-content = 'min'
   max-content = 'max'
+  fit-content = 'fit'
   auto = 'auto'
   none = 'none'
   full = 'full'
@@ -215,4 +247,15 @@
 ")
 
 (def components
-  [])
+  [{:id :arbitrary-property
+    :rules "
+    arbitrary-property = <'['> #'[^\\] ]*' <']'>
+    "
+    :garden (fn [{[value] :component-data}]
+              (let [[prop val] (-> value
+                                   ;; negative-lookbehind isn't supported in javascript
+                                   (str/replace #"(^|[^\\])_" "$1 ")
+                                   (str/replace #"\\_" "_")
+                                   (str/split #":" 2))]
+                {(keyword prop) val}))}
+   ])

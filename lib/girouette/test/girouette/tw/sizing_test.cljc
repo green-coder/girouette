@@ -70,4 +70,10 @@
     [".max-w-screen-sm" {:max-width "640px"}]
 
     "max-h-64"
-    [".max-h-64" {:max-height "16rem"}]))
+    [".max-h-64" {:max-height "16rem"}]
+
+    "max-w-fit"
+    [".max-w-fit" {:max-width "fit-content"}]
+
+    "h-fit"
+    [".h-fit" {:height "fit-content"}]))

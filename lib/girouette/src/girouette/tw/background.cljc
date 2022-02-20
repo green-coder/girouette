@@ -39,6 +39,12 @@
                        :background-color (color->css [r g b "var(--gi-bg-opacity)"])})))))
     :before-rules #{:background-opacity}}
 
+   {:id :background-origin
+    :rules "
+    background-origin = <'bg-origin-'> ( 'border' | 'padding' | 'content' )
+    "
+    :garden (fn [{[value] :component-data}]
+              {:background-origin (str value "-box")})}
 
    {:id :background-opacity
     :rules "

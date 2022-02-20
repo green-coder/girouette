@@ -102,6 +102,19 @@
     "group-hover:container"
     [".group:hover" [".group-hover\\:container" {:width "100%"}]]
 
+    "group-invalid:container"
+    [".group:invalid" [".group-invalid\\:container" {:width "100%"}]]
+
+    "group-odd:container"
+    [".group:nth-child(odd)" [".group-odd\\:container" {:width "100%"}]]
+
+    "peer-active:container"
+    [".peer:active ~ .peer-active\\:container" {:width "100%"}]
+
+    "peer-odd:container"
+    [".peer:nth-child(odd) ~ .peer-odd\\:container"
+     {:width "100%"}]
+
     "dark:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:prefers-color-scheme "dark"}
@@ -121,6 +134,30 @@
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:prefers-reduced-motion "reduced"}
                                     :rules ([".motion-reduce\\:container" {:width "100%"}])}}
+
+    "landscape:container"
+    #garden.types.CSSAtRule{:identifier :media
+                            :value {:media-queries {:orientation "landscape"}
+                                    :rules ([".landscape\\:container" {:width "100%"}])}}
+
+    "file:container"
+    [".file\\:container"
+     [(keyword "&::file-selector-button") {:width "100%"}]]
+
+    "file:hover:container"
+    [".file\\:hover\\:container"
+     [(keyword "&::file-selector-button")
+      [:&:hover {:width "100%"}]]]
+
+    "open:bg-white"
+    [".open\\:bg-white"
+     [(keyword "&[open]") {:background-color "rgba(255,255,255,var(--gi-bg-opacity))"
+                           :--gi-bg-opacity 1}]]
+
+    "hover:file:container"
+    [".hover\\:file\\:container"
+     [:&:hover
+      [(keyword "&::file-selector-button") {:width "100%"}]]]
 
     "focus:container"
     [".focus\\:container" [:&:focus {:width "100%"}]]
@@ -148,4 +185,20 @@
     "sm:first:focus:container"
     #garden.types.CSSAtRule{:identifier :media
                             :value {:media-queries {:min-width "640px"}
-                                    :rules ([".sm\\:first\\:focus\\:container" [:&:first-child [:&:focus {:max-width "640px"}]]])}}))
+                                    :rules ([".sm\\:first\\:focus\\:container" [:&:first-child [:&:focus {:max-width "640px"}]]])}}
+
+    "placeholder:text-red-500"
+    [".placeholder\\:text-red-500" [(keyword "&::placeholder")
+                                    {:color "rgba(239,68,68,var(--gi-text-opacity))"
+                                     :--gi-text-opacity 1}]]
+
+    "before:ml-1"
+    [".before\\:ml-1" [(keyword "&::before") {:margin-left "0.25rem"}]]))
+
+(deftest arbtrary-test
+  (are [class-name expected-garden]
+    (= expected-garden (class-name->garden class-name))
+
+    "hover:[mask-type:alpha]"
+    [".hover\\:\\[mask-type\\:alpha\\]"
+     [:&:hover {:mask-type "alpha"}]]))

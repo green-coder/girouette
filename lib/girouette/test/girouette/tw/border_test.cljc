@@ -38,6 +38,10 @@
     "border-b-2em"
     [".border-b-2em" {:border-bottom-width "2em"}]
 
+    "border-y-2em"
+    [".border-y-2em" {:border-top-width "2em"
+                      :border-bottom-width "2em"}]
+
     "border-3px"
     [".border-3px" {:border-width "3px"}]
 
@@ -49,6 +53,21 @@
     [".border-green-300" {:--gi-border-opacity 1
                           :border-color        "rgba(134,239,172,var(--gi-border-opacity))"}]
 
+    "border-t-green-300"
+    [".border-t-green-300"
+     {:--gi-border-opacity 1
+      :border-top-color "rgba(134,239,172,var(--gi-border-opacity))"}]
+
+    "border-y-green-300"
+    [".border-y-green-300"
+     {:--gi-border-opacity 1
+      :border-bottom-color "rgba(134,239,172,var(--gi-border-opacity))"
+      :border-top-color "rgba(134,239,172,var(--gi-border-opacity))"}]
+
+    "border-b-rgba-c0ffee50"
+    [".border-b-rgba-c0ffee50" {:border-bottom-color "#c0ffee50"}]
+
+
     ;; Border Opacity
     "border-opacity-25"
     [".border-opacity-25" {:--gi-border-opacity 0.25}]
@@ -56,6 +75,9 @@
     ;; Border Style
     "border-dotted"
     [".border-dotted" {:border-style "dotted"}]
+
+    "border-hidden"
+    [".border-hidden" {:border-style "hidden"}]
 
     ;; Divide Width
     "divide-x"
@@ -88,6 +110,26 @@
     "divide-double"
     [".divide-double" [#garden.selectors.CSSSelector{:selector "&>*+*"}
      {:border-style "double"}]]
+
+    ;; Outline
+    "outline-none"
+    [".outline-none" {:outline "2px solid transparent"
+                      :outline-offset "2px"}]
+
+    "outline"
+    [".outline" {:outline-style "solid"}]
+
+    "outline-gray-100"
+    [".outline-gray-100" {:outline-color "#f4f4f5"}]
+
+    "outline-3"
+    [".outline-3" {:outline-width "3px"}]
+
+    "outline-1rem"
+    [".outline-1rem" {:outline-width "1rem"}]
+
+    "outline-offset-2"
+    [".outline-offset-2" {:outline-offset "2px"}]
 
     ;; Ring Width
     ;; TODO: Test for `*	box-shadow: 0 0 #0000;`
