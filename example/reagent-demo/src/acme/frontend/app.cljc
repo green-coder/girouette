@@ -18,7 +18,7 @@
    [:div.rainbow-text.text-center.font-size-10vw
     "Everybody needs a rainbow in their life"]
 
-   ;; Demonstrate the use of custom colors (e.g. cat-white, cat-orange, cat-black)
+   ;; Demonstrates the use of custom colors (e.g. cat-white, cat-orange, cat-black)
    [:div.flex
     [:div.flex-1.bg-cat-white]
     [:div.flex-1.bg-cat-orange]
@@ -27,7 +27,15 @@
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-white.bg-cat-orange "Miaw!!!"]
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-orange.bg-cat-black "Miaw!!!"]]
 
-   ;; Demonstrate the shadow colors
+   ;; Demonstrates a fix on the `divide-*` classes.
+   [:div.max-w-7xl.mx-auto.mt-5.bg-gray-100.p-6
+    [:div.overflow-hidden.rounded-md.shadow.border-gray-200.bg-white
+     [:ul.divide-y.divide-gray-200
+      [:li.p-3 "divide-y"]
+      [:li.p-3 "test list item"]
+      [:li.p-3 "another test list item"]]]]
+
+   ;; Demonstrates the shadow colors
    [:div.m-4.p-4.grid.grid-cols-3.gap-4.justify-items-center.text-lg.border-1.rounded-lg
     [:p.font-medium.text-blueGray-500.font-mono.text-center.mb-3.dark:text-blueGray-400 "shadow-cyan-500/50"]
     [:p.font-medium.text-blueGray-500.font-mono.text-center.mb-3.dark:text-blueGray-400 "shadow-blue-500/50"]

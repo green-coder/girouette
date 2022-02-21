@@ -129,10 +129,12 @@
                                                       :number {:unit "px"}}))]
                   [between-children-selector
                    (case axis
-                     "x" {:border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
-                          :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")}
-                     "y" {:border-top-width    (str "calc(" width " * var(--gi-divide-y-reverse))")
-                          :border-bottom-width (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")})])))}
+                     "x" {:--gi-divide-x-reverse 0
+                          :border-right-width (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")
+                          :border-left-width  (str "calc(" width " * var(--gi-divide-x-reverse))")}
+                     "y" {:--gi-divide-y-reverse 0
+                          :border-top-width    (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")
+                          :border-bottom-width (str "calc(" width " * var(--gi-divide-y-reverse))")})])))}
 
 
    {:id :divide-color
