@@ -12,7 +12,7 @@
     [girouette.tw.typography :as typography]
     [girouette.tw.background :as background]
     [girouette.tw.border :as border]
-    ; [girouette.tw.effect :as effect]
+    [girouette.tw.effect :as effect]
     ; [girouette.tw.table :as table]
     ; [girouette.tw.animation :as animation]
     ; [girouette.tw.transform :as transform]
@@ -45,7 +45,7 @@
    typography/components
    background/components
    border/components
-   ;effect/components
+   effect/components
    ;table/components
    ;animation/components
    ;transform/components

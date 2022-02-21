@@ -4,7 +4,7 @@
             [girouette.tw.common :refer [matches-nothing value-unit->css div-100 mul-255 clamp-0-255]]
             [garden.color :as gc]))
 
-;; Those color values and names are from Tailwind CSS.
+;; Those color values and names are from Tailwind CSS v2.
 ;; They are imported here for the purpose of compatibility.
 (def ^:no-doc default-color-map
   {"white" "ffffff"
