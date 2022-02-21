@@ -30,17 +30,19 @@
    [:div.flex.my-10
     ;; Demonstrates a fix on the `divide-*` classes.
     [:div.mx-auto.p-6.bg-gray-100
-     [:div.flex.flex-col.bg-white.divide-y-10.divide-red-200
+     [:div.flex.flex-col.bg-white.divide-y-10.divide-red-400-50
       [:div.p-3 "item 1"]
       [:div.p-3 "item 2"]
-      [:div.p-3 "item 3"]]]
+      [:div.p-3 {:hidden true} "item 3"]
+      [:div.p-3 "item 4"]]]
 
     ;; Demonstrates the `divide-*-reverse` classes.
     [:div.mx-auto.p-6.bg-gray-100
-     [:div.flex.flex-col-reverse.bg-white.divide-y-10.divide-y-reverse.divide-red-200
+     [:div.flex.flex-col-reverse.bg-white.divide-y-10.divide-y-reverse.divide-red-400-50
       [:div.p-3 "reverse item 1"]
       [:div.p-3 "reverse item 2"]
-      [:div.p-3 "reverse item 3"]]]]
+      [:div.p-3 {:hidden true} "reverse item 3"]
+      [:div.p-3 "reverse item 4"]]]]
 
    ;; Demonstrates the shadow colors
    [:div.m-4.p-4.grid.grid-cols-3.gap-4.justify-items-center.text-lg.border-1.rounded-lg
