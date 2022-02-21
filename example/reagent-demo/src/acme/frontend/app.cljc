@@ -27,13 +27,20 @@
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-white.bg-cat-orange "Miaw!!!"]
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-orange.bg-cat-black "Miaw!!!"]]
 
-   ;; Demonstrates a fix on the `divide-*` classes.
-   [:div.max-w-7xl.mx-auto.mt-5.bg-gray-100.p-6
-    [:div.overflow-hidden.rounded-md.shadow.border-gray-200.bg-white
-     [:ul.divide-y.divide-gray-200
-      [:li.p-3 "divide-y"]
-      [:li.p-3 "test list item"]
-      [:li.p-3 "another test list item"]]]]
+   [:div.flex.my-10
+    ;; Demonstrates a fix on the `divide-*` classes.
+    [:div.mx-auto.p-6.bg-gray-100
+     [:div.flex.flex-col.bg-white.divide-y-10.divide-red-200
+      [:div.p-3 "item 1"]
+      [:div.p-3 "item 2"]
+      [:div.p-3 "item 3"]]]
+
+    ;; Demonstrates the `divide-*-reverse` classes.
+    [:div.mx-auto.p-6.bg-gray-100
+     [:div.flex.flex-col-reverse.bg-white.divide-y-10.divide-y-reverse.divide-red-200
+      [:div.p-3 "reverse item 1"]
+      [:div.p-3 "reverse item 2"]
+      [:div.p-3 "reverse item 3"]]]]
 
    ;; Demonstrates the shadow colors
    [:div.m-4.p-4.grid.grid-cols-3.gap-4.justify-items-center.text-lg.border-1.rounded-lg

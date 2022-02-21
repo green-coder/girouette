@@ -117,24 +117,28 @@
 
    {:id :divide-width
     :rules "
-    divide-width = <'divide-'> axis (<'-'> divide-width-value)?
+    divide-width = <'divide-'> axis (<'-'> (divide-width-value | divide-width-reverse))?
     divide-width-value = number | length | length-unit
+    divide-width-reverse = 'reverse'
     "
     :garden (fn [{:keys [component-data]}]
-              (let [{axis  :axis
-                     value :divide-width-value} (into {} component-data)]
-                (let [width (if (nil? value)
-                              "1px"
-                              (value-unit->css value {:zero-unit nil
-                                                      :number {:unit "px"}}))]
+              (let [{:keys [axis divide-width-value divide-width-reverse]} (into {} component-data)
+                    width (if (nil? divide-width-value)
+                            "1px"
+                            (value-unit->css divide-width-value {:zero-unit nil
+                                                                 :number {:unit "px"}}))]
                   [between-children-selector
                    (case axis
-                     "x" {:--gi-divide-x-reverse 0
-                          :border-right-width (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")
-                          :border-left-width  (str "calc(" width " * var(--gi-divide-x-reverse))")}
-                     "y" {:--gi-divide-y-reverse 0
-                          :border-top-width    (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")
-                          :border-bottom-width (str "calc(" width " * var(--gi-divide-y-reverse))")})])))}
+                     "x" (if (nil? divide-width-reverse)
+                           {:--gi-divide-x-reverse 0
+                            :border-right-width (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")
+                            :border-left-width  (str "calc(" width " * var(--gi-divide-x-reverse))")}
+                           {:--gi-divide-x-reverse 1})
+                     "y" (if (nil? divide-width-reverse)
+                           {:--gi-divide-y-reverse 0
+                            :border-top-width    (str "calc(" width " * calc(1 - var(--gi-divide-y-reverse)))")
+                            :border-bottom-width (str "calc(" width " * var(--gi-divide-y-reverse))")}
+                           {:--gi-divide-y-reverse 1}))]))}
 
 
    {:id :divide-color

@@ -91,6 +91,10 @@
                      :border-top-width      "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"
                      :border-bottom-width   "calc(2px * var(--gi-divide-y-reverse))"}]]
 
+    "divide-y-reverse"
+    [".divide-y-reverse" [#garden.selectors.CSSSelector{:selector "&>*+*"}
+                          {:--gi-divide-y-reverse 1}]]
+
     ;; Divide Color
     "divide-current"
     [".divide-current" [#garden.selectors.CSSSelector{:selector "&>*+*"}
