@@ -1,6 +1,5 @@
 (ns acme.frontend.app
-  (:require [reagent.dom :as rdom]
-            [girouette.core :refer [css]]))
+  (:require [reagent.dom :as rdom]))
 
 (defn simple-example []
   [:main

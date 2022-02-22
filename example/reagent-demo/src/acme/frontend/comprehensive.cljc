@@ -1,5 +1,4 @@
-(ns acme.frontend.comprehensive
-  (:require [girouette.core :refer [css]]))
+(ns acme.frontend.comprehensive)
 
 ;; ---------------------------------------------------
 ;;   Use {:retrieve :comprehensive} to collect those

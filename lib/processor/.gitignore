@@ -4,6 +4,7 @@
 *.jar
 *.iml
 .cljs_node_repl
+.clj-kondo
 node_modules
 out
 

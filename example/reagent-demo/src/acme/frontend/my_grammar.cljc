@@ -65,7 +65,7 @@
 
 
 ;; This example shows how to Girouette on a custom grammar.
-;; Here, we use only a subset of the Girouette components and we add your own.
+;; Here, we use only a subset of the Girouette components, and we add your own.
 (def class-name->garden
   (:class-name->garden (make-api my-chosen-components {:color-map my-color-map
                                                        :font-family-map typography/default-font-family-map})))

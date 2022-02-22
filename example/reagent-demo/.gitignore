@@ -12,6 +12,7 @@ pom.xml.asc
 *.jar
 *.log
 .shadow-cljs
+.clj-kondo
 .idea
 .nrepl-*
 .DS_Store
