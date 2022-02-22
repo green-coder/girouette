@@ -10,12 +10,13 @@
             [clojure.tools.deps.alpha.util.dir :refer [*the-dir*]]
             [clojure.walk :as walk]
             [garden.core :as garden]
-            [hawk.core :as hawk]
+            [nextjournal.beholder :as beholder]
             [girouette.garden.util :as util]
             [girouette.tw.common :refer [dot]]
             [girouette.tw.preflight :refer [preflight]]
             [girouette.processor.env :refer [config]])
-  (:import (java.io File)))
+  (:import (java.io File)
+           (java.nio.file Path)))
 
 
 (defn red-str [& s]
@@ -315,9 +316,11 @@
         (when watch?
           (when verbose?
             (println (str "\n\uD83D\uDC40 Watching files in " (str/join ", " source-paths) " ...")))
-          (hawk/watch! [{:paths source-paths
-                         :handler (fn [ctx {:keys [^File file kind]}]
-                                    (when (input-file? file)
-                                      (on-file-changed file kind)
-                                      (spit-output))
-                                    ctx)}]))))))
+          (apply
+           beholder/watch-blocking
+           (fn [{:keys [type ^Path path]}]
+             (let [file ^File (.toFile path)]
+               (when (input-file? file)
+                 (on-file-changed file type)
+                 (spit-output))))
+           source-paths))))))
