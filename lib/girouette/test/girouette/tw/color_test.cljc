@@ -1,10 +1,10 @@
 (ns girouette.tw.color-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.color :refer [read-color default-color-map color->css]]))
+            [girouette.tw.color :as color :refer [read-color default-color-map flatten-color-map color->css]]))
 
 (deftest read-color-test
   (are [color-data expected-output]
-    (= expected-output (read-color default-color-map color-data))
+    (= expected-output (read-color (flatten-color-map default-color-map) color-data))
 
     [:color [:color-rgb "123"]]
     [0x11 0x22 0x33 nil]
@@ -65,3 +65,17 @@
 
     [:color [:predefined-color-opacity "green-300" [:number "95_5"]]]
     [134 239 172 243]))
+
+
+(deftest read-tw3-color-test
+  (are [color-data expected-output]
+    (= expected-output (read-color (flatten-color-map color/tw-v3-unified-colors) color-data))
+
+    [:color [:predefined-color-opacity "slate-300"]]
+    [203 213 225 nil]
+
+    [:color [:predefined-color-opacity "slate-300" [:integer "50"]]]
+    [203 213 225 127]
+
+    [:color [:predefined-color-opacity "slate-300" [:number "95_5"]]]
+    [203 213 225 243]))

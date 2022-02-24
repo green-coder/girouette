@@ -107,16 +107,18 @@
 
 (defn make-api
   "Creates an API based on a collection of Girouette components."
-  [components {:keys [color-map font-family-map] :as options}]
+  [components {:keys [color-map font-family-map]}]
   (let [components (util/into-one-vector components) ;; flatten the structure
-        grammar (assemble-grammar components options)
+        flattened-color-map (color/flatten-color-map color-map)
+        grammar (assemble-grammar components {:color-map flattened-color-map
+                                              :font-family-map font-family-map})
         parser (insta/parser grammar)
         component-by-id (-> (into {}
                                   (map (juxt :id identity))
                                   components)
                             complement-before-rules-after-rules
                             assoc-ordering-level)
-        predef-props {:read-color (partial color/read-color color-map)
+        predef-props {:read-color (partial color/read-color flattened-color-map)
                       :font-family-map font-family-map}
         class-name->garden (fn [class-name]
                              (let [parsed-data (insta/parse parser class-name)]
