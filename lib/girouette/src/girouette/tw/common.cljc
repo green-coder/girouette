@@ -251,6 +251,7 @@
 
 (def components
   [{:id :arbitrary-property
+    :since-version [:tw 3]
     :rules "
     arbitrary-property = <'['> #'[^\\] ]*' <']'>
     "

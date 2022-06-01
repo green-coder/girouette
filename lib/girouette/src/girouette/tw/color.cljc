@@ -2,7 +2,10 @@
   (:require [clojure.string :as str]
             [clojure.set :as set]
             [clojure.edn :as edn]
-            [girouette.tw.common :refer [matches-nothing value-unit->css div-100 mul-255 clamp-0-255]]
+            [girouette.tw.common :refer [matches-nothing
+                                         value-unit->css
+                                         div-100 mul-255
+                                         clamp-0-255]]
             [garden.color :as gc]))
 
 (def tw-v3-unified-colors
@@ -239,9 +242,8 @@
                                                    "coolGray" "gray"
                                                    "blueGray" "slate"}))))
 
-;; Those color values and names are from Tailwind CSS v2.
-;; They are imported here for the purpose of compatibility.
-(def ^:no-doc default-color-map
+(def tw-v2-colors
+  "The colors from Tailwind CSS v2, for backward compatibility."
   {"white" "ffffff"
    "black" "000000"
    "rose" {50 "fff1f2"

@@ -1,10 +1,10 @@
 (ns girouette.tw.border-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.default-api :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [tw-v3-class-name->garden]]))
 
 (deftest component-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+    (= expected-garden (tw-v3-class-name->garden class-name))
     ;; Border Radius
     "rounded-none"
     [".rounded-none" {:border-radius "0px"}]
@@ -103,7 +103,7 @@
     "divide-gray-100"
     [".divide-gray-100" [#garden.selectors.CSSSelector{:selector "&>:not([hidden])~:not([hidden])"}
                          {:--gi-divide-opacity 1
-                          :border-color        "rgba(244,244,245,var(--gi-divide-opacity))"}]]
+                          :border-color        "rgba(243,244,246,var(--gi-divide-opacity))"}]]
 
     ;; Divide Opacity
     "divide-opacity-70"
@@ -132,7 +132,7 @@
     [".outline-inherit" {:outline-color "inherit"}]
 
     "outline-gray-100"
-    [".outline-gray-100" {:outline-color "#f4f4f5"}]
+    [".outline-gray-100" {:outline-color "#f3f4f6"}]
 
     ;; Outline style
     "outline-none"

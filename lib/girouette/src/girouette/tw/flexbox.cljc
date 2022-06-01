@@ -3,6 +3,7 @@
 
 (def components
   [{:id :flex-grow
+    :since-version [:tw 2]
     :rules "
     flex-grow = <'flex-'>? <'grow'> (<'-'> flex-grow-value)?
     flex-grow-value = number | fraction
@@ -15,6 +16,7 @@
 
 
    {:id :flex-shrink
+    :since-version [:tw 2]
     :rules "
     flex-shrink = <'flex-'>? <'shrink'> (<'-'> flex-shrink-value)?
     flex-shrink-value = number | fraction
@@ -27,6 +29,7 @@
 
 
    {:id :flex-basis
+    :since-version [:tw 2]
     :rules "
     flex-basis = <'flex-'>? <'basis'> (<'-'> flex-basis-value)?
     flex-basis-value = number | length | length-unit | fraction | percentage | full-100% | auto
@@ -43,6 +46,7 @@
 
 
    {:id :flex-shorthand
+    :since-version [:tw 2]
     :rules "
     flex-shorthand = <'flex-'> (flex-shorthand-1-arg | flex-shorthand-2-args | flex-shorthand-3-args)
     flex-shorthand-1-arg = number | fraction | 'auto' | 'initial' | 'none'
@@ -78,6 +82,7 @@
 
 
    {:id :flex-direction
+    :since-version [:tw 2]
     :rules "
     flex-direction = <'flex-'> ('row' | 'row-reverse' | 'col' | 'col-reverse')
     "
@@ -89,6 +94,7 @@
 
 
    {:id :flex-wrap
+    :since-version [:tw 2]
     :rules "
     flex-wrap = <'flex-'> ('wrap' | 'wrap-reverse' | 'nowrap')
     "
@@ -97,6 +103,7 @@
 
 
    {:id :order
+    :since-version [:tw 2]
     :rules "
     order = signus? <'order-'> order-param
     order-param = integer | 'first' | 'last' | 'none'

@@ -4,6 +4,7 @@
 
 (def components
   [{:id :transition-property
+    :since-version [:tw 2]
     :rules "
     transition-property = <'transition'> (<'-'> ('none' | 'all' | 'colors' |
                                                  'opacity' | 'shadow' | 'transform'))?
@@ -22,6 +23,7 @@
 
 
    {:id :transition-duration
+    :since-version [:tw 2]
     :rules "
     transition-duration = <'duration-'> (number | time)
     "
@@ -31,6 +33,7 @@
 
 
    {:id :transition-timing-function
+    :since-version [:tw 2]
     :rules "
     transition-timing-function = <'ease-'> ('linear' | 'in' | 'out' | 'in-out')
     "
@@ -42,6 +45,7 @@
 
 
    {:id :transition-delay
+    :since-version [:tw 2]
     :rules "
     transition-delay = <'delay-'> (number | time)
     "
@@ -51,6 +55,7 @@
 
 
    {:id :animation
+    :since-version [:tw 2]
     :rules "
     animation = <'animate-'> ('none' | 'spin' | 'ping' | 'pulse' | 'bounce')
     "

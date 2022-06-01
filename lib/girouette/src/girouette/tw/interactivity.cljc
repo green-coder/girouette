@@ -5,6 +5,7 @@
 
 (def components
   [{:id :accent-color
+    :since-version [:tw 3]
     :rules "
     accent-color = <'accent-'> ('inherit' | 'auto' | color)
     "
@@ -15,6 +16,7 @@
                                (color->css (read-color color)))})}
 
    {:id :appearance
+    :since-version [:tw 2]
     :rules "
     appearance = 'appearance-none'
     "
@@ -23,6 +25,7 @@
 
 
    {:id :cursor
+    :since-version [:tw 2]
     :rules "
     cursor = <'cursor-'> ('auto' | 'default' | 'pointer' | 'wait' |
                           'text' | 'move' | 'help' | 'not-allowed' |
@@ -39,7 +42,21 @@
               {:cursor type})}
 
 
+   {:id :outline
+    :since-version [:tw 2]
+    :removed-in-version [:tw 3]
+    :rules "
+    outline = <'outline-'> ('none' | 'white' | 'black')
+    "
+    :garden (fn [{[type] :component-data}]
+              {:outline ({"none" "2px solid transparent"
+                          "white" "2px dotted white"
+                          "black" "2px dotted black"} type)
+               :outline-offset "2px"})}
+
+
    {:id :pointer-events
+    :since-version [:tw 2]
     :rules "
     pointer-events = <'pointer-events-'> ('none' | 'auto')
     "
@@ -48,6 +65,7 @@
 
 
    {:id :resize
+    :since-version [:tw 2]
     :rules "
     resize = <'resize'> (<'-'> ('none' | 'x' | 'y'))?
     "
@@ -59,6 +77,7 @@
 
 
    {:id :scroll-behavior
+    :since-version [:tw 3]
     :rules "
     scroll-behavior = <'scroll-'> ('auto' | 'smooth')
     "
@@ -67,6 +86,7 @@
 
 
    {:id :scroll-margin
+    :since-version [:tw 3]
     :rules "
     scroll-margin = signus? <'scroll-m'> (direction | axis)? <'-'> scroll-margin-value
     scroll-margin-value = number | length | length-unit
@@ -99,6 +119,7 @@
 
 
    {:id :scroll-padding
+    :since-version [:tw 3]
     :rules "
     scroll-padding = signus? <'scroll-p'> (direction | axis)? <'-'> scroll-padding-value
     scroll-padding-value = number | length | length-unit | fraction | percentage
@@ -134,6 +155,7 @@
 
 
    {:id :scroll-snap-align
+    :since-version [:tw 3]
     :rules "
     scroll-snap-align = <'snap-'> ('start' | 'end' | 'center' | (<'align-'> 'none'))
     "
@@ -142,6 +164,7 @@
 
 
    {:id :scroll-snap-stop
+    :since-version [:tw 3]
     :rules "
     scroll-snap-stop = <'snap-'> ('normal' | 'always')
     "
@@ -150,6 +173,7 @@
 
 
    {:id :scroll-snap-type
+    :since-version [:tw 3]
     :rules "
     scroll-snap-type = <'snap-'> (scroll-snap-type-dir | scroll-snap-type-strictness)
     scroll-snap-type-dir = 'none' | 'x' | 'y' | 'both'
@@ -169,6 +193,7 @@
 
 
    {:id :touch-action
+    :since-version [:tw 3]
     :rules "
     touch-action = <'touch-'> ('auto' | 'none' |
                                'pan-x' | 'pan-y' |
@@ -180,6 +205,7 @@
 
 
    {:id :user-select
+    :since-version [:tw 2]
     :rules "
     user-select = <'select-'> ('none' | 'text' | 'all' | 'auto')
     "
@@ -188,6 +214,7 @@
 
 
    {:id :will-change
+    :since-version [:tw 3]
     :rules "
     will-change = <'will-change-'> ('auto' | 'scroll' | 'contents' | 'transform')
     "

@@ -2,6 +2,7 @@
 
 (def components
   [{:id :screen-reader
+    :since-version [:tw 2]
     :rules "
     screen-reader = 'sr-only' | 'not-sr-only'
     "

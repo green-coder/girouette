@@ -1,10 +1,10 @@
 (ns girouette.tw.color-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.color :as color :refer [read-color default-color-map flatten-color-map color->css]]))
+            [girouette.tw.color :as color :refer [read-color flatten-color-map]]))
 
 (deftest read-color-test
   (are [color-data expected-output]
-    (= expected-output (read-color (flatten-color-map default-color-map) color-data))
+    (= expected-output (read-color (flatten-color-map color/tw-v2-colors) color-data))
 
     [:color [:color-rgb "123"]]
     [0x11 0x22 0x33 nil]

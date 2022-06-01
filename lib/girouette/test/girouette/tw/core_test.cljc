@@ -35,6 +35,22 @@
                  :after-rules #{3}}
               5 {:ordering-level 0}})))))
 
+(deftest version-<-test
+  (is (false? (#'gc/version-< [:tw 2] [:tw 1])))
+  (is (false? (#'gc/version-< [:tw 2] [:tw 1 9])))
+  (is (false? (#'gc/version-< [:tw 2] [:tw 2])))
+  (is (false? (#'gc/version-< [:tw 2] [:tw 2 0])))
+  (is (true?  (#'gc/version-< [:tw 2] [:tw 2 0 1])))
+  (is (true?  (#'gc/version-< [:tw 2] [:tw 3]))))
+
+(deftest version-<=-test
+  (is (false? (#'gc/version-<= [:tw 2] [:tw 1])))
+  (is (false? (#'gc/version-<= [:tw 2] [:tw 1 9])))
+  (is (true?  (#'gc/version-<= [:tw 2] [:tw 2])))
+  (is (true?  (#'gc/version-<= [:tw 2] [:tw 2 0])))
+  (is (true?  (#'gc/version-<= [:tw 2] [:tw 2 0 1])))
+  (is (true?  (#'gc/version-<= [:tw 2] [:tw 3]))))
+
 (deftest make-api-test
   (testing "The API still work without any color and font family."
     (let [{:keys [class-name->garden]} (make-api layout/components {})]

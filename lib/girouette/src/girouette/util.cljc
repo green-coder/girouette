@@ -3,6 +3,9 @@
   (:refer-clojure :exclude [group-by])
   (:require [clojure.core :as cc]))
 
+(defmacro implies [x y]
+  `(or (not ~x) ~y))
+
 (defmacro comp-> [& args]
   `(comp ~@(reverse args)))
 
@@ -44,9 +47,10 @@
 #_ (index-by first second [[:a 1] [:a 2] [:b 3] [:a 4] [:b 5]])
 
 (defn into-one-vector
-  "Flattens the outer vectors in the provided data and returns one vector with the data inside."
+  "Flattens the outer vectors/lists/seqs/sets in the provided data and returns one vector with the data inside."
   [data]
-  (if (vector? data)
+  (if (or (sequential? data)
+          (set? data))
     (into [] (mapcat into-one-vector) data)
     [data]))
 

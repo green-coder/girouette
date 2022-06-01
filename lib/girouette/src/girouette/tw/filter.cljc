@@ -13,6 +13,7 @@
 
 (def components
   [{:id :blur
+    :since-version [:tw 3]
     :rules "
     blur = <'blur'> (<'-'> (blur-value-fix | blur-value-number))?
     blur-value-fix = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none'
@@ -35,6 +36,7 @@
 
 
    {:id :brightness
+    :since-version [:tw 3]
     :rules "
     brightness = <'brightness-'> (number | percentage | fraction)
     "
@@ -46,6 +48,7 @@
 
 
    {:id :contrast
+    :since-version [:tw 3]
     :rules "
     contrast = <'contrast-'> (number | percentage | fraction)
     "
@@ -57,6 +60,7 @@
 
 
    {:id :drop-shadow
+    :since-version [:tw 3]
     :rules "
     drop-shadow = <'drop-shadow'> (<'-'> drop-shadow-value)?
     <drop-shadow-value> = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none'
@@ -74,6 +78,7 @@
 
 
    {:id :grayscale
+    :since-version [:tw 3]
     :rules "
     grayscale = <'grayscale'> (<'-'> (number | percentage | fraction))?
     "
@@ -87,6 +92,7 @@
 
 
    {:id :hue-rotate
+    :since-version [:tw 3]
     :rules "
     hue-rotate = <'hue-rotate-'> (number | angle)
     "
@@ -98,6 +104,7 @@
 
 
    {:id :invert
+    :since-version [:tw 3]
     :rules "
     invert = <'invert'> (<'-'> (number | percentage | fraction))?
     "
@@ -111,6 +118,7 @@
 
 
    {:id :saturate
+    :since-version [:tw 3]
     :rules "
     saturate = <'saturate-'> (number | percentage | fraction)
     "
@@ -122,6 +130,7 @@
 
 
    {:id :sepia
+    :since-version [:tw 3]
     :rules "
     sepia = <'sepia'> (<'-'> (number | percentage | fraction))?
     "
@@ -135,6 +144,7 @@
 
 
    {:id :backdrop-blur
+    :since-version [:tw 3]
     :rules "
     backdrop-blur = <'backdrop-blur'> (<'-'> (backdrop-blur-value-fix | backdrop-blur-value-number))?
     backdrop-blur-value-fix = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none'
@@ -158,6 +168,7 @@
 
 
    {:id :backdrop-brightness
+    :since-version [:tw 3]
     :rules "
     backdrop-brightness = <'backdrop-brightness-'> (number | percentage | fraction)
     "
@@ -169,6 +180,7 @@
 
 
    {:id :backdrop-contrast
+    :since-version [:tw 3]
     :rules "
     backdrop-contrast = <'backdrop-contrast-'> (number | percentage | fraction)
     "
@@ -180,6 +192,7 @@
 
 
    {:id :backdrop-grayscale
+    :since-version [:tw 3]
     :rules "
     backdrop-grayscale = <'backdrop-grayscale'> (<'-'> (number | percentage | fraction))?
     "
@@ -193,6 +206,7 @@
 
 
    {:id :backdrop-hue-rotate
+    :since-version [:tw 3]
     :rules "
     backdrop-hue-rotate = <'backdrop-hue-rotate-'> (number | angle)
     "
@@ -204,6 +218,7 @@
 
 
    {:id :backdrop-invert
+    :since-version [:tw 3]
     :rules "
     backdrop-invert = <'backdrop-invert'> (<'-'> (number | percentage | fraction))?
     "
@@ -217,6 +232,7 @@
 
 
    {:id :backdrop-opacity
+    :since-version [:tw 3]
     :rules "
     backdrop-opacity = <'backdrop-opacity-'> (number | percentage | fraction)
     "
@@ -228,6 +244,7 @@
 
 
    {:id :backdrop-saturate
+    :since-version [:tw 3]
     :rules "
     backdrop-saturate = <'backdrop-saturate-'> (number | percentage | fraction)
     "
@@ -239,6 +256,7 @@
 
 
    {:id :backdrop-sepia
+    :since-version [:tw 3]
     :rules "
     backdrop-sepia = <'backdrop-sepia'> (<'-'> (number | percentage | fraction))?
     "

@@ -1,27 +1,72 @@
 (ns girouette.tw.effect-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.default-api :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [tw-v2-class-name->garden
+                                              tw-v3-class-name->garden]]))
 
-(deftest component-test
+(deftest component-v2-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+    (= expected-garden (tw-v2-class-name->garden class-name))
 
     ;; Box shadow v2
-    ;;"shadow"
-    ;;[".shadow" {:--gi-shadow "0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06)"
-    ;;            :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-    ;;
-    ;;"shadow-none"
-    ;;[".shadow-none" {:--gi-shadow "0 0 #0000"
-    ;;                 :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-    ;;
-    ;;"shadow-inner"
-    ;;[".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0,0.06)"
-    ;;                  :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-    ;;
-    ;;"shadow-2xl"
-    ;;[".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0,0.25)"
-    ;;                :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+    "shadow"
+    [".shadow" {:--gi-shadow "0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06)"
+                :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    "shadow-none"
+    [".shadow-none" {:--gi-shadow "0 0 #0000"
+                     :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    "shadow-inner"
+    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0,0.06)"
+                      :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    "shadow-2xl"
+    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0,0.25)"
+                    :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]))
+
+
+;; The v3 components which are incompatible with v2.
+(deftest component-v3-test
+  (are [class-name expected-garden]
+    (= expected-garden (tw-v3-class-name->garden class-name))
+
+    ;; Box shadow v3
+    "shadow"
+    [".shadow" {:--gi-shadow         "0 1px 3px 0 rgba(0,0,0/0.1),0 1px 2px -1px rgba(0,0,0/0.1)"
+                :--gi-shadow-colored "0 1px 3px 0 var(--gi-shadow-color),0 1px 2px -1px var(--gi-shadow-color)"
+                :box-shadow          "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    "shadow-none"
+    [".shadow-none" {:--gi-shadow         "0 0 #0000",
+                     :--gi-shadow-colored "0 0 var(--gi-shadow-color)",
+                     :box-shadow          "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    "shadow-inner"
+    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0/0.05)",
+                      :--gi-shadow-colored "inset 0 2px 4px 0 var(--gi-shadow-color)"
+                      :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    "shadow-2xl"
+    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0/0.25)",
+                    :--gi-shadow-colored "0 25px 50px -12px var(--gi-shadow-color)"
+                    :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
+
+    ;; Box shadow color
+    "shadow-inherit"
+    [".shadow-inherit" {:--gi-shadow-color "inherit"
+                        :--gi-shadow "var(--gi-shadow-colored)"}]
+
+    "shadow-current"
+    [".shadow-current" {:--gi-shadow-color "currentColor"
+                        :--gi-shadow "var(--gi-shadow-colored)"}]
+
+    "shadow-cyan-500-50"
+    [".shadow-cyan-500-50" {:--gi-shadow-color "#06b6d47f"
+                            :--gi-shadow "var(--gi-shadow-colored)"}]
+
+    "shadow-cyan-500/50"
+    [".shadow-cyan-500\\/50" {:--gi-shadow-color "#06b6d47f"
+                              :--gi-shadow "var(--gi-shadow-colored)"}]
 
     ;; Opacity
     "opacity-0"
@@ -130,47 +175,3 @@
 
     "bg-blend-luminosity"
     [".bg-blend-luminosity" {:background-blend-mode "luminosity"}]))
-
-
-;; The v3 components which are incompatible with v2.
-(deftest component-v3-test
-  (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
-
-    ;; Box shadow v3
-    "shadow"
-    [".shadow" {:--gi-shadow         "0 1px 3px 0 rgba(0,0,0/0.1),0 1px 2px -1px rgba(0,0,0/0.1)"
-                :--gi-shadow-colored "0 1px 3px 0 var(--gi-shadow-color),0 1px 2px -1px var(--gi-shadow-color)"
-                :box-shadow          "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-
-    "shadow-none"
-    [".shadow-none" {:--gi-shadow         "0 0 #0000",
-                     :--gi-shadow-colored "0 0 var(--gi-shadow-color)",
-                     :box-shadow          "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-
-    "shadow-inner"
-    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0/0.05)",
-                      :--gi-shadow-colored "inset 0 2px 4px 0 var(--gi-shadow-color)"
-                      :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-
-    "shadow-2xl"
-    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0/0.25)",
-                    :--gi-shadow-colored "0 25px 50px -12px var(--gi-shadow-color)"
-                    :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
-
-    ;; Box shadow color
-    "shadow-inherit"
-    [".shadow-inherit" {:--gi-shadow-color "inherit"
-                        :--gi-shadow "var(--gi-shadow-colored)"}]
-
-    "shadow-current"
-    [".shadow-current" {:--gi-shadow-color "currentColor"
-                        :--gi-shadow "var(--gi-shadow-colored)"}]
-
-    "shadow-cyan-500-50"
-    [".shadow-cyan-500-50" {:--gi-shadow-color "#06b6d47f"
-                            :--gi-shadow "var(--gi-shadow-colored)"}]
-
-    "shadow-cyan-500/50"
-    [".shadow-cyan-500\\/50" {:--gi-shadow-color "#06b6d47f"
-                              :--gi-shadow "var(--gi-shadow-colored)"}]))

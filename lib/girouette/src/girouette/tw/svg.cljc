@@ -4,6 +4,7 @@
 
 (def components
   [{:id :fill
+    :since-version [:tw 2]
     :rules "
     fill = <'fill-'> color
     "
@@ -13,6 +14,7 @@
 
 
    {:id :stroke
+    :since-version [:tw 2]
     :rules "
     stroke = <'stroke-'> color
     "
@@ -22,6 +24,7 @@
 
 
    {:id :stroke-width
+    :since-version [:tw 2]
     :rules "
     stroke-width = <'stroke-'> number
     "

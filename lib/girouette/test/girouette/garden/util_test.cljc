@@ -1,6 +1,6 @@
 (ns girouette.garden.util-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.default-api :refer [class-name->garden]]
+            [girouette.tw.default-api :refer [tw-v3-class-name->garden]]
             [girouette.tw.common :refer [dot]]
             [girouette.garden.util :refer [apply-class-rules]]))
 
@@ -8,7 +8,7 @@
   (are [target-class-name gi-class-names expected-garden]
        (= expected-garden
           (apply-class-rules (dot target-class-name)
-                             (mapv class-name->garden gi-class-names)
+                             (mapv tw-v3-class-name->garden gi-class-names)
                              (mapv dot gi-class-names)))
 
        "my-class"

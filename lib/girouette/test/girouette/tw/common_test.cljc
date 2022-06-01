@@ -3,7 +3,7 @@
     [clojure.test :refer [deftest testing is are]]
     [girouette.tw.common :refer [dot read-number number->double-or-int value-unit->css
                                  div-100 div-4 mul-100]]
-    [girouette.tw.default-api :refer [class-name->garden]]))
+    [girouette.tw.default-api :refer [tw-v3-class-name->garden]]))
 
 (deftest dot-test
   (are [input expected-output]
@@ -104,7 +104,7 @@
 
 (deftest prefixes-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+    (= expected-garden (tw-v3-class-name->garden class-name))
 
     "group-hover:container"
     [".group:hover" [".group-hover\\:container" {:width "100%"}]]
@@ -209,7 +209,7 @@
 
 (deftest arbitrary-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+    (= expected-garden (tw-v3-class-name->garden class-name))
 
     "hover:[mask-type:alpha]"
     [".hover\\:\\[mask-type\\:alpha\\]"

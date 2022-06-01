@@ -4,6 +4,7 @@
 
 (def components
   [{:id :padding
+    :since-version [:tw 2]
     :rules "
     padding = signus? <'p'> (direction | axis)? <'-'> padding-value
     padding-value = number | length | length-unit
@@ -31,6 +32,7 @@
 
 
    {:id :margin
+    :since-version [:tw 2]
     :rules "
     margin = signus? <'m'> (direction | axis)? <'-'> margin-value
     margin-value = number | length | length-unit | auto
@@ -56,7 +58,9 @@
                         (map (fn [direction] [(keyword (str "margin-" direction)) value-css]))
                         directions))))}
 
+
    {:id :space-between
+    :since-version [:tw 2]
     :rules "
     space-between = signus? <'space-'> axis <'-'> space-between-value (<'-'> space-between-reverse)?
     space-between-value = number | length | length-unit

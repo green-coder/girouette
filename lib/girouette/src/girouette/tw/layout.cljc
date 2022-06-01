@@ -4,6 +4,7 @@
 
 (def components
   [{:id :aspect-ratio
+    :since-version [:tw 3]
     :rules "
     aspect-ratio = <'aspect-'> (aspect-ratio-fixed | aspect-ratio-as-ratio)
     aspect-ratio-fixed = 'auto' | 'square' | 'video'
@@ -20,6 +21,7 @@
 
 
    {:id :container
+    :since-version [:tw 2]
     :rules "
     container = <'container'>
     "
@@ -30,6 +32,7 @@
 
 
    {:id :columns
+    :since-version [:tw 3]
     :rules  "
     columns = <'columns-'> (columns-count | columns-width | columns-count <'-'> columns-width)
     columns-count = integer | 'auto'
@@ -65,6 +68,7 @@
 
 
    {:id :break-after
+    :since-version [:tw 3]
     :rules "
     break-after = <'break-after-'> ('auto' | 'avoid' | 'all' | 'avoid-page' |
                                     'page' | 'left' | 'right' | 'column')
@@ -74,6 +78,7 @@
 
 
    {:id :break-before
+    :since-version [:tw 3]
     :rules "
     break-before = <'break-before-'> ('auto' | 'avoid' | 'all' | 'avoid-page' |
                                       'page' | 'left' | 'right' | 'column')
@@ -83,6 +88,7 @@
 
 
    {:id :break-inside
+    :since-version [:tw 3]
     :rules "
     break-inside = <'break-inside-'> ('auto' | 'avoid' | 'avoid-page' | 'avoid-column')
     "
@@ -91,6 +97,7 @@
 
 
    {:id :box-decoration-break
+    :since-version [:tw 3]
     :rules "
     box-decoration-break = <'box-decoration-'> ('clone' | 'slice')
     "
@@ -99,6 +106,7 @@
 
 
    {:id :box-sizing
+    :since-version [:tw 2]
     :rules "
     box-sizing = <'box-'> ('border' | 'content')
     "
@@ -109,6 +117,7 @@
 
 
    {:id :display
+    :since-version [:tw 2]
     :rules "
     display = 'block' | 'inline-block' | 'inline' | 'flex' | 'inline-flex' |
         'table' | 'inline-table' | 'table-caption' | 'table-cell' | 'table-column' |
@@ -122,6 +131,7 @@
 
 
    {:id :floats
+    :since-version [:tw 2]
     :rules "
     floats = <'float-'> ('left' | 'right' | 'none')
     "
@@ -130,6 +140,7 @@
 
 
    {:id :clear
+    :since-version [:tw 2]
     :rules "
     clear = <'clear-'> ('left' | 'right' | 'both' | 'none')
     "
@@ -137,6 +148,7 @@
               {:clear direction})}
 
    {:id :isolation
+    :since-version [:tw 3]
     :rules "
     isolation = 'isolate' | <'isolation-'> 'auto'
     "
@@ -144,6 +156,7 @@
               {:isolation isolation})}
 
    {:id :object-fit
+    :since-version [:tw 2]
     :rules "
     object-fit = <'object-'> ('contain' | 'cover' | 'fill' | 'none' | 'scale-down')
     "
@@ -152,6 +165,7 @@
 
 
    {:id :object-position
+    :since-version [:tw 2]
     :rules  "
     object-position = <'object-'> object-position-side
     <object-position-side> = 'left' | 'left-bottom' | 'left-top' |
@@ -163,6 +177,7 @@
 
 
    {:id :overflow
+    :since-version [:tw 2]
     :rules "
     overflow = <'overflow-'> (axis <'-'>)? overflow-mode
     overflow-mode = 'auto' | 'hidden' | 'clip' | 'visible' | 'scroll'
@@ -174,6 +189,7 @@
 
 
    {:id :overscroll
+    :since-version [:tw 2]
     :rules "
     overscroll = <'overscroll-'> (axis <'-'>)? overscroll-mode
     overscroll-mode = 'auto' | 'contain' | 'none'
@@ -185,6 +201,7 @@
 
 
    {:id :position
+    :since-version [:tw 2]
     :rules "
     position = 'static' | 'fixed' | 'absolute' | 'relative' | 'sticky'
     "
@@ -193,6 +210,7 @@
 
 
    {:id :positioning
+    :since-version [:tw 2]
     :rules "
     positioning = signus? positioning-mode <'-'> positioning-value
     positioning-mode = 'top' | 'right' | 'bottom' | 'left' | #'inset(-x|-y)?'
@@ -220,6 +238,7 @@
 
 
    {:id :visibility
+    :since-version [:tw 2]
     :rules "
     visibility = 'visible' | 'invisible'
     "
@@ -229,6 +248,7 @@
 
 
    {:id :z-index
+    :since-version [:tw 2]
     :rules "
     z-index = <'z-'> (integer | auto)
     "

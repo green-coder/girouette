@@ -10,7 +10,7 @@
   placeholder-pseudo-element)
 
 
-(def default-font-family-map
+(def tw-v2-font-family-map
   {"sans" "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
    "serif" "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif"
    "mono" "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"})
@@ -29,6 +29,7 @@
 
 (def components
   [{:id :font-family
+    :since-version [:tw 2]
     :rules "
     font-family = <'font-'> font-family-name
     "
@@ -38,6 +39,7 @@
 
 
    {:id :font-size
+    :since-version [:tw 2]
     :rules "
     font-size = <'text-'> ('xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' |
                            '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl')
@@ -62,6 +64,7 @@
 
    ;; This is an extra, not from Tailwind.
    {:id :font-size-2
+    :since-version [:tw 2] ;; Marked as [:tw 2] to fit the chronology of accretion.
     :rules "
     font-size-2 = <'font-size-'> (number | length | fraction | percentage)
     "
@@ -74,6 +77,7 @@
 
 
    {:id :font-smoothing
+    :since-version [:tw 2]
     :rules "
     font-smoothing = 'antialiased' | 'subpixel-antialised'
     "
@@ -86,6 +90,7 @@
 
 
    {:id :font-style
+    :since-version [:tw 2]
     :rules "
     font-style = 'italic' | 'not-italic'
     "
@@ -96,6 +101,7 @@
 
 
    {:id :font-weight
+    :since-version [:tw 2]
     :rules "
     font-weight = <'font-'> ('thin' | 'extralight' | 'light' | 'normal' |
                              'medium' | 'semibold' | 'bold' | 'extrabold' | 'black')
@@ -113,6 +119,7 @@
 
 
    {:id :font-variant-numeric
+    :since-version [:tw 2]
     :rules "
     font-variant-numeric = 'normal-nums' | 'ordinal' | 'slashed-zero' | 'lining-nums' |
                            'oldstyle-nums' | 'proportional-nums' | 'tabular-nums' |
@@ -123,6 +130,7 @@
 
 
    {:id :letter-spacing
+    :since-version [:tw 2]
     :rules "
     letter-spacing = <'tracking-'> ('tighter' | 'tight' | 'normal' |
                                     'wide' | 'wider' | 'widest')
@@ -138,6 +146,7 @@
 
 
    {:id :line-height
+    :since-version [:tw 2]
     :rules "
     line-height = <'leading-'> (line-height-size-name | number)
     line-height-size-name = 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'
@@ -158,6 +167,7 @@
 
    ;; This is an extra, not from Tailwind.
    {:id :line-height-2
+    :since-version [:tw 2] ;; Marked as [:tw 2] to fit the chronology of accretion.
     :rules "
     line-height-2 = <'line-height-'> (number | length | fraction | percentage)
     "
@@ -168,6 +178,7 @@
 
 
    {:id :list-style-type
+    :since-version [:tw 2]
     :rules "
     list-style-type = <'list-'> ('none' | 'disc' | 'decimal')
     "
@@ -176,6 +187,7 @@
 
 
    {:id :list-style-position
+    :since-version [:tw 2]
     :rules "
     list-style-position = <'list-'> ('inside' | 'outside')
     "
@@ -184,6 +196,7 @@
 
 
    {:id :placeholder-color
+    :since-version [:tw 2]
     :rules "
     placeholder-color = <'placeholder-'> color
     "
@@ -202,6 +215,7 @@
 
 
    {:id :placeholder-opacity
+    :since-version [:tw 2]
     :rules "
     placeholder-opacity = <'placeholder-opacity-'> number
     "
@@ -210,6 +224,7 @@
 
 
    {:id :text-align
+    :since-version [:tw 2]
     :rules "
     text-align = <'text-'> ('left' | 'center' | 'right' | 'justify')
     "
@@ -218,6 +233,7 @@
 
 
    {:id :text-color
+    :since-version [:tw 2]
     :rules "
     text-color = <'text-'> color
     "
@@ -235,6 +251,7 @@
 
 
    {:id :text-opacity
+    :since-version [:tw 2]
     :rules "
     text-opacity = <'text-opacity-'> number
     "
@@ -243,6 +260,7 @@
 
 
    {:id :text-decoration
+    :since-version [:tw 2]
     :rules "
     text-decoration = 'underline' | 'line-through' | 'no-underline'
     "
@@ -253,6 +271,7 @@
 
 
    {:id :text-decoration-color
+    :since-version [:tw 3]
     :rules "
     text-decoration-color = <'decoration-'> ('inherit' | color)
     "
@@ -263,6 +282,7 @@
 
 
    {:id :text-decoration-style
+    :since-version [:tw 3]
     :rules "
     text-decoration-style = <'decoration-'> ('solid' | 'double' | 'dotted' | 'dashed' | 'wavy')
     "
@@ -271,6 +291,7 @@
 
 
    {:id :text-decoration-thickness
+    :since-version [:tw 3]
     :rules "
     text-decoration-thickness = <'decoration-'> (text-decoration-thickness-from | text-decoration-thickness-value)
     text-decoration-thickness-from = 'from-font'
@@ -289,6 +310,7 @@
 
 
    {:id :text-underline-offset
+    :since-version [:tw 3]
     :rules "
     text-underline-offset = <'underline-'> (auto | number | length | length-unit | fraction | percentage)
     "
@@ -301,6 +323,7 @@
 
 
    {:id :text-transform
+    :since-version [:tw 2]
     :rules "
     text-transform = 'uppercase' | 'lowercase' | 'capitalize' | 'normal-case'
     "
@@ -312,6 +335,22 @@
 
 
    {:id :text-overflow
+    :since-version [:tw 2]
+    :removed-in-version [:tw 3]
+    :rules "
+    text-overflow = 'truncate' | 'overflow-ellipsis' | 'overflow-clip'
+    "
+    :garden (fn [{[overflow] :component-data}]
+              (case overflow
+                "truncate" {:overflow "hidden"
+                            :text-overflow "ellipsis"
+                            :white-space "nowrap"}
+                "overflow-ellipsis" {:text-overflow "ellipsis"}
+                "overflow-clip" {:text-overflow "clip"}))}
+
+
+   {:id :text-overflow
+    :since-version [:tw 3]
     :rules "
     text-overflow = 'truncate' | 'text-ellipsis' | 'text-clip'
     "
@@ -325,6 +364,7 @@
 
 
    {:id :text-indent
+    :since-version [:tw 3]
     :rules "
     text-indent = <'indent-'> (number | length | length-unit | fraction)
     "
@@ -338,6 +378,7 @@
 
 
    {:id :vertical-alignment
+    :since-version [:tw 2]
     :rules "
     vertical-alignment = <'align-'> ('baseline' | 'top' | 'middle' | 'bottom' |
                                      'text-top' | 'text-bottom' | 'sub' | 'super')
@@ -347,6 +388,7 @@
 
 
    {:id :whitespace-control
+    :since-version [:tw 2]
     :rules "
     whitespace-control = <'whitespace-'> ('normal' | 'nowrap' | 'pre' | 'pre-line' | 'pre-wrap')
     "
@@ -355,6 +397,7 @@
 
 
    {:id :word-break
+    :since-version [:tw 2]
     :rules "
     word-break = <'break-'> ('normal' | 'words' | 'all')
     "
@@ -367,6 +410,7 @@
 
 
    {:id :content
+    :since-version [:tw 3]
     :rules "
     content = <'content-'> <'['> #'[^\\] ]*' <']'>
     "

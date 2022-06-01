@@ -1,10 +1,20 @@
 (ns girouette.tw.interactivity-test
   (:require [clojure.test :refer [deftest testing is are]]
-            [girouette.tw.default-api :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [tw-v2-class-name->garden
+                                              tw-v3-class-name->garden]]))
 
-(deftest component-test
+(deftest component-v2-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+    (= expected-garden (tw-v2-class-name->garden class-name))
+
+    "outline-none"
+    [".outline-none" {:outline "2px solid transparent"
+                      :outline-offset "2px"}]))
+
+
+(deftest component-v3-test
+  (are [class-name expected-garden]
+    (= expected-garden (tw-v3-class-name->garden class-name))
 
     "accent-current"
     [".accent-current" {:accent-color "currentColor"}]

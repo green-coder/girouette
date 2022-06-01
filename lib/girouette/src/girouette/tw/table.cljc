@@ -2,6 +2,7 @@
 
 (def components
   [{:id :border-collapse
+    :since-version [:tw 2]
     :rules "
     border-collapse = <'border-'> ('collapse' | 'separate')
     "
@@ -10,6 +11,7 @@
 
 
    {:id :table-layout
+    :since-version [:tw 2]
     :rules "
     table-layout = <'table-'> ('auto' | 'fixed')
     "

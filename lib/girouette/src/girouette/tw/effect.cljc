@@ -5,7 +5,8 @@
 
 (def components
   [{:id :box-shadow
-    :version [2]
+    :since-version [:tw 2]
+    :removed-in-version [:tw 3]
     :rules "
     box-shadow = <'shadow'> (<'-'> box-shadow-value)?
     box-shadow-value = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inner' | 'none'
@@ -31,7 +32,7 @@
                                   "var(--gi-shadow)")}))}
 
    {:id      :box-shadow
-    :version [3]
+    :since-version [:tw 3]
     :rules   "
     box-shadow = <'shadow'> (<'-'> box-shadow-value)?
     box-shadow-value = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inner' | 'none'
@@ -65,6 +66,7 @@
 
 
    {:id :box-shadow-color
+    :since-version [:tw 2]
     :rules "
     box-shadow-color = <'shadow-'> ('inherit' | color)
     "
@@ -77,6 +79,7 @@
 
 
    {:id :opacity
+    :since-version [:tw 2]
     :rules "
     opacity = <'opacity-'> (number | percentage | fraction)
     "
@@ -85,6 +88,7 @@
 
 
    {:id :mix-blend-mode
+    :since-version [:tw 3]
     :rules "
     mix-blend-mode = <'mix-blend-'> mix-blend-mode-value
     <mix-blend-mode-value> = 'normal' | 'multiply' | 'screen' | 'overlay' |
@@ -98,6 +102,7 @@
 
 
    {:id :background-blend-mode
+    :since-version [:tw 3]
     :rules "
     background-blend-mode = <'bg-blend-'> background-blend-mode-value
     <background-blend-mode-value> = 'normal' | 'multiply' | 'screen' | 'overlay' |

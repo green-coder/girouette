@@ -3,6 +3,7 @@
 
 (def components
   [{:id :grid-template-columns
+    :since-version [:tw 2]
     :rules "
     grid-template-columns = <'grid-cols-'> (integer | none)
     "
@@ -14,6 +15,7 @@
 
 
    {:id :grid-column-auto
+    :since-version [:tw 2]
     :rules "
     grid-column-auto = 'col-auto'
     "
@@ -22,6 +24,7 @@
 
 
    {:id :grid-column-span
+    :since-version [:tw 2]
     :rules "
     grid-column-span = <'col-span-'> (integer | full)
     "
@@ -34,6 +37,7 @@
 
 
    {:id :grid-column-start
+    :since-version [:tw 2]
     :rules "
     grid-column-start = <'col-start-'> (integer | auto)
     "
@@ -42,6 +46,7 @@
 
 
    {:id :grid-column-end
+    :since-version [:tw 2]
     :rules "
     grid-column-end = <'col-end-'> (integer | auto)
     "
@@ -50,6 +55,7 @@
 
 
    {:id :grid-template-rows
+    :since-version [:tw 2]
     :rules "
     grid-template-rows = <'grid-rows-'> (integer | none)
     "
@@ -61,6 +67,7 @@
 
 
    {:id :grid-row-auto
+    :since-version [:tw 2]
     :rules "
     grid-row-auto = 'row-auto'
     "
@@ -69,6 +76,7 @@
 
 
    {:id :grid-row-span
+    :since-version [:tw 2]
     :rules "
     grid-row-span = <'row-span-'> (integer | full)
     "
@@ -81,6 +89,7 @@
 
 
    {:id :grid-row-start
+    :since-version [:tw 2]
     :rules "
     grid-row-start = <'row-start-'> (integer | auto)
     "
@@ -89,6 +98,7 @@
 
 
    {:id :grid-row-end
+    :since-version [:tw 2]
     :rules "
     grid-row-end = <'row-end-'> (integer | auto)
     "
@@ -97,6 +107,7 @@
 
 
    {:id :grid-auto-flow
+    :since-version [:tw 2]
     :rules "
     grid-auto-flow = <'grid-flow-'> ('row' | 'col' | 'row-dense' | 'col-dense')
     "
@@ -108,6 +119,7 @@
 
 
    {:id :grid-auto-columns
+    :since-version [:tw 2]
     :rules "
     grid-auto-columns = <'auto-cols-'> ('auto' | 'min' | 'max' | 'fr')
     "
@@ -119,6 +131,7 @@
 
 
    {:id :grid-auto-rows
+    :since-version [:tw 2]
     :rules "
     grid-auto-rows = <'auto-rows-'> ('auto' | 'min' | 'max' | 'fr')
     "
@@ -130,6 +143,7 @@
 
 
    {:id :gap
+    :since-version [:tw 2]
     :rules "
     gap = <'gap-'> (axis <'-'>)? gap-value
     gap-value = number | length | length-unit | percentage

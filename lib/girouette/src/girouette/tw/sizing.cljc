@@ -3,6 +3,7 @@
 
 (def components
   [{:id :width
+    :since-version [:tw 2]
     :rules "
     width = <'w-'> (number | length | length-unit | fraction | percentage | full-100% |
                     auto | screen-100vw | min-content | max-content | fit-content)
@@ -17,6 +18,7 @@
 
 
    {:id :min-width
+    :since-version [:tw 2]
     :rules "
     min-width = <'min-w-'> (number | length | length-unit | fraction | percentage | full-100% |
                             auto | screen-100vw | min-content | max-content | fit-content)
@@ -31,6 +33,7 @@
 
 
    {:id     :max-width
+    :since-version [:tw 2]
     :rules  "
     max-width = <'max-w-'> (max-width-fixed-size | max-width-generic-size)
     max-width-fixed-size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' |
@@ -67,6 +70,7 @@
 
 
    {:id :height
+    :since-version [:tw 2]
     :rules "
     height = <'h-'> (number | length | length-unit | fraction | percentage | full-100% |
                      auto | screen-100vh | min-content | max-content | fit-content)
@@ -81,6 +85,7 @@
 
 
    {:id :min-height
+    :since-version [:tw 2]
     :rules "
     min-height = <'min-h-'> (number | length | length-unit | fraction | percentage | full-100% |
                              auto | screen-100vh | min-content | max-content | fit-content)
@@ -95,6 +100,7 @@
 
 
    {:id :max-height
+    :since-version [:tw 2]
     :rules "
     max-height = <'max-h-'> (number | length | length-unit | fraction | percentage | full-100% |
                              none | screen-100vh | min-content | max-content | fit-content)

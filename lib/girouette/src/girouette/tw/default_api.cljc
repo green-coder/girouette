@@ -1,6 +1,6 @@
 (ns girouette.tw.default-api
   (:require
-    [girouette.tw.core :refer [make-api]]
+    [girouette.tw.core :refer [filter-components-by-version make-api]]
     [girouette.tw.common :as common]
     [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
@@ -21,7 +21,7 @@
     [girouette.tw.svg :as svg]
     [girouette.tw.accessibility :as accessibility]))
 
-(def default-components
+(def all-tw-components
   [common/components
    layout/components
    flexbox/components
@@ -42,9 +42,23 @@
    accessibility/components])
 
 
-;; This is how to build the API using the default components.
-;; For a customized experience of Girouette, create your own API in the same way, using altered components.
-(let [{:keys [parser class-name->garden]} (make-api default-components {:color-map color/default-color-map
-                                                                        :font-family-map typography/default-font-family-map})]
-  (def parser parser)
-  (def class-name->garden class-name->garden))
+;; The API built using the Tailwind v2 components.
+(let [{:keys [parser class-name->garden]} (-> all-tw-components
+                                              (filter-components-by-version [:tw 2])
+                                              (make-api {:color-map color/tw-v2-colors
+                                                         :font-family-map typography/tw-v2-font-family-map}))]
+  (def tw-v2-parser parser)
+  (def tw-v2-class-name->garden class-name->garden))
+
+
+;; The API built using the Tailwind v3 components.
+(let [{:keys [parser class-name->garden]} (-> all-tw-components
+                                              (filter-components-by-version [:tw 3])
+                                              (make-api {:color-map color/tw-v3-unified-colors-extended
+                                                         :font-family-map typography/tw-v2-font-family-map}))]
+  (def tw-v3-parser parser)
+  (def tw-v3-class-name->garden class-name->garden))
+
+
+;; Feel free to fork the snippet above and add your own components,
+;; as that's what Girouette was made for: customization.

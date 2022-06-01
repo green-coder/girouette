@@ -4,6 +4,7 @@
 
 (def components
   [{:id :transform
+    :since-version [:tw 2]
     :rules "
     transform = 'transform' | 'transform-gpu' | 'transform-none'
     "
@@ -41,6 +42,7 @@
 
 
    {:id :transform-origin
+    :since-version [:tw 2]
     :rules  "
     transform-origin = <'origin-'> ('top-left'| 'top' | 'top-right' |
                                     'left' | 'center' | 'right' |
@@ -51,6 +53,7 @@
 
 
    {:id :scale
+    :since-version [:tw 2]
     :rules "
     scale = signus? <'scale-'> (axis <'-'>)? scale-value
     scale-value = number
@@ -69,6 +72,7 @@
 
 
    {:id :rotate
+    :since-version [:tw 2]
     :rules "
     rotate = signus? <'rotate-'> rotate-value
     rotate-value = number | angle
@@ -81,6 +85,7 @@
 
 
    {:id :translate
+    :since-version [:tw 2]
     :rules "
     translate = signus? <'translate-'> axis <'-'> translate-value
     translate-value = number | length | length-unit | fraction | percentage | full-100%
@@ -99,6 +104,7 @@
 
 
    {:id :skew
+    :since-version [:tw 2]
     :rules  "
     skew = signus? <'skew-'> axis <'-'> skew-value
     skew-value = number | angle

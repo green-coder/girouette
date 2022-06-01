@@ -4,6 +4,7 @@
 
 (def components
   [{:id :border-radius
+    :since-version [:tw 2]
     :rules "
     border-radius = <'rounded'> (<'-'> border-radius-position)? (<'-'> border-radius-size)?
     border-radius-position  = 't' | 'r' | 'b' | 'l' | 'tl' | 'tr' | 'br' | 'bl'
@@ -40,6 +41,7 @@
 
 
    {:id :border-width
+    :since-version [:tw 2]
     :rules "
     border-width = <'border'> (<'-'> (axis | direction))? (<'-'> border-width-value)?
     border-width-value = number | length | length-unit
@@ -66,6 +68,7 @@
 
 
    {:id :border-color
+    :since-version [:tw 2]
     :rules "
     border-color = <'border'> (<'-'> (axis | direction))? <'-'> color
     "
@@ -100,6 +103,7 @@
 
 
    {:id :border-opacity
+    :since-version [:tw 2]
     :rules "
     border-opacity = <'border-opacity-'> number
     "
@@ -108,6 +112,7 @@
 
 
    {:id :border-style
+    :since-version [:tw 2]
     :rules "
     border-style = <'border-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'hidden' | 'none')
     "
@@ -116,6 +121,7 @@
 
 
    {:id :divide-width
+    :since-version [:tw 2]
     :rules "
     divide-width = <'divide-'> axis (<'-'> (divide-width-value | divide-width-reverse))?
     divide-width-value = number | length | length-unit
@@ -142,6 +148,7 @@
 
 
    {:id :divide-color
+    :since-version [:tw 2]
     :rules "
     divide-color = <'divide-'> color
     "
@@ -160,6 +167,7 @@
 
 
    {:id :divide-opacity
+    :since-version [:tw 2]
     :rules "
     divide-opacity = <'divide-opacity-'> number
     "
@@ -168,6 +176,7 @@
 
 
    {:id :divide-style
+    :since-version [:tw 2]
     :rules "
     divide-style = <'divide-'> ('solid' | 'dashed' | 'dotted' | 'double' | 'none')
     "
@@ -177,6 +186,7 @@
 
 
    {:id :outline-width
+    :since-version [:tw 3]
     :rules "
     outline-width = <'outline-'> (number | length | length-unit)
     "
@@ -185,6 +195,7 @@
 
 
    {:id :outline-color
+    :since-version [:tw 3]
     :rules "
     outline-color = <'outline-'> ('inherit' | color)
     "
@@ -195,6 +206,7 @@
 
 
    {:id :outline-style
+    :since-version [:tw 3]
     :rules "
     outline-style = <'outline'> (<'-'> ('none' | 'dashed' | 'dotted' | 'double' | 'hidden'))?
     "
@@ -212,6 +224,7 @@
 
 
    {:id :outline-offset
+    :since-version [:tw 3]
     :rules "
     outline-offset = <'outline-offset-'> (number | length | length-unit)
     "
@@ -220,6 +233,7 @@
 
 
    {:id :ring-width
+    :since-version [:tw 2]
     :rules "
     ring-width = <'ring'> (<'-'> ('inset' | number | length | length-unit))?
     "
@@ -236,6 +250,7 @@
 
 
    {:id :ring-color
+    :since-version [:tw 2]
     :rules "
     ring-color = <'ring-'> color
     "
@@ -251,6 +266,7 @@
 
 
    {:id :ring-opacity
+    :since-version [:tw 2]
     :rules "
     ring-opacity = <'ring-opacity-'> number
     "
@@ -259,6 +275,7 @@
 
 
    {:id :ring-offset-width
+    :since-version [:tw 2]
     :rules "
     ring-offset-width = <'ring-offset-'> (number | length | length-unit)
     "
@@ -270,6 +287,7 @@
 
 
    {:id :ring-offset-color
+    :since-version [:tw 2]
     :rules "
     ring-offset-color = <'ring-offset-'> color
     "

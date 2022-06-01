@@ -5,6 +5,7 @@
 
 (def components
   [{:id :background-attachment
+    :since-version [:tw 2]
     :rules "
     background-attachment = <'bg-'> ('fixed' | 'local' | 'scroll')
     "
@@ -13,6 +14,7 @@
 
 
    {:id :background-clip
+    :since-version [:tw 2]
     :rules "
     background-clip = <'bg-clip-'> ('border' | 'padding' | 'content' | 'text')
     "
@@ -24,6 +26,7 @@
 
 
    {:id :background-color
+    :since-version [:tw 2]
     :rules "
     background-color = <'bg-'> color
     "
@@ -39,14 +42,9 @@
                        :background-color (color->css [r g b "var(--gi-bg-opacity)"])})))))
     :before-rules #{:background-opacity}}
 
-   {:id :background-origin
-    :rules "
-    background-origin = <'bg-origin-'> ( 'border' | 'padding' | 'content' )
-    "
-    :garden (fn [{[value] :component-data}]
-              {:background-origin (str value "-box")})}
 
    {:id :background-opacity
+    :since-version [:tw 2]
     :rules "
     background-opacity = <'bg-opacity-'> number
     "
@@ -55,6 +53,7 @@
 
 
    {:id :background-origin
+    :since-version [:tw 3]
     :rules "
     background-origin = <'bg-origin-'> ('border' | 'padding' | 'content')
     "
@@ -63,6 +62,7 @@
 
 
    {:id :background-position
+    :since-version [:tw 2]
     :rules "
     background-position = <'bg-'> ('top' | 'center' | 'bottom' |
                                    'left-top' | 'left' | 'left-bottom' |
@@ -73,6 +73,7 @@
 
 
    {:id :background-repeat
+    :since-version [:tw 2]
     :rules "
     background-repeat = <'bg-'> ('repeat' | 'no-repeat' | 'repeat-x' | 'repeat-y' |
                                  <'repeat-'> 'round' | <'repeat-'> 'space')
@@ -82,6 +83,7 @@
 
 
    {:id :background-size
+    :since-version [:tw 2]
     :rules "
     background-size = <'bg-'> ('auto' | 'cover' | 'contain' |
                                <'size-'> background-size-length <'-'> background-size-length)
@@ -101,6 +103,7 @@
 
 
    {:id :background-image
+    :since-version [:tw 2]
     :rules "
     background-image = <'bg-'> 'none' |
                        <'bg-gradient-to-'> ('tr' | 't' | 'tl' | 'l' | 'r' | 'bl' | 'b' | 'br')
@@ -120,6 +123,7 @@
 
 
    {:id :gradient-color-from
+    :since-version [:tw 2]
     :rules "
     gradient-color-from = <'from-'> color
     "
@@ -134,6 +138,7 @@
 
 
    {:id :gradient-color-to
+    :since-version [:tw 2]
     :rules "
     gradient-color-to = <'to-'> color
     "
@@ -143,6 +148,7 @@
 
 
    {:id :gradient-color-via
+    :since-version [:tw 2]
     :rules "
     gradient-color-via = <'via-'> color
     "

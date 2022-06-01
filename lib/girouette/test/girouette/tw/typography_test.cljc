@@ -1,11 +1,11 @@
 (ns girouette.tw.typography-test
   (:require [clojure.test :refer [deftest testing is are]]
             [girouette.tw.typography :refer [placeholder-pseudo-element]]
-            [girouette.tw.default-api :refer [class-name->garden]]))
+            [girouette.tw.default-api :refer [tw-v3-class-name->garden]]))
 
 (deftest component-test
   (are [class-name expected-garden]
-    (= expected-garden (class-name->garden class-name))
+    (= expected-garden (tw-v3-class-name->garden class-name))
 
     ;; Font family
     "font-sans"
