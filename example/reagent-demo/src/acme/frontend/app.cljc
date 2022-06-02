@@ -1,9 +1,9 @@
 (ns acme.frontend.app
-  (:require [reagent.dom :as rdom]))
+  (:require [reagent.dom :as rdom]
+            ["@radix-ui/react-icons" :as Icons]))
 
 (defn simple-example []
   [:main
-
    [:div.bg-white.dark:bg-gray-800.p-10
     [:h1.text-3xl.text-gray-600.dark:text-gray-100 "Dark Mode Test"]]
 
@@ -50,7 +50,13 @@
     [:p.font-medium.text-blueGray-500.font-mono.text-center.mb-3.dark:text-blueGray-400 "shadow-indigo-500/50"]
     [:button.py-2.px-3.mb-4.bg-cyan-500.text-white.font-semibold.rounded-md.shadow-lg.shadow-cyan-500-50.focus:outline-none "Clojure rules"]
     [:button.py-2.px-3.mb-4.bg-blue-500.text-white.font-semibold.rounded-md.shadow-lg.shadow-blue-500-50.focus:outline-none "Clojure rules"]
-    [:button.py-2.px-3.mb-4.bg-indigo-500.text-white.font-semibold.rounded-md.shadow-lg.shadow-indigo-500-50.focus:outline-none "Clojure rules"]]])
+    [:button.py-2.px-3.mb-4.bg-indigo-500.text-white.font-semibold.rounded-md.shadow-lg.shadow-indigo-500-50.focus:outline-none "Clojure rules"]]
+
+   ;; Demonstrate the use of a native component.
+   ;; The Girouette processor does not crash with a recent version of CLJS.
+   [:p
+    "Displays a native JS React component:"
+    [:> Icons/CheckIcon]]])
 
 (defn render []
   (rdom/render [simple-example] (js/document.getElementById "app")))
