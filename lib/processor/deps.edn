@@ -1,8 +1,8 @@
 {:paths   ["src"]
 
- :deps    {org.clojure/clojure          {:mvn/version "1.10.3"}
-           org.clojure/clojurescript    {:mvn/version "1.11.4"}
-           org.clojure/tools.deps.alpha {:mvn/version "0.12.1153"}
+ :deps    {org.clojure/clojure          {:mvn/version "1.11.1"}
+           org.clojure/clojurescript    {:mvn/version "1.11.54"}
+           org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}
            org.clojure/tools.analyzer   {:mvn/version "1.1.0"}
            ;rewrite-clj/rewrite-clj      {:mvn/version "0.6.1"}
            com.nextjournal/beholder     {:mvn/version "1.0.0"}
@@ -13,13 +13,13 @@
            girouette/girouette          {:local/root "../../lib/girouette"}}
 
  :aliases {:test     {:extra-paths ["test"]
-                      :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.63.998"}
+                      :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.66.1034"}
                                     lambdaisland/kaocha-cljs      {:mvn/version "1.0.107"}
                                     lambdaisland/kaocha-junit-xml {:mvn/version "0.0.76"}
                                     org.clojure/test.check        {:mvn/version "1.1.1"}}}
 
            ; clojure -M:outdated --upgrade
-           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "1.5.0"}}
+           :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "1.7.798"}}
                       :main-opts  ["-m" "antq.core"]}
 
            :depstar  {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
