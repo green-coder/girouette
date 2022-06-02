@@ -1,5 +1,39 @@
 ## Unreleased
 
+## Added
+
+- (PR #83) Compatibility with Tailwind `v3.0.23`, except for the Tailwind-styled "arbitrary values" specified between `[` and `]`.
+  Thanks to `jamesnvc` for this large contribution.
+- Added Tailwind v3's "colors" and "extended colors".
+- Added fields `:since-version` and `:removed-in-version` on Girouette components.
+- Added a function to filter components based on a version value. Users can
+  select components for the version they want, e.g. `[:tw 2]` or `[:tw 3]`,
+  making Girouette (hope)fully backward compatible.
+- (Issue #91) Added a more recent v3.0.24 version of Preflight (v3.0.24), selectable via the settings of the Girouette processor.
+
+## Fixed
+
+- (PR #85) Implemented `--gi-divide-*-reverse`.
+  Thanks to `flyingmachine` for the bug report and fix.
+
+## Changed
+
+- (PR #86) Swap hawk for beholder. It results in a faster response of the CSS processor tool while in the watch mode.
+  Thanks to `dpassen` for the contribution.
+- Updated the example project to use the Girouette API setup compatible with Tailwind v3.
+
+## Breaking changes
+
+Some symbols have been renamed to better reflect the multiple versions supported by Girouette:
+- `girouette.tw.color/default-color-map` -> `girouette.tw.color/tw-v2-colors`
+- `girouette.tw.default-api/default-components` -> `girouette.tw.default-api/all-tw-components`
+- `girouette.tw.default-api/class-name->garden` -> `girouette.tw.default-api/tw-v2-class-name->garden`
+- `girouette.tw.typography/default-font-family-map` -> `girouette.tw.typography/tw-v2-font-family-map`
+- `girouette.tw.preflight/preflight` -> `girouette.tw.preflight/preflight-v2_0_3`
+
+The processor's params `preflight?` was replaced by `base-css-rules`, it takes a vector of qualified symbols.
+See the example's config.
+
 ## v0.0.7
 
 ### Fixed
