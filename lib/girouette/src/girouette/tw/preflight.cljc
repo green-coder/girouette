@@ -317,7 +317,7 @@
     {:box-sizing "border-box" ;; 1
      :border-width 0          ;; 2
      :border-style "solid"    ;; 2
-     :border-color "theme('borderColor.DEFAULT', currentColor)"}] ;; 2
+     :border-color "currentColor"}] ;; 2
 
    [(s/before)
     (s/after)
@@ -329,10 +329,10 @@
    ;; 3. Use a more readable tab size.
    ;; 4. Use the user's configured `sans` font-family by default.
    [:html {:line-height 1.5                 ;; 1
-           :-webkit-text-size-adjust "100%" ;; 2
+           :-webkit-text-size-adjust "none" ;; 2
            :-moz-tab-size 4                 ;; 3
            :tab-size 4                      ;; 3
-           :font-family "theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\")"}] ;; 4
+           :font-family "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""}] ;; 4
 
 
    ;; 1. Remove the margin in all browsers.
@@ -373,7 +373,7 @@
     :kbd
     :samp
     :pre
-    {:font-family "theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace)" ;; 1
+    {:font-family "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace" ;; 1
      :font-size "1em"}] ;; 2
 
 
@@ -501,8 +501,8 @@
    ;; 2. Set the default placeholder color to the user's configured gray 400 color.
    [((s/selector :input) placeholder)
     ((s/selector :textarea) placeholder)
-    {:opacity 1                                   ;; 1
-     :color "theme('colors.gray.400', #9ca3af)"}] ;; 2
+    {:opacity 1         ;; 1
+     :color "#9ca3af"}] ;; 2
 
 
    ;; Set the default cursor for buttons.
