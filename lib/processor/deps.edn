@@ -9,8 +9,8 @@
            org.slf4j/slf4j-nop          {:mvn/version "1.7.36"}
 
            garden/garden                {:mvn/version "1.3.10"}
-           girouette/girouette          {:mvn/version "0.0.7"}
-           #_#_girouette/girouette          {:local/root "../../lib/girouette"}}
+           #_#_girouette/girouette          {:mvn/version "0.0.7"}
+           girouette/girouette          {:local/root "../../lib/girouette"}}
 
  :aliases {:test     {:extra-paths ["test"]
                       :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.63.998"}

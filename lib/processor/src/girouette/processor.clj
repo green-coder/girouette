@@ -13,7 +13,6 @@
             [nextjournal.beholder :as beholder]
             [girouette.garden.util :as util]
             [girouette.tw.common :refer [dot]]
-            [girouette.tw.preflight :refer [preflight]]
             [girouette.processor.env :refer [config]])
   (:import (java.io File)
            (java.nio.file Path)))
@@ -153,7 +152,7 @@
     (kw->classes x)))
 
 (defn- spit-output []
-  (let [{:keys [output-format output-file preflight? garden-fn apply-classes]} @config]
+  (let [{:keys [output-format output-file garden-fn base-css-rules apply-classes]} @config]
     ;; NOTE output-file is a string, e.g. "public/style/girouette.css"
     ;; so we should check all parent directories exist
     (let [file-parent (-> (io/file output-file)
@@ -166,7 +165,9 @@
       (with-open [file-writer (io/writer output-file :encoding "UTF-8")]
         (pp/pprint @file-data file-writer))
       (let [all-css-classes (into #{} (mapcat :css-classes) (vals @file-data))
-            predef-garden (if preflight? preflight [])
+            predef-garden (into []
+                                (mapcat (fn [symb] @(requiring-resolve symb)))
+                                base-css-rules)
             class-compositions (when (some? apply-classes)
                                  @(requiring-resolve apply-classes))
             all-garden-defs (-> predef-garden
@@ -232,11 +233,11 @@
      :or {retrieval-method :comprehensive
           output-format :css}} :css
 
-    :keys [dry-run? css-symb garden-fn preflight? watch? verbose? color? apply-classes]
+    :keys [dry-run? css-symb garden-fn base-css-rules watch? verbose? color? apply-classes]
     :or {dry-run? false
          css-symb 'girouette.core/css
          garden-fn 'girouette.tw.default-api/class-name->garden
-         preflight? true
+         base-css-rules []
          watch? false
          verbose? true
          color? true}}]
@@ -262,8 +263,9 @@
           "css-symb should be a qualified symbol")
   (assert (qualified-symbol? garden-fn)
           "garden-fn should be a qualified symbol")
-  (assert (boolean? preflight?)
-          "preflight? should be a boolean")
+  (assert (and (vector? base-css-rules)
+               (every? qualified-symbol? base-css-rules))
+          "base-css-rules should be a vector of qualified symbol")
   (assert (boolean? watch?)
           "watch? should be a boolean")
   (assert (boolean? verbose?)
@@ -275,7 +277,7 @@
           "apply-classes should be a qualified symbol")
 
   (let [garden-fn (cond-> garden-fn
-                    (#{:garden :css} output-format) requiring-resolve)
+                    (contains? #{:garden :css} output-format) requiring-resolve)
         output-file (cond
                       (some? output-file) output-file
                       (= output-format :css) "girouette.css"
@@ -288,7 +290,7 @@
                     :dry-run? dry-run?
                     :css-symb css-symb
                     :garden-fn garden-fn
-                    :preflight? preflight?
+                    :base-css-rules base-css-rules
                     :watch? watch?
                     :verbose? verbose?
                     :color? color?

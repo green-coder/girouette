@@ -12,6 +12,9 @@
                                  :ns-default girouette.processor
                                  :exec-fn    process
                                  :exec-args  {:css           {:output-file "public/style/girouette.css"}
+                                              :base-css-rules [;girouette.tw.preflight/preflight-v2_0_3
+                                                               girouette.tw.preflight/preflight-v3_0_24
+                                                               acme.frontend.my-css/my-base-css-rules]
                                               :garden-fn     acme.frontend.my-grammar/class-name->garden
                                               :apply-classes acme.frontend.my-css/composed-classes
                                               :watch?        true
