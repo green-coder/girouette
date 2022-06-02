@@ -39,6 +39,9 @@ This "on demand" generative approach allows to have any combination of parameter
 class name, while opening the door to the most creative grammars which a human would want
 to use to communicate its intent.
 
+(*UPDATE:* a couple of months after Girouette was released, the author of Tailwind implemented
+in its version 2 and 3 an "on demand" feature very similar to Girouette)
+
 ### Documentation & Resources
 
 Girouette supports [all the classes available in Tailwind 2.0.2](https://tailwindcss.com/docs)
