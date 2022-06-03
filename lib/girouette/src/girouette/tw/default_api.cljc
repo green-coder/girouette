@@ -1,6 +1,7 @@
 (ns girouette.tw.default-api
   (:require
-    [girouette.tw.core :refer [filter-components-by-version make-api]]
+    [girouette.tw.core :as gtw]
+    [girouette.version :as version]
     [girouette.tw.common :as common]
     [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
@@ -44,18 +45,18 @@
 
 ;; The API built using the Tailwind v2 components.
 (let [{:keys [parser class-name->garden]} (-> all-tw-components
-                                              (filter-components-by-version [:tw 2])
-                                              (make-api {:color-map color/tw-v2-colors
-                                                         :font-family-map typography/tw-v2-font-family-map}))]
+                                              (version/filter-components-by-version [:tw 2])
+                                              (gtw/make-api {:color-map color/tw-v2-colors
+                                                             :font-family-map typography/tw-v2-font-family-map}))]
   (def tw-v2-parser parser)
   (def tw-v2-class-name->garden class-name->garden))
 
 
 ;; The API built using the Tailwind v3 components.
 (let [{:keys [parser class-name->garden]} (-> all-tw-components
-                                              (filter-components-by-version [:tw 3])
-                                              (make-api {:color-map color/tw-v3-unified-colors-extended
-                                                         :font-family-map typography/tw-v2-font-family-map}))]
+                                              (version/filter-components-by-version [:tw 3])
+                                              (gtw/make-api {:color-map color/tw-v3-unified-colors-extended
+                                                             :font-family-map typography/tw-v2-font-family-map}))]
   (def tw-v3-parser parser)
   (def tw-v3-class-name->garden class-name->garden))
 

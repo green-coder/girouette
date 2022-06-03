@@ -2,7 +2,7 @@
   (:require
     [clojure.test :refer [deftest testing is are]]
     [girouette.tw.layout :as layout]
-    [girouette.tw.core :as gc :refer [make-api]]))
+    [girouette.tw.core :as gc]))
 
 (deftest assoc-ordering-level-test
   (let [id->component {1 {:before-rules #{2 3}}
@@ -35,24 +35,8 @@
                  :after-rules #{3}}
               5 {:ordering-level 0}})))))
 
-(deftest version-<-test
-  (is (false? (#'gc/version-< [:tw 2] [:tw 1])))
-  (is (false? (#'gc/version-< [:tw 2] [:tw 1 9])))
-  (is (false? (#'gc/version-< [:tw 2] [:tw 2])))
-  (is (false? (#'gc/version-< [:tw 2] [:tw 2 0])))
-  (is (true?  (#'gc/version-< [:tw 2] [:tw 2 0 1])))
-  (is (true?  (#'gc/version-< [:tw 2] [:tw 3]))))
-
-(deftest version-<=-test
-  (is (false? (#'gc/version-<= [:tw 2] [:tw 1])))
-  (is (false? (#'gc/version-<= [:tw 2] [:tw 1 9])))
-  (is (true?  (#'gc/version-<= [:tw 2] [:tw 2])))
-  (is (true?  (#'gc/version-<= [:tw 2] [:tw 2 0])))
-  (is (true?  (#'gc/version-<= [:tw 2] [:tw 2 0 1])))
-  (is (true?  (#'gc/version-<= [:tw 2] [:tw 3]))))
-
 (deftest make-api-test
   (testing "The API still work without any color and font family."
-    (let [{:keys [class-name->garden]} (make-api layout/components {})]
+    (let [{:keys [class-name->garden]} (gc/make-api layout/components {})]
       (is (= [".flex" {:display "flex"}]
              (class-name->garden "flex"))))))

@@ -1,6 +1,7 @@
 (ns acme.frontend.my-grammar
   (:require
-    [girouette.tw.core :as girouette.tw]
+    [girouette.version :as version]
+    [girouette.tw.core :as gtw]
     [girouette.tw.common :as common]
     [girouette.tw.color :as color]
     [girouette.tw.layout :as layout]
@@ -53,7 +54,7 @@
        ;svg/components
        ;accessibility/components
        ,]
-      (girouette.tw/filter-components-by-version [:tw 3])
+      (version/filter-components-by-version [:tw 3])
       (into my-custom-components)))
 
 
@@ -69,6 +70,6 @@
 ;; Here, we use only a subset of the Girouette components, and we add your own.
 (def class-name->garden
   (-> my-chosen-components
-      (girouette.tw/make-api {:color-map my-color-map
-                              :font-family-map typography/tw-v2-font-family-map})
+      (gtw/make-api {:color-map my-color-map
+                     :font-family-map typography/tw-v2-font-family-map})
       :class-name->garden))
