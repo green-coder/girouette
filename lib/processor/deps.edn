@@ -9,8 +9,8 @@
            org.slf4j/slf4j-nop          {:mvn/version "1.7.36"}
 
            garden/garden                {:mvn/version "1.3.10"}
-           #_#_girouette/girouette          {:mvn/version "0.0.7"}
-           girouette/girouette          {:local/root "../../lib/girouette"}}
+           ;girouette/girouette          {:local/root "../../lib/girouette"}
+           girouette/girouette          {:mvn/version "0.0.8"}}
 
  :aliases {:test     {:extra-paths ["test"]
                       :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.66.1034"}
@@ -27,7 +27,7 @@
                       :exec-args    {:sync-pom    true
                                      :group-id    "girouette"
                                      :artifact-id "processor"
-                                     :version     "0.0.7"
+                                     :version     "0.0.8"
                                      :jar         "processor.jar"}}}}
 ;; Memo for deploying a new release:
 ;; - Change the version above, then build the jar:

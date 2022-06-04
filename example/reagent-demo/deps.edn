@@ -3,12 +3,12 @@
  :deps    {org.clojure/clojurescript {:mvn/version "1.11.54"}
            thheller/shadow-cljs      {:mvn/version "2.19.1"}
            reagent/reagent           {:mvn/version "1.1.1"}
-           #_#_girouette/girouette       {:mvn/version "RELEASE"}
-           girouette/girouette       {:local/root "../../lib/girouette"}}
+           ;girouette/girouette       {:local/root "../../lib/girouette"}
+           girouette/girouette       {:mvn/version "v0.0.8"}}
 
  :aliases {; clojure -X:girouette-processor
-           :girouette-processor {;:extra-deps {girouette/processor {:mvn/version "RELEASE"}}
-                                 :extra-deps {girouette/processor {:local/root "../../lib/processor"}}
+           :girouette-processor {;:extra-deps {girouette/processor {:local/root "../../lib/processor"}}
+                                 :extra-deps {girouette/processor {:mvn/version "v0.0.8"}}
                                  :ns-default girouette.processor
                                  :exec-fn    process
                                  :exec-args  {:css           {:output-file "public/style/girouette.css"}

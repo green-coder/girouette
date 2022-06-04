@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.0.8
+
 ## Added
 
 - (PR #83) Compatibility with Tailwind `v3.0.23`, except for the Tailwind-styled "arbitrary values" specified between `[` and `]`.
@@ -15,6 +17,7 @@
 
 - (PR #85) Implemented `--gi-divide-*-reverse`.
   Thanks to `flyingmachine` for the bug report and fix.
+- Cljdoc is analyzing Girouette correctly again. Thanks to `ribelo` and `lread` for their help.
 
 ## Changed
 
