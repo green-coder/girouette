@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>girouette</groupId>
   <artifactId>processor</artifactId>
-  <version>0.0.7</version>
+  <version>0.0.8</version>
   <name>processor</name>
   <scm>
     <url>https://github.com/green-coder/girouette</url>
@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>clojure</artifactId>
-      <version>1.10.3</version>
+      <version>1.11.1</version>
     </dependency>
     <dependency>
       <groupId>org.clojure</groupId>
@@ -26,22 +26,27 @@
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>clojurescript</artifactId>
-      <version>1.11.4</version>
+      <version>1.11.54</version>
+    </dependency>
+    <dependency>
+      <groupId>com.nextjournal</groupId>
+      <artifactId>beholder</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.deps.alpha</artifactId>
-      <version>0.12.1120</version>
+      <version>0.14.1178</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+      <version>1.7.36</version>
     </dependency>
     <dependency>
       <groupId>girouette</groupId>
       <artifactId>girouette</artifactId>
-      <version>0.0.7</version>
-    </dependency>
-    <dependency>
-      <groupId>hawk</groupId>
-      <artifactId>hawk</artifactId>
-      <version>0.2.11</version>
+      <version>0.0.8</version>
     </dependency>
     <dependency>
       <groupId>garden</groupId>
