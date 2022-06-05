@@ -34,8 +34,9 @@ Some symbols have been renamed to better reflect the multiple versions supported
 - `girouette.tw.typography/default-font-family-map` -> `girouette.tw.typography/tw-v2-font-family-map`
 - `girouette.tw.preflight/preflight` -> `girouette.tw.preflight/preflight-v2_0_3`
 
-The processor's params `preflight?` was replaced by `base-css-rules`, it takes a vector of qualified symbols.
-See the example's config.
+The processor's params have changed (see the [example project](https://github.com/green-coder/girouette/blob/fd0f7cbb017ea5a989c5ce01149c67896aaca977/example/reagent-demo/deps.edn)):
+- `garden-fn` is no longer optional, you need to provide a qualified symbol.
+- `preflight?` was replaced by `base-css-rules`, it takes a vector of qualified symbols.
 
 ## v0.0.7
 
