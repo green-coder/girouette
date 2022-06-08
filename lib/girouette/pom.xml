@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>girouette</groupId>
   <artifactId>girouette</artifactId>
-  <version>0.0.8</version>
+  <version>0.0.9</version>
   <name>girouette</name>
   <scm>
     <url>https://github.com/green-coder/girouette</url>

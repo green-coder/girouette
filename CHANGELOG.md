@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.0.9
+
 ## Fixed
 
 - (PR #92) Fixed the CSS Selectors broken in `v0.0.8`. Thanks to `zolazhou`.
