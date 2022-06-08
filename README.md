@@ -44,7 +44,9 @@ in its version 2 and 3 an "on demand" feature very similar to Girouette)
 
 ### Documentation & Resources
 
-Girouette supports [all the classes available in Tailwind 2.0.2](https://tailwindcss.com/docs)
+Girouette currently has components which makes it compatible (with a few caveats) with:
+- [Tailwind v2.0.2](https://v2.tailwindcss.com/docs)
+- [Tailwind v3.0.23](https://tailwindcss.com/docs)
 
 Presentation @ the Bay Area Clojure Meetup:
 - [The slides](https://app.pitch.com/app/presentation/a760be33-4a5b-4e73-bd25-07387cd197dc/7282e9fa-8789-43bc-8b2d-eaec38711d98)
