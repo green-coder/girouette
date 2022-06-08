@@ -139,7 +139,7 @@
 
   For example:
   .space-y-2 uses this selector to add space between elements"
-  (garden.selectors.CSSSelector.  "&>:not([hidden])~:not([hidden])"))
+  (garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])"))
 
 
 (defn outer-state-variants-transform [rule props]

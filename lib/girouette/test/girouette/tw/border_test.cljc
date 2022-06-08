@@ -80,28 +80,28 @@
 
     ;; Divide Width
     "divide-x"
-    [".divide-x" [(garden.selectors.CSSSelector. {:selector "&>:not([hidden])~:not([hidden])"})
+    [".divide-x" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                   {:--gi-divide-x-reverse 0
                    :border-right-width    "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"
                    :border-left-width     "calc(1px * var(--gi-divide-x-reverse))"}]]
 
     "divide-y-2"
-    [".divide-y-2" [(garden.selectors.CSSSelector. {:selector "&>:not([hidden])~:not([hidden])"})
+    [".divide-y-2" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                     {:--gi-divide-y-reverse 0
                      :border-top-width      "calc(2px * calc(1 - var(--gi-divide-y-reverse)))"
                      :border-bottom-width   "calc(2px * var(--gi-divide-y-reverse))"}]]
 
     "divide-y-reverse"
-    [".divide-y-reverse" [(garden.selectors.CSSSelector. {:selector "&>:not([hidden])~:not([hidden])"})
+    [".divide-y-reverse" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                           {:--gi-divide-y-reverse 1}]]
 
     ;; Divide Color
     "divide-current"
-    [".divide-current" [(garden.selectors.CSSSelector. {:selector "&>:not([hidden])~:not([hidden])"})
+    [".divide-current" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                         {:border-color "currentColor"}]]
 
     "divide-gray-100"
-    [".divide-gray-100" [(garden.selectors.CSSSelector. {:selector "&>:not([hidden])~:not([hidden])"})
+    [".divide-gray-100" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                          {:--gi-divide-opacity 1
                           :border-color        "rgba(243,244,246,var(--gi-divide-opacity))"}]]
 
@@ -111,7 +111,7 @@
 
     ;; Divide Style
     "divide-double"
-    [".divide-double" [(garden.selectors.CSSSelector. {:selector "&>:not([hidden])~:not([hidden])"})
+    [".divide-double" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                        {:border-style "double"}]]
 
     ;; Outline width
