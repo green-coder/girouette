@@ -137,8 +137,8 @@
                    (case axis
                      "x" (if (nil? divide-width-reverse)
                            {:--gi-divide-x-reverse 0
-                            :border-right-width (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")
-                            :border-left-width  (str "calc(" width " * var(--gi-divide-x-reverse))")}
+                            :border-right-width (str "calc(" width " * var(--gi-divide-x-reverse))")
+                            :border-left-width  (str "calc(" width " * calc(1 - var(--gi-divide-x-reverse)))")}
                            {:--gi-divide-x-reverse 1})
                      "y" (if (nil? divide-width-reverse)
                            {:--gi-divide-y-reverse 0

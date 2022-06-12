@@ -27,7 +27,24 @@
     [:div.flex-1.p-4.text-center.text-4xl.text-cat-orange.bg-cat-black "Miaw!!!"]]
 
    [:div.flex.my-10
-    ;; Demonstrates a fix on the `divide-*` classes.
+    ;; Demonstrates a fix on the `divide-x` class.
+    [:div.mx-auto.p-6.bg-gray-100
+     [:div.flex.flex-row.bg-white.divide-x-10.divide-red-400-50
+      [:div.p-3 "item 1"]
+      [:div.p-3 "item 2"]
+      [:div.p-3 {:hidden true} "item 3"]
+      [:div.p-3 "item 4"]]]
+
+    ;; Demonstrates the `divide-x-reverse` class.
+    [:div.mx-auto.p-6.bg-gray-100
+     [:div.flex.flex-row-reverse.bg-white.divide-x-10.divide-x-reverse.divide-red-400-50
+      [:div.p-3 "reverse item 1"]
+      [:div.p-3 "reverse item 2"]
+      [:div.p-3 {:hidden true} "reverse item 3"]
+      [:div.p-3 "reverse item 4"]]]]
+
+   [:div.flex.my-10
+    ;; Demonstrates a fix on the `divide-y` class.
     [:div.mx-auto.p-6.bg-gray-100
      [:div.flex.flex-col.bg-white.divide-y-10.divide-red-400-50
       [:div.p-3 "item 1"]
@@ -35,7 +52,7 @@
       [:div.p-3 {:hidden true} "item 3"]
       [:div.p-3 "item 4"]]]
 
-    ;; Demonstrates the `divide-*-reverse` classes.
+    ;; Demonstrates the `divide-y-reverse` class.
     [:div.mx-auto.p-6.bg-gray-100
      [:div.flex.flex-col-reverse.bg-white.divide-y-10.divide-y-reverse.divide-red-400-50
       [:div.p-3 "reverse item 1"]
