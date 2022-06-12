@@ -82,8 +82,8 @@
     "divide-x"
     [".divide-x" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
                   {:--gi-divide-x-reverse 0
-                   :border-right-width    "calc(1px * var(--gi-divide-x-reverse))"
-                   :border-left-width     "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"}]]
+                   :border-left-width     "calc(1px * calc(1 - var(--gi-divide-x-reverse)))"
+                   :border-right-width    "calc(1px * var(--gi-divide-x-reverse))"}]]
 
     "divide-y-2"
     [".divide-y-2" [(garden.selectors.CSSSelector. "&>:not([hidden])~:not([hidden])")
