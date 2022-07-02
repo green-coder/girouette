@@ -4,7 +4,7 @@
            thheller/shadow-cljs      {:mvn/version "2.19.5"}
            reagent/reagent           {:mvn/version "1.1.1"}
            ;girouette/girouette       {:local/root "../../lib/girouette"}
-           girouette/girouette       {:mvn/version "0.0.9"}}
+           girouette/girouette       {:mvn/version "0.0.10"}}
 
  :aliases {; clojure -X:girouette-processor
            :girouette-processor {;:extra-deps {girouette/processor {:local/root "../../lib/processor"}}
