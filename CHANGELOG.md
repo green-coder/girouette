@@ -3,6 +3,7 @@
 ## Fixed
 
 - (PR #93) Fixed an inversion left-right in the `divide-x-..` classes. Thanks to `andrei-zhidkov` for the fix.
+- (PR #94) Fixes the format of the CSS colors in `box-shadow`. Thanks to `zolazhou` for the fix.
 
 ## v0.0.9
 

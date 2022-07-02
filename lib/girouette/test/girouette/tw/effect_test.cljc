@@ -32,7 +32,7 @@
 
     ;; Box shadow v3
     "shadow"
-    [".shadow" {:--gi-shadow         "0 1px 3px 0 rgba(0,0,0/0.1),0 1px 2px -1px rgba(0,0,0/0.1)"
+    [".shadow" {:--gi-shadow         "0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px -1px rgba(0,0,0,0.1)"
                 :--gi-shadow-colored "0 1px 3px 0 var(--gi-shadow-color),0 1px 2px -1px var(--gi-shadow-color)"
                 :box-shadow          "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
@@ -42,12 +42,12 @@
                      :box-shadow          "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
     "shadow-inner"
-    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0/0.05)",
+    [".shadow-inner" {:--gi-shadow "inset 0 2px 4px 0 rgba(0,0,0,0.05)",
                       :--gi-shadow-colored "inset 0 2px 4px 0 var(--gi-shadow-color)"
                       :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
     "shadow-2xl"
-    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0/0.25)",
+    [".shadow-2xl" {:--gi-shadow "0 25px 50px -12px rgba(0,0,0,0.25)",
                     :--gi-shadow-colored "0 25px 50px -12px var(--gi-shadow-color)"
                     :box-shadow "var(--gi-ring-offset-shadow,0 0 #0000),var(--gi-ring-shadow,0 0 #0000),var(--gi-shadow)"}]
 
