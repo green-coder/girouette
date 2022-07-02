@@ -1,7 +1,7 @@
 {:paths   ["src"]
 
- :deps    {org.clojure/clojurescript {:mvn/version "1.11.54"}
-           thheller/shadow-cljs      {:mvn/version "2.19.1"}
+ :deps    {org.clojure/clojurescript {:mvn/version "1.11.60"}
+           thheller/shadow-cljs      {:mvn/version "2.19.5"}
            reagent/reagent           {:mvn/version "1.1.1"}
            ;girouette/girouette       {:local/root "../../lib/girouette"}
            girouette/girouette       {:mvn/version "0.0.9"}}
@@ -21,5 +21,5 @@
                                               #_#_:dry-run? true}}
 
            ; clojure -M:outdated --upgrade
-           :outdated            {:extra-deps {com.github.liquidz/antq {:mvn/version "1.7.798"}}
+           :outdated            {:extra-deps {com.github.liquidz/antq {:mvn/version "1.8.847"}}
                                  :main-opts  ["-m" "antq.core"]}}}
