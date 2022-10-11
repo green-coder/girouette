@@ -1,5 +1,13 @@
 ## Unreleased
 
+## Fixed
+
+- "Text decoration" now uses the property "text-decoration-line" instead of "text-decoration".
+
+## Added
+
+- Class "overline".
+
 ## v0.0.10
 
 ## Fixed

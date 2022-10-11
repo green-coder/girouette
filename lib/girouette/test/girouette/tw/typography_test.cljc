@@ -156,6 +156,8 @@
     [".text-opacity-100" {:--gi-text-opacity 1}]
 
     ;; Text decoration
+    "underline"
+    [".underline" {:text-decoration-line "underline"}]
 
     ;; Text decoration color
     "decoration-inherit"

@@ -262,12 +262,13 @@
    {:id :text-decoration
     :since-version [:tw 2]
     :rules "
-    text-decoration = 'underline' | 'line-through' | 'no-underline'
+    text-decoration = 'underline' | 'overline' | 'line-through' | 'no-underline'
     "
     :garden (fn [{[decoration] :component-data}]
-              {:text-decoration ({"underline" "underline"
-                                  "line-through" "line-through"
-                                  "no-underline" "none"} decoration)})}
+              {:text-decoration-line ({"underline" "underline"
+                                       "overline" "overline"
+                                       "line-through" "line-through"
+                                       "no-underline" "none"} decoration)})}
 
 
    {:id :text-decoration-color
