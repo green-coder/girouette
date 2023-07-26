@@ -1,5 +1,5 @@
 (ns ^:no-doc girouette.tw.sizing
-  (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
+  (:require [girouette.tw.common :as common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :width
@@ -11,8 +11,7 @@
     :garden (fn [{[value-data] :component-data}]
               {:width (value-unit->css value-data
                                        {:zero-unit nil
-                                        :number {:unit "rem"
-                                                 :value-fn div-4}
+                                        :number (common/default-number-value-option)
                                         :fraction {:unit "%"
                                                    :value-fn mul-100}})})}
 
@@ -26,8 +25,7 @@
     :garden (fn [{[value-data] :component-data}]
               {:min-width (value-unit->css value-data
                                            {:zero-unit nil
-                                            :number {:unit "rem"
-                                                     :value-fn div-4}
+                                            :number (common/default-number-value-option)
                                             :fraction {:unit "%"
                                                        :value-fn mul-100}})})}
 
@@ -78,8 +76,7 @@
     :garden (fn [{[value-data] :component-data}]
               {:height (value-unit->css value-data
                                         {:zero-unit nil
-                                         :number {:unit "rem"
-                                                  :value-fn div-4}
+                                         :number (common/default-number-value-option)
                                          :fraction {:unit "%"
                                                     :value-fn mul-100}})})}
 
@@ -93,8 +90,7 @@
     :garden (fn [{[value-data] :component-data}]
               {:min-height (value-unit->css value-data
                                             {:zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}
+                                             :number (common/default-number-value-option)
                                              :fraction {:unit "%"
                                                         :value-fn mul-100}})})}
 
@@ -108,7 +104,6 @@
     :garden (fn [{[value-data] :component-data}]
               {:max-height (value-unit->css value-data
                                             {:zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}
+                                             :number (common/default-number-value-option)
                                              :fraction {:unit "%"
                                                         :value-fn mul-100}})})}])

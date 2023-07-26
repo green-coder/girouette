@@ -1,5 +1,5 @@
 (ns ^:no-doc girouette.tw.flexbox
-  (:require [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
+  (:require [girouette.tw.common :as common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :flex-grow
@@ -39,8 +39,7 @@
                              (if (nil? flex-basis-value)
                                1
                                (value-unit->css flex-basis-value {:zero-unit "px"
-                                                                  :number {:unit "rem"
-                                                                           :value-fn div-4}
+                                                                  :number (common/default-number-value-option)
                                                                   :fraction {:unit "%"
                                                                              :value-fn mul-100}})))})}
 
@@ -74,8 +73,7 @@
                              grow-value (value-unit->css grow-data)
                              shrink-value (value-unit->css shrink-data)
                              basis-value (value-unit->css basis-data {:zero-unit nil
-                                                                      :number {:unit "rem"
-                                                                               :value-fn div-4}
+                                                                      :number (common/default-number-value-option)
                                                                       :fraction {:unit "%"
                                                                                  :value-fn mul-100}})]
                          (str grow-value " " shrink-value " " basis-value)))})}

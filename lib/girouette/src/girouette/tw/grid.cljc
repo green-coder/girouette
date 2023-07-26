@@ -1,5 +1,5 @@
 (ns ^:no-doc girouette.tw.grid
-  (:require [girouette.tw.common :refer [value-unit->css div-4]]))
+  (:require [girouette.tw.common :as common :refer [value-unit->css div-4]]))
 
 (def components
   [{:id :grid-template-columns
@@ -154,5 +154,4 @@
                    "y" :row-gap
                    nil :gap} axis)
                  (value-unit->css gap-value {:zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}})}))}])
+                                             :number (common/default-number-value-option)})}))}])

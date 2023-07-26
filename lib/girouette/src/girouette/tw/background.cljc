@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.background
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]
+            [girouette.tw.common :as common :refer [value-unit->css div-100 div-4 mul-100]]
             [girouette.tw.color :refer [as-transparent color->css]]))
 
 (def components
@@ -94,8 +94,7 @@
                 {:background-size (first data)}
                 (let [[x y] data
                       options {:zero-unit nil
-                               :number {:unit "rem"
-                                        :value-fn div-4}
+                               :number (common/default-number-value-option)
                                :fraction {:unit "%"
                                           :value-fn mul-100}}]
                   {:background-size [[(value-unit->css x options)

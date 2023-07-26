@@ -1,7 +1,7 @@
 (ns ^:no-doc girouette.tw.interactivity
   (:require
    [girouette.tw.color :refer [color->css]]
-   [girouette.tw.common :refer [value-unit->css div-4 mul-100]]))
+   [girouette.tw.common :as common :refer [value-unit->css div-4 mul-100]]))
 
 (def components
   [{:id :accent-color
@@ -110,8 +110,7 @@
                     value-css (value-unit->css scroll-margin-value
                                                {:signus signus
                                                 :zero-unit "px"
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}})]
+                                                :number (common/default-number-value-option)})]
                 (into {}
                       (map (fn [prop]
                              [prop value-css]))
@@ -144,8 +143,7 @@
                     value-css (value-unit->css scroll-padding-value
                                                {:signus signus
                                                 :zero-unit "px"
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}
+                                                :number (common/default-number-value-option)
                                                 :fraction {:unit "%"
                                                            :value-fn mul-100}})]
                 (into {}

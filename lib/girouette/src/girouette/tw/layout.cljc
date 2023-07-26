@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.layout
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [value-unit->css breakpoint->pixels div-4 mul-100 ratio-str]]))
+            [girouette.tw.common :as common :refer [value-unit->css breakpoint->pixels div-4 mul-100 ratio-str]]))
 
 (def components
   [{:id :aspect-ratio
@@ -228,8 +228,7 @@
                     value-css (value-unit->css positioning-value
                                                {:signus signus
                                                 :zero-unit nil
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}
+                                                :number (common/default-number-value-option)
                                                 :fraction {:unit "%"
                                                            :value-fn mul-100}})]
                 (into {}

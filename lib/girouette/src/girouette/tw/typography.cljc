@@ -1,7 +1,7 @@
 (ns ^:no-doc girouette.tw.typography
   (:require [clojure.string :as str]
             [garden.selectors :refer [defpseudoelement]]
-            [girouette.tw.common :refer [matches-nothing value-unit->css div-4 mul-100 div-100]]
+            [girouette.tw.common :as common :refer [matches-nothing value-unit->css div-4 mul-100 div-100]]
             [girouette.tw.color :refer [color->css]]))
 
 
@@ -70,8 +70,7 @@
     "
     :garden (fn [{[value-data] :component-data}]
               {:font-size (value-unit->css value-data
-                                           {:number {:unit "rem"
-                                                     :value-fn div-4}
+                                           {:number (common/default-number-value-option)
                                             :fraction {:unit "%"
                                                        :value-fn mul-100}})})}
 
@@ -161,8 +160,7 @@
                                 "loose"   2} (second value-data))
                               (value-unit->css value-data
                                                {:zero-unit nil
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}}))})}
+                                                :number (common/default-number-value-option)}))})}
 
 
    ;; This is an extra, not from Tailwind.
@@ -372,8 +370,7 @@
     :garden (fn [{[value-data] :component-data}]
               {:text-indent (value-unit->css value-data
                                              {:zero-unit "px"
-                                              :number {:unit "rem"
-                                                       :value-fn div-4}
+                                              :number (common/default-number-value-option)
                                               :fraction {:unit "%"
                                                          :value-fn mul-100}})})}
 

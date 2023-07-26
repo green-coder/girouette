@@ -1,6 +1,6 @@
 (ns ^:no-doc girouette.tw.transform
   (:require [clojure.string :as str]
-            [girouette.tw.common :refer [value-unit->css div-100 div-4 mul-100]]))
+            [girouette.tw.common :as common :refer [value-unit->css div-100 div-4 mul-100]]))
 
 (def components
   [{:id :transform
@@ -97,8 +97,7 @@
                 {attribute (value-unit->css translate-value
                                             {:signus signus
                                              :zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}
+                                             :number (common/default-number-value-option)
                                              :fraction {:unit "%"
                                                         :value-fn mul-100}})}))}
 

@@ -1,5 +1,5 @@
 (ns ^:no-doc girouette.tw.spacing
-  (:require [girouette.tw.common :refer [value-unit->css div-4 between-children-selector]]))
+  (:require [girouette.tw.common :as common :refer [value-unit->css div-4 between-children-selector]]))
 
 
 (def components
@@ -22,8 +22,7 @@
                                    nil))
                     value-css (value-unit->css padding-value {:signus signus
                                                               :zero-unit nil
-                                                              :number {:unit "rem"
-                                                                       :value-fn div-4}})]
+                                                              :number (common/default-number-value-option)})]
                 (if (nil? directions)
                   {:padding value-css}
                   (into {}
@@ -50,8 +49,7 @@
                                    nil))
                     value-css (value-unit->css margin-value {:signus signus
                                                              :zero-unit nil
-                                                             :number {:unit "rem"
-                                                                      :value-fn div-4}})]
+                                                             :number (common/default-number-value-option)})]
                 (if (nil? directions)
                   {:margin value-css}
                   (into {}
@@ -74,6 +72,5 @@
                                 ["y" true]  "bottom"} [axis (some? space-between-reverse)])
                     value-css (value-unit->css space-between-value {:signus signus
                                                                     :zero-unit nil
-                                                                    :number {:unit "rem"
-                                                                             :value-fn div-4}})]
+                                                                    :number (common/default-number-value-option)})]
                 [between-children-selector {(keyword (str "margin-" direction)) value-css}]))}])
