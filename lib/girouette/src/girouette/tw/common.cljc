@@ -52,6 +52,25 @@
 (defn ratio-str [[x y]] (str x " / " y))
 
 
+;; This can be changed by passing another value in `make-api`
+(def ^:dynamic *default-number-unit* "rem")
+
+
+(defn default-number-value-fn
+  "Takes a tailwind number value and converts it as per the default unit.
+  Eg. p-1 turns into `padding: 0.25rem` or `padding: 4px` based on default unit."
+  [x]
+  (case *default-number-unit*
+    "rem" (div-4 x)
+    "px" (* 4 x)))
+
+
+(defn default-number-value-option []
+  "Configuration for how a default tailwind number unit gets converted to a css value."
+  {:unit *default-number-unit*
+   :value-fn default-number-value-fn})
+
+
 (defn read-number
   "Converts the input into a number.
    Accepts the formats [:integer \"1\"], [:number \"1\"] or \"1\".

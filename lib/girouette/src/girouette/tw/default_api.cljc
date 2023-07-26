@@ -60,6 +60,15 @@
   (def tw-v3-parser parser)
   (def tw-v3-class-name->garden class-name->garden))
 
+;; The API built using the Tailwind v3 components but using "px" instead of "rem" for default number value units
+(let [{:keys [parser class-name->garden]} (-> all-tw-components
+                                              (version/filter-components-by-version [:tw 3])
+                                              (gtw/make-api {:color-map color/tw-v3-unified-colors-extended
+                                                             :font-family-map typography/tw-v2-font-family-map
+                                                             :default-number-unit "px"}))]
+  (def tw-v3-px-parser parser)
+  (def tw-v3-px-class-name->garden class-name->garden))
+
 
 ;; Feel free to fork the snippet above and add your own components,
 ;; as that's what Girouette was made for: customization.
