@@ -216,7 +216,7 @@
     positioning-mode = 'top' | 'right' | 'bottom' | 'left' | #'inset(-x|-y)?'
     positioning-value = number | length | length-unit | fraction | percentage | full-100% | auto
     "
-    :garden (fn [{component-data :component-data}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [signus positioning-mode positioning-value]} (into {} component-data)
                     directions ({"inset" [:top :right :bottom :left]
                                  "inset-x" [:right :left]
@@ -228,8 +228,7 @@
                     value-css (value-unit->css positioning-value
                                                {:signus signus
                                                 :zero-unit nil
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}
+                                                :number unitless-length-conversion
                                                 :fraction {:unit "%"
                                                            :value-fn mul-100}})]
                 (into {}

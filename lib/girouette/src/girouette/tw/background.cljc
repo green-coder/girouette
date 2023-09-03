@@ -89,13 +89,13 @@
                                <'size-'> background-size-length <'-'> background-size-length)
     <background-size-length> = auto | number | length | length-unit | fraction | percentage
     "
-    :garden (fn [{data :component-data}]
+    :garden (fn [{data :component-data
+                  :keys [unitless-length-conversion]}]
               (if (= (count data) 1)
                 {:background-size (first data)}
                 (let [[x y] data
                       options {:zero-unit nil
-                               :number {:unit "rem"
-                                        :value-fn div-4}
+                               :number unitless-length-conversion
                                :fraction {:unit "%"
                                           :value-fn mul-100}}]
                   {:background-size [[(value-unit->css x options)

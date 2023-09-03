@@ -91,7 +91,7 @@
     scroll-margin = signus? <'scroll-m'> (direction | axis)? <'-'> scroll-margin-value
     scroll-margin-value = number | length | length-unit
     "
-    :garden (fn [{:keys [component-data]}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [signus direction axis scroll-margin-value]} (into {} component-data)
                     directions (case direction
                                  "t" ["top"]
@@ -110,8 +110,7 @@
                     value-css (value-unit->css scroll-margin-value
                                                {:signus signus
                                                 :zero-unit "px"
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}})]
+                                                :number unitless-length-conversion})]
                 (into {}
                       (map (fn [prop]
                              [prop value-css]))
@@ -124,7 +123,7 @@
     scroll-padding = signus? <'scroll-p'> (direction | axis)? <'-'> scroll-padding-value
     scroll-padding-value = number | length | length-unit | fraction | percentage
     "
-    :garden (fn [{:keys [component-data]}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [signus direction axis scroll-padding-value]}
                     (into {} component-data)
                     directions (case direction
@@ -144,8 +143,7 @@
                     value-css (value-unit->css scroll-padding-value
                                                {:signus signus
                                                 :zero-unit "px"
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}
+                                                :number unitless-length-conversion
                                                 :fraction {:unit "%"
                                                            :value-fn mul-100}})]
                 (into {}

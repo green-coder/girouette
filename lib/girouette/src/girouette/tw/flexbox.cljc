@@ -34,13 +34,13 @@
     flex-basis = <'flex-'>? <'basis'> (<'-'> flex-basis-value)?
     flex-basis-value = number | length | length-unit | fraction | percentage | full-100% | auto
     "
-    :garden (fn [{data :component-data}]
+    :garden (fn [{data :component-data
+                  :keys [unitless-length-conversion]}]
               {:flex-basis (let [{:keys [flex-basis-value]} (into {} data)]
                              (if (nil? flex-basis-value)
                                1
                                (value-unit->css flex-basis-value {:zero-unit "px"
-                                                                  :number {:unit "rem"
-                                                                           :value-fn div-4}
+                                                                  :number unitless-length-conversion
                                                                   :fraction {:unit "%"
                                                                              :value-fn mul-100}})))})}
 
@@ -53,7 +53,8 @@
     flex-shorthand-2-args = flex-grow-value <'-'> (flex-shrink-value | flex-basis-value)
     flex-shorthand-3-args = flex-grow-value <'-'> flex-shrink-value <'-'> flex-basis-value
     "
-    :garden (fn [{[[shorthand-type & args]] :component-data}]
+    :garden (fn [{[[shorthand-type & args]] :component-data
+                  :keys [unitless-length-conversion]}]
               {:flex (case shorthand-type
                        :flex-shorthand-1-arg
                        (case (first args)
@@ -74,8 +75,7 @@
                              grow-value (value-unit->css grow-data)
                              shrink-value (value-unit->css shrink-data)
                              basis-value (value-unit->css basis-data {:zero-unit nil
-                                                                      :number {:unit "rem"
-                                                                               :value-fn div-4}
+                                                                      :number unitless-length-conversion
                                                                       :fraction {:unit "%"
                                                                                  :value-fn mul-100}})]
                          (str grow-value " " shrink-value " " basis-value)))})}

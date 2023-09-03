@@ -8,11 +8,11 @@
     width = <'w-'> (number | length | length-unit | fraction | percentage | full-100% |
                     auto | screen-100vw | min-content | max-content | fit-content)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:width (value-unit->css value-data
                                        {:zero-unit nil
-                                        :number {:unit "rem"
-                                                 :value-fn div-4}
+                                        :number unitless-length-conversion
                                         :fraction {:unit "%"
                                                    :value-fn mul-100}})})}
 
@@ -23,11 +23,11 @@
     min-width = <'min-w-'> (number | length | length-unit | fraction | percentage | full-100% |
                             auto | screen-100vw | min-content | max-content | fit-content)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:min-width (value-unit->css value-data
                                            {:zero-unit nil
-                                            :number {:unit "rem"
-                                                     :value-fn div-4}
+                                            :number unitless-length-conversion
                                             :fraction {:unit "%"
                                                        :value-fn mul-100}})})}
 
@@ -41,7 +41,7 @@
     max-width-generic-size = number | length | length-unit | fraction | percentage | full-100% |
                              none | screen-100vw | min-content | max-content | fit-content
     "
-    :garden (fn [{:keys [component-data]}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [max-width-fixed-size max-width-generic-size]} (into {} component-data)]
                 {:max-width (if (some? max-width-fixed-size)
                               ({"xs"  "20rem"
@@ -63,8 +63,7 @@
                                 "screen-2xl" "1536px"} max-width-fixed-size)
                               (value-unit->css max-width-generic-size
                                                {:zero-unit nil
-                                                :number    {:unit     "rem"
-                                                            :value-fn div-4}
+                                                :number    unitless-length-conversion
                                                 :fraction  {:unit     "%"
                                                             :value-fn mul-100}}))}))}
 
@@ -75,11 +74,11 @@
     height = <'h-'> (number | length | length-unit | fraction | percentage | full-100% |
                      auto | screen-100vh | min-content | max-content | fit-content)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:height (value-unit->css value-data
                                         {:zero-unit nil
-                                         :number {:unit "rem"
-                                                  :value-fn div-4}
+                                         :number unitless-length-conversion
                                          :fraction {:unit "%"
                                                     :value-fn mul-100}})})}
 
@@ -90,11 +89,11 @@
     min-height = <'min-h-'> (number | length | length-unit | fraction | percentage | full-100% |
                              auto | screen-100vh | min-content | max-content | fit-content)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:min-height (value-unit->css value-data
                                             {:zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}
+                                             :number unitless-length-conversion
                                              :fraction {:unit "%"
                                                         :value-fn mul-100}})})}
 
@@ -105,10 +104,10 @@
     max-height = <'max-h-'> (number | length | length-unit | fraction | percentage | full-100% |
                              none | screen-100vh | min-content | max-content | fit-content)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:max-height (value-unit->css value-data
                                             {:zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}
+                                             :number unitless-length-conversion
                                              :fraction {:unit "%"
                                                         :value-fn mul-100}})})}])

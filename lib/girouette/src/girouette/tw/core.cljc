@@ -107,7 +107,11 @@
 
 (defn make-api
   "Creates an API based on a collection of Girouette components."
-  [components {:keys [color-map font-family-map]}]
+  [components {:keys [color-map
+                      font-family-map
+                      unitless-length-conversion]
+               :or {unitless-length-conversion {:unit "rem"
+                                                :value-fn common/div-4}}}]
   (let [components (util/into-one-vector components) ;; flatten the structure
         flattened-color-map (color/flatten-color-map color-map)
         grammar (assemble-grammar components {:color-map flattened-color-map
@@ -119,7 +123,8 @@
                             complement-before-rules-after-rules
                             assoc-ordering-level)
         predef-props {:read-color (partial color/read-color flattened-color-map)
-                      :font-family-map font-family-map}
+                      :font-family-map font-family-map
+                      :unitless-length-conversion unitless-length-conversion}
         class-name->garden (fn [class-name]
                              (let [parsed-data (insta/parse parser class-name)]
                                (when-not (insta/failure? parsed-data)

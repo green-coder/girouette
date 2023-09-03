@@ -68,10 +68,10 @@
     :rules "
     font-size-2 = <'font-size-'> (number | length | fraction | percentage)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:font-size (value-unit->css value-data
-                                           {:number {:unit "rem"
-                                                     :value-fn div-4}
+                                           {:number unitless-length-conversion
                                             :fraction {:unit "%"
                                                        :value-fn mul-100}})})}
 
@@ -151,7 +151,8 @@
     line-height = <'leading-'> (line-height-size-name | number)
     line-height-size-name = 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:line-height (if (= (first value-data) :line-height-size-name)
                               ({"none"    1
                                 "tight"   1.25
@@ -161,8 +162,7 @@
                                 "loose"   2} (second value-data))
                               (value-unit->css value-data
                                                {:zero-unit nil
-                                                :number {:unit "rem"
-                                                         :value-fn div-4}}))})}
+                                                :number unitless-length-conversion}))})}
 
 
    ;; This is an extra, not from Tailwind.
@@ -369,11 +369,11 @@
     :rules "
     text-indent = <'indent-'> (number | length | length-unit | fraction)
     "
-    :garden (fn [{[value-data] :component-data}]
+    :garden (fn [{[value-data] :component-data
+                  :keys [unitless-length-conversion]}]
               {:text-indent (value-unit->css value-data
                                              {:zero-unit "px"
-                                              :number {:unit "rem"
-                                                       :value-fn div-4}
+                                              :number unitless-length-conversion
                                               :fraction {:unit "%"
                                                          :value-fn mul-100}})})}
 
