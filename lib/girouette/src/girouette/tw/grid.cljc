@@ -148,11 +148,11 @@
     gap = <'gap-'> (axis <'-'>)? gap-value
     gap-value = number | length | length-unit | percentage
     "
-    :garden (fn [{data :component-data}]
+    :garden (fn [{data :component-data
+                  :keys [unitless-length-conversion]}]
               (let [{:keys [axis gap-value]} (into {} data)]
                 {({"x" :column-gap
                    "y" :row-gap
                    nil :gap} axis)
                  (value-unit->css gap-value {:zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}})}))}])
+                                             :number unitless-length-conversion})}))}])

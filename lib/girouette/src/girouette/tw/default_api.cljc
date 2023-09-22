@@ -56,7 +56,12 @@
 (let [{:keys [parser class-name->garden]} (-> all-tw-components
                                               (version/filter-components-by-version [:tw 3])
                                               (gtw/make-api {:color-map color/tw-v3-unified-colors-extended
-                                                             :font-family-map typography/tw-v2-font-family-map}))]
+                                                             :font-family-map typography/tw-v2-font-family-map
+                                                             ;; Customization of unitless-length conversion is possible.
+                                                             ;; e.g. "p-2" -> {:padding "8px"}
+                                                             #_#_
+                                                             :unitless-length-conversion {:unit "px"
+                                                                                          :value-fn common/mul-4}}))]
   (def tw-v3-parser parser)
   (def tw-v3-class-name->garden class-name->garden))
 

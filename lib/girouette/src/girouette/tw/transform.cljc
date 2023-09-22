@@ -90,15 +90,15 @@
     translate = signus? <'translate-'> axis <'-'> translate-value
     translate-value = number | length | length-unit | fraction | percentage | full-100%
     "
-    :garden (fn [{data :component-data}]
+    :garden (fn [{data :component-data
+                  :keys [unitless-length-conversion]}]
               (let [{:keys [signus axis translate-value]} (into {} data)
                     attribute ({"x" :--gi-translate-x
                                 "y" :--gi-translate-y} axis)]
                 {attribute (value-unit->css translate-value
                                             {:signus signus
                                              :zero-unit nil
-                                             :number {:unit "rem"
-                                                      :value-fn div-4}
+                                             :number unitless-length-conversion
                                              :fraction {:unit "%"
                                                         :value-fn mul-100}})}))}
 

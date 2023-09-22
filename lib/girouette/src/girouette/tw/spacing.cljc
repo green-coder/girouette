@@ -9,7 +9,7 @@
     padding = signus? <'p'> (direction | axis)? <'-'> padding-value
     padding-value = number | length | length-unit
     "
-    :garden (fn [{component-data :component-data}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [signus direction axis padding-value]} (into {} component-data)
                     directions (case direction
                                  "t" ["top"]
@@ -22,8 +22,7 @@
                                    nil))
                     value-css (value-unit->css padding-value {:signus signus
                                                               :zero-unit nil
-                                                              :number {:unit "rem"
-                                                                       :value-fn div-4}})]
+                                                              :number unitless-length-conversion})]
                 (if (nil? directions)
                   {:padding value-css}
                   (into {}
@@ -37,7 +36,7 @@
     margin = signus? <'m'> (direction | axis)? <'-'> margin-value
     margin-value = number | length | length-unit | auto
     "
-    :garden (fn [{component-data :component-data}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [signus direction axis margin-value]} (into {} component-data)
                     directions (case direction
                                  "t" ["top"]
@@ -50,8 +49,7 @@
                                    nil))
                     value-css (value-unit->css margin-value {:signus signus
                                                              :zero-unit nil
-                                                             :number {:unit "rem"
-                                                                      :value-fn div-4}})]
+                                                             :number unitless-length-conversion})]
                 (if (nil? directions)
                   {:margin value-css}
                   (into {}
@@ -66,7 +64,7 @@
     space-between-value = number | length | length-unit
     space-between-reverse = 'reverse'
     "
-    :garden (fn [{component-data :component-data}]
+    :garden (fn [{:keys [component-data unitless-length-conversion]}]
               (let [{:keys [signus axis space-between-value space-between-reverse]} (into {} component-data)
                     direction ({["x" false] "left"
                                 ["x" true]  "right"
@@ -74,6 +72,5 @@
                                 ["y" true]  "bottom"} [axis (some? space-between-reverse)])
                     value-css (value-unit->css space-between-value {:signus signus
                                                                     :zero-unit nil
-                                                                    :number {:unit "rem"
-                                                                             :value-fn div-4}})]
+                                                                    :number unitless-length-conversion})]
                 [between-children-selector {(keyword (str "margin-" direction)) value-css}]))}])
